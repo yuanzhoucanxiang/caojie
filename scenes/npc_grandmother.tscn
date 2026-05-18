@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/npc/npc_base.gd" id="1_npc"]
+
+[sub_resource type="CircleShape2D" id="interact_zone_shape"]
+radius = 90.0
+
+[node name="Grandmother" type="StaticBody2D"]
+script = ExtResource("1_npc")
+npc_id = "grandmother"
+npc_name = "奶奶"
+
+[node name="InteractionZone" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionZone"]
+shape = SubResource("interact_zone_shape")
