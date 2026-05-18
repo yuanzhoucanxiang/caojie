@@ -1,0 +1,13 @@
+# Godot 4+
+.godot/
+*.translation
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# 临时/导出文件
+export/
+export_presets.cfg
+*.tmp
+*.log
