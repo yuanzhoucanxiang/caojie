@@ -3,7 +3,7 @@ extends StaticBody2D
 signal dialogue_triggered(npc_name: String, event_data: Dictionary)
 
 @export var npc_id: String = "grandmother"
-@export var npc_name: String = "奶奶"
+@export var npc_name: String = "外婆"
 
 const SPRITE_SIZE: Vector2 = Vector2(24, 42)
 const SPRITE_COLOR: Color = Color(0.933, 0.533, 0.6, 1)
@@ -42,10 +42,10 @@ func _get_events() -> Array[Dictionary]:
 		{
 			"id": "event_1",
 			"conditions": [],
-			"text": "乖孙，过来帮奶奶择菜。",
+			"text": "乖孙，过来帮外婆择菜。",
 			"choices": [
 				{
-					"text": "好的奶奶！",
+					"text": "好的外婆！",
 					"effects": {"懂事": 1, "亲密": 1}
 				},
 				{
@@ -57,10 +57,10 @@ func _get_events() -> Array[Dictionary]:
 		{
 			"id": "event_2",
 			"conditions": ["event_completed:event_1"],
-			"text": "来，奶奶给你讲个故事。从前啊……",
+			"text": "来，外婆给你讲个故事。从前啊……",
 			"choices": [
 				{
-					"text": "认真听奶奶讲",
+					"text": "认真听外婆讲",
 					"effects": {"懂事": 1, "亲密": 1}
 				},
 				{
@@ -108,7 +108,7 @@ func trigger_dialogue() -> void:
 			"id": "",
 			"text": "乖孙，今天没有特别的事。去找点事做吧。",
 			"choices": [
-				{"text": "好的奶奶", "effects": {}}
+				{"text": "好的外婆", "effects": {}}
 			]
 		}
 		dialogue_triggered.emit(npc_name, fallback)
