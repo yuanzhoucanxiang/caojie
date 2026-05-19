@@ -9,3 +9,10 @@
 * [08 - 美术与 UI](08-美术与UI.md)
 * [09 - 时间系统](09-时间系统.md)
 * [10 - 技术设计](10-技术设计.md)
+* **人物档案**
+  * [外婆](characters/外婆.md)
+  * [外公](characters/外公.md)
+  * [舅舅](characters/舅舅.md)
+  * [舅妈](characters/舅妈.md)
+  * [大表哥](characters/大表哥.md)
+  * [二表哥](characters/二表哥.md)
