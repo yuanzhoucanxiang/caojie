@@ -9,10 +9,22 @@
 * [08 - 美术与 UI](08-美术与UI.md)
 * [09 - 时间系统](09-时间系统.md)
 * [10 - 技术设计](10-技术设计.md)
-* **人物档案**
+* **人物档案 —— 家庭成员**
   * [外婆](characters/外婆.md)
   * [外公](characters/外公.md)
   * [舅舅](characters/舅舅.md)
   * [舅妈](characters/舅妈.md)
   * [大表哥](characters/大表哥.md)
   * [二表哥](characters/二表哥.md)
+* **人物档案 —— 童年玩伴**
+  * [小明](characters/小明.md)
+  * [阿旺](characters/阿旺.md)
+  * [阿宝](characters/阿宝.md)
+  * [小英](characters/小英.md)
+  * [小凤](characters/小凤.md)
+* **人物档案 —— 村里其他人**
+  * [阿婆](characters/阿婆.md)
+  * [村长](characters/村长.md)
+  * [小明妈](characters/小明妈.md)
+  * [小凤妈](characters/小凤妈.md)
+  * [村民群像](characters/村民群像.md)
