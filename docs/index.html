@@ -5,7 +5,7 @@
   <title>《草芥》— 游戏策划案</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=ZCOOL+KuaiLe&family=Quicksand:wght@400;600;700&display=swap">
   <style>
     :root {
       --sidebar-width: 260px;
@@ -13,21 +13,21 @@
       --theme-color-dark: #2d5016;
       --pixel-shadow: #2a2018;
       --pixel-size: 2px;
+      --font-cute: "ZCOOL KuaiLe", "PingFang SC", "Microsoft YaHei", sans-serif;
+      --font-pixel: "Press Start 2P", monospace;
     }
 
     /* === 全局背景与字体 === */
     body {
       background-color: #f5f0e8;
       color: #3a2f28;
-      font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+      font-family: var(--font-cute);
+      font-size: 16px;
     }
 
-    /* 像素字体：用于标题和标签 */
-    .pixel-font,
-    .sidebar .app-name,
-    .cover-main .cover-main__title,
-    .cover-main a.start {
-      font-family: "Press Start 2P", monospace;
+    /* 像素字体：仅用于装饰性元素 */
+    .pixel-font {
+      font-family: var(--font-pixel);
       -webkit-font-smoothing: none;
       -moz-osx-font-smoothing: unset;
       font-smooth: never;
@@ -50,23 +50,6 @@
       );
     }
 
-    /* === 像素边框 mixin（用 box-shadow 模拟） === */
-    .pixel-border {
-      border: none;
-      box-shadow:
-        var(--pixel-size) 0 0 0 var(--theme-color-dark),
-        calc(var(--pixel-size) * -1) 0 0 0 var(--theme-color-dark),
-        0 var(--pixel-size) 0 0 var(--theme-color-dark),
-        0 calc(var(--pixel-size) * -1) 0 0 var(--theme-color-dark);
-    }
-
-    /* 像素阴影：台阶式，不是模糊的 */
-    .pixel-drop-shadow {
-      box-shadow:
-        var(--pixel-size) var(--pixel-size) 0 0 var(--pixel-shadow),
-        calc(var(--pixel-size) * 2) calc(var(--pixel-size) * 2) 0 0 rgba(42, 32, 24, 0.3);
-    }
-
     /* === 侧边栏 === */
     .sidebar {
       background-color: #ebe4d8;
@@ -77,16 +60,19 @@
       padding-top: 12px;
     }
     .sidebar .app-name {
+      font-family: var(--font-pixel);
+      -webkit-font-smoothing: none;
       color: var(--theme-color-dark);
-      font-size: 0.85em;
+      font-size: 0.7em;
       padding: 20px 16px 10px;
       letter-spacing: 0.08em;
-      line-height: 1.6;
+      line-height: 1.8;
     }
+    /* 侧边栏：小字号，紧凑 */
     .sidebar ul li a {
       color: #5c4a3a;
-      font-size: 0.95em;
-      padding: 6px 20px;
+      font-size: 0.85em;
+      padding: 5px 20px;
       transition: color 0.15s, background-color 0.15s;
       border-left: 3px solid transparent;
     }
@@ -102,28 +88,28 @@
       background-color: #e0d8c8;
     }
     .sidebar ul li ul li a {
-      font-size: 0.9em;
+      font-size: 0.78em;
       padding-left: 32px;
     }
 
-    /* === 主内容区 === */
+    /* === 主内容区：大字号，拉开与侧边栏差距 === */
     .markdown-section {
       max-width: 800px;
       color: #3a2f28;
+      font-size: 1.15em;
+      line-height: 1.9;
     }
 
-    /* 标题：像素字体 + 像素下划线 */
+    /* 标题：圆润可爱字体 + 像素装饰 */
     .markdown-section h1 {
-      font-family: "Press Start 2P", monospace;
-      font-size: 1.4em;
+      font-family: var(--font-cute);
+      font-size: 1.8em;
       color: var(--theme-color-dark);
-      letter-spacing: 0.08em;
-      line-height: 1.6;
-      -webkit-font-smoothing: none;
+      letter-spacing: 0.06em;
+      line-height: 1.5;
       border-bottom: none;
       padding-bottom: 12px;
       margin-bottom: 20px;
-      text-shadow: 2px 2px 0 rgba(200, 169, 110, 0.3);
     }
     /* h1 像素装饰下划线 */
     .markdown-section h1::after {
@@ -141,12 +127,11 @@
     }
 
     .markdown-section h2 {
-      font-family: "Press Start 2P", monospace;
-      font-size: 0.9em;
+      font-family: var(--font-cute);
+      font-size: 1.3em;
       color: #4a6741;
-      letter-spacing: 0.05em;
-      line-height: 1.8;
-      -webkit-font-smoothing: none;
+      letter-spacing: 0.04em;
+      line-height: 1.6;
       border-bottom: none;
       padding-bottom: 8px;
       margin-top: 32px;
@@ -165,7 +150,8 @@
     }
 
     .markdown-section h3 {
-      font-size: 1.05em;
+      font-family: var(--font-cute);
+      font-size: 1.15em;
       color: #5c4a3a;
       border-left: 4px solid #c8a96e;
       padding-left: 12px;
@@ -267,6 +253,7 @@
 
     /* === 搜索框 === */
     .search input {
+      font-family: var(--font-cute);
       background-color: #ebe4d8 !important;
       border: 2px solid #c8a96e !important;
       border-radius: 0 !important;
@@ -288,44 +275,50 @@
           rgba(0, 0, 0, 0.03) 2px,
           rgba(0, 0, 0, 0.03) 4px
         ),
-        linear-gradient(135deg, #3a2f28 0%, #4a3f32 50%, #2d3a25 100%) !important;
+        linear-gradient(160deg, #2a2018 0%, #3a2f28 30%, #3d4a2e 70%, #2d3a25 100%) !important;
     }
     .cover-main .cover-main__title {
-      color: #e8dcc8;
-      font-size: 2.8em;
-      letter-spacing: 0.2em;
-      text-shadow:
-        3px 3px 0 #2a2018,
-        6px 6px 0 rgba(42, 32, 24, 0.4);
+      font-family: var(--font-pixel);
       -webkit-font-smoothing: none;
+      color: #f0e6d0;
+      font-size: 3.6em;
+      letter-spacing: 0.25em;
+      text-shadow:
+        0 0 40px rgba(200, 169, 110, 0.4),
+        0 0 80px rgba(200, 169, 110, 0.15),
+        4px 4px 0 #1a140e,
+        8px 8px 0 rgba(26, 20, 14, 0.5);
+      margin-bottom: 20px;
     }
     .cover-main .cover-main__description {
-      color: #c8a96e;
-      font-size: 1em;
+      font-family: var(--font-cute);
+      color: #d4c0a0;
+      font-size: 1.15em;
       max-width: 500px;
-      line-height: 2;
-      text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
+      line-height: 2.2;
+      text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.4);
     }
     .cover-main a.start {
+      font-family: var(--font-pixel);
+      -webkit-font-smoothing: none;
       border: 2px solid #c8a96e !important;
       color: #c8a96e !important;
       border-radius: 0;
-      padding: 12px 32px;
-      font-size: 0.75em;
+      padding: 14px 36px;
+      font-size: 0.7em;
       letter-spacing: 0.15em;
-      box-shadow: 3px 3px 0 0 rgba(200, 169, 110, 0.4);
+      box-shadow: 4px 4px 0 0 rgba(200, 169, 110, 0.4);
       transition: all 0.15s;
-      -webkit-font-smoothing: none;
     }
     .cover-main a.start:hover {
       background-color: #c8a96e;
-      color: #3a2f28 !important;
+      color: #2a2018 !important;
       box-shadow: 2px 2px 0 0 rgba(200, 169, 110, 0.6);
-      transform: translate(1px, 1px);
+      transform: translate(2px, 2px);
     }
     .cover-main a.start:active {
       box-shadow: 1px 1px 0 0 rgba(200, 169, 110, 0.6);
-      transform: translate(2px, 2px);
+      transform: translate(3px, 3px);
     }
 
     /* 封面页装饰像素块 */
@@ -335,7 +328,7 @@
       bottom: 60px;
       left: 50%;
       transform: translateX(-50%);
-      width: 200px;
+      width: 240px;
       height: 4px;
       background: repeating-linear-gradient(
         90deg,
@@ -344,19 +337,17 @@
         #4a7c3f 16px, #4a7c3f 24px,
         transparent 24px, transparent 32px
       );
-      opacity: 0.5;
+      opacity: 0.6;
     }
 
     /* === 响应式 === */
     @media screen and (max-width: 768px) {
       .markdown-section {
         max-width: 100%;
-      }
-      .markdown-section h1 {
-        font-size: 1em;
+        font-size: 1.05em;
       }
       .cover-main .cover-main__title {
-        font-size: 1.8em;
+        font-size: 2.2em;
       }
     }
   </style>
