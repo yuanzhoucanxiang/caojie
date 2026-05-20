@@ -16,7 +16,7 @@
 
 ## 美术方向
 - 高精度像素美术
-- 参考：Ori系列、歧路旅人(HD-2D)、REPLACED
+- 参考：Ori系列、歧路旅人(HD-2D)、REPLACED、直到那时(Until Then)
 - 2D分层素材堆叠模拟3D景深
 
 ## 项目结构
