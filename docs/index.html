@@ -2,15 +2,362 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>caojie 游戏策划案</title>
+  <title>《草芥》— 游戏策划案</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
   <style>
     :root {
       --sidebar-width: 260px;
+      --theme-color: #4a7c3f;
+      --theme-color-dark: #2d5016;
+      --pixel-shadow: #2a2018;
+      --pixel-size: 2px;
     }
+
+    /* === 全局背景与字体 === */
+    body {
+      background-color: #f5f0e8;
+      color: #3a2f28;
+      font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    }
+
+    /* 像素字体：用于标题和标签 */
+    .pixel-font,
+    .sidebar .app-name,
+    .cover-main .cover-main__title,
+    .cover-main a.start {
+      font-family: "Press Start 2P", monospace;
+      -webkit-font-smoothing: none;
+      -moz-osx-font-smoothing: unset;
+      font-smooth: never;
+      text-rendering: optimizeSpeed;
+    }
+
+    /* === 扫描线纹理覆盖 === */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      z-index: 9999;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.015) 2px,
+        rgba(0, 0, 0, 0.015) 4px
+      );
+    }
+
+    /* === 像素边框 mixin（用 box-shadow 模拟） === */
+    .pixel-border {
+      border: none;
+      box-shadow:
+        var(--pixel-size) 0 0 0 var(--theme-color-dark),
+        calc(var(--pixel-size) * -1) 0 0 0 var(--theme-color-dark),
+        0 var(--pixel-size) 0 0 var(--theme-color-dark),
+        0 calc(var(--pixel-size) * -1) 0 0 var(--theme-color-dark);
+    }
+
+    /* 像素阴影：台阶式，不是模糊的 */
+    .pixel-drop-shadow {
+      box-shadow:
+        var(--pixel-size) var(--pixel-size) 0 0 var(--pixel-shadow),
+        calc(var(--pixel-size) * 2) calc(var(--pixel-size) * 2) 0 0 rgba(42, 32, 24, 0.3);
+    }
+
+    /* === 侧边栏 === */
+    .sidebar {
+      background-color: #ebe4d8;
+      border-right: var(--pixel-size) solid #c8a96e;
+      box-shadow: var(--pixel-size) 0 0 0 #b89a5e;
+    }
+    .sidebar .sidebar-nav {
+      padding-top: 12px;
+    }
+    .sidebar .app-name {
+      color: var(--theme-color-dark);
+      font-size: 0.85em;
+      padding: 20px 16px 10px;
+      letter-spacing: 0.08em;
+      line-height: 1.6;
+    }
+    .sidebar ul li a {
+      color: #5c4a3a;
+      font-size: 0.95em;
+      padding: 6px 20px;
+      transition: color 0.15s, background-color 0.15s;
+      border-left: 3px solid transparent;
+    }
+    .sidebar ul li a:hover {
+      color: var(--theme-color-dark);
+      background-color: #ddd5c5;
+      border-left-color: #c8a96e;
+    }
+    .sidebar ul li.active > a {
+      color: var(--theme-color-dark);
+      font-weight: 600;
+      border-left: 3px solid var(--theme-color);
+      background-color: #e0d8c8;
+    }
+    .sidebar ul li ul li a {
+      font-size: 0.9em;
+      padding-left: 32px;
+    }
+
+    /* === 主内容区 === */
     .markdown-section {
       max-width: 800px;
+      color: #3a2f28;
+    }
+
+    /* 标题：像素字体 + 像素下划线 */
+    .markdown-section h1 {
+      font-family: "Press Start 2P", monospace;
+      font-size: 1.4em;
+      color: var(--theme-color-dark);
+      letter-spacing: 0.08em;
+      line-height: 1.6;
+      -webkit-font-smoothing: none;
+      border-bottom: none;
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 0 rgba(200, 169, 110, 0.3);
+    }
+    /* h1 像素装饰下划线 */
+    .markdown-section h1::after {
+      content: '';
+      display: block;
+      margin-top: 12px;
+      height: 4px;
+      background: repeating-linear-gradient(
+        90deg,
+        #c8a96e 0px, #c8a96e 8px,
+        transparent 8px, transparent 12px,
+        #4a7c3f 12px, #4a7c3f 20px,
+        transparent 20px, transparent 24px
+      );
+    }
+
+    .markdown-section h2 {
+      font-family: "Press Start 2P", monospace;
+      font-size: 0.9em;
+      color: #4a6741;
+      letter-spacing: 0.05em;
+      line-height: 1.8;
+      -webkit-font-smoothing: none;
+      border-bottom: none;
+      padding-bottom: 8px;
+      margin-top: 32px;
+    }
+    /* h2 像素装饰下划线 */
+    .markdown-section h2::after {
+      content: '';
+      display: block;
+      margin-top: 8px;
+      height: 2px;
+      background: repeating-linear-gradient(
+        90deg,
+        #4a6741 0px, #4a6741 4px,
+        transparent 4px, transparent 8px
+      );
+    }
+
+    .markdown-section h3 {
+      font-size: 1.05em;
+      color: #5c4a3a;
+      border-left: 4px solid #c8a96e;
+      padding-left: 12px;
+    }
+
+    /* 链接 */
+    .markdown-section a {
+      color: var(--theme-color);
+      text-decoration: none;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.15s;
+    }
+    .markdown-section a:hover {
+      color: var(--theme-color-dark);
+      border-bottom-color: var(--theme-color);
+    }
+
+    /* 引用块：像素边框 */
+    .markdown-section blockquote {
+      border-left: none;
+      background-color: #efe9db;
+      color: #5c4a3a;
+      padding: 14px 18px;
+      margin: 16px 0;
+      box-shadow:
+        4px 0 0 0 #c8a96e,
+        2px 2px 0 0 #c8a96e,
+        -2px 0 0 0 #d4cbb8,
+        0 -2px 0 0 #d4cbb8,
+        0 4px 0 0 #d4cbb8;
+    }
+
+    /* 行内代码 */
+    .markdown-section code {
+      background-color: #e8e0d0;
+      color: #6b4c3b;
+      border-radius: 0;
+      padding: 2px 6px;
+      box-shadow: 2px 2px 0 0 rgba(42, 32, 24, 0.15);
+    }
+
+    /* 代码块 */
+    .markdown-section pre {
+      background-color: #3a2f28;
+      border-radius: 0;
+      box-shadow:
+        4px 4px 0 0 rgba(42, 32, 24, 0.4);
+      border: 2px solid #5c4a3a;
+    }
+    .markdown-section pre code {
+      background-color: transparent;
+      color: #e8dcc8;
+      box-shadow: none;
+    }
+
+    /* 表格：像素边框 */
+    .markdown-section table {
+      border: 2px solid #c8a96e;
+      border-radius: 0;
+      box-shadow: 3px 3px 0 0 rgba(42, 32, 24, 0.2);
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+    .markdown-section table th {
+      background-color: #e8e0d0;
+      color: var(--theme-color-dark);
+      border-bottom: 2px solid #c8a96e;
+      font-weight: 700;
+    }
+    .markdown-section table td {
+      border-color: #d4cbb8;
+    }
+    .markdown-section table tr:hover td {
+      background-color: #f0eade;
+    }
+
+    /* 水平线：像素点阵 */
+    .markdown-section hr {
+      border: none;
+      height: 4px;
+      background: repeating-linear-gradient(
+        90deg,
+        #c8a96e 0px, #c8a96e 4px,
+        transparent 4px, transparent 8px,
+        #d4cbb8 8px, #d4cbb8 12px,
+        transparent 12px, transparent 16px
+      );
+      margin: 24px 0;
+    }
+
+    /* 列表项标记 */
+    .markdown-section ul li::marker {
+      color: var(--theme-color);
+    }
+    .markdown-section ol li::marker {
+      color: var(--theme-color-dark);
+      font-weight: 700;
+    }
+
+    /* === 搜索框 === */
+    .search input {
+      background-color: #ebe4d8 !important;
+      border: 2px solid #c8a96e !important;
+      border-radius: 0 !important;
+      color: #3a2f28 !important;
+      box-shadow: 2px 2px 0 0 rgba(42, 32, 24, 0.15);
+    }
+    .search input:focus {
+      border-color: var(--theme-color) !important;
+      box-shadow: 2px 2px 0 0 rgba(74, 124, 63, 0.3);
+    }
+
+    /* === 封面页 === */
+    .cover-main {
+      background:
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 2px,
+          rgba(0, 0, 0, 0.03) 2px,
+          rgba(0, 0, 0, 0.03) 4px
+        ),
+        linear-gradient(135deg, #3a2f28 0%, #4a3f32 50%, #2d3a25 100%) !important;
+    }
+    .cover-main .cover-main__title {
+      color: #e8dcc8;
+      font-size: 2.8em;
+      letter-spacing: 0.2em;
+      text-shadow:
+        3px 3px 0 #2a2018,
+        6px 6px 0 rgba(42, 32, 24, 0.4);
+      -webkit-font-smoothing: none;
+    }
+    .cover-main .cover-main__description {
+      color: #c8a96e;
+      font-size: 1em;
+      max-width: 500px;
+      line-height: 2;
+      text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
+    }
+    .cover-main a.start {
+      border: 2px solid #c8a96e !important;
+      color: #c8a96e !important;
+      border-radius: 0;
+      padding: 12px 32px;
+      font-size: 0.75em;
+      letter-spacing: 0.15em;
+      box-shadow: 3px 3px 0 0 rgba(200, 169, 110, 0.4);
+      transition: all 0.15s;
+      -webkit-font-smoothing: none;
+    }
+    .cover-main a.start:hover {
+      background-color: #c8a96e;
+      color: #3a2f28 !important;
+      box-shadow: 2px 2px 0 0 rgba(200, 169, 110, 0.6);
+      transform: translate(1px, 1px);
+    }
+    .cover-main a.start:active {
+      box-shadow: 1px 1px 0 0 rgba(200, 169, 110, 0.6);
+      transform: translate(2px, 2px);
+    }
+
+    /* 封面页装饰像素块 */
+    .cover-main::before {
+      content: '';
+      position: absolute;
+      bottom: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 4px;
+      background: repeating-linear-gradient(
+        90deg,
+        #c8a96e 0px, #c8a96e 8px,
+        transparent 8px, transparent 16px,
+        #4a7c3f 16px, #4a7c3f 24px,
+        transparent 24px, transparent 32px
+      );
+      opacity: 0.5;
+    }
+
+    /* === 响应式 === */
+    @media screen and (max-width: 768px) {
+      .markdown-section {
+        max-width: 100%;
+      }
+      .markdown-section h1 {
+        font-size: 1em;
+      }
+      .cover-main .cover-main__title {
+        font-size: 1.8em;
+      }
     }
   </style>
 </head>
@@ -18,9 +365,10 @@
   <div id="app">加载中...</div>
   <script>
     window.$docsify = {
-      name: 'caojie 策划案',
+      name: '《草芥》策划案',
       repo: '',
       loadSidebar: true,
+      coverpage: true,
       subMaxLevel: 3,
       search: {
         placeholder: '搜索策划案...',
