@@ -267,77 +267,42 @@
 
     /* === 封面页 === */
     .cover-main {
-      background:
-        repeating-linear-gradient(
-          0deg,
-          transparent,
-          transparent 2px,
-          rgba(0, 0, 0, 0.03) 2px,
-          rgba(0, 0, 0, 0.03) 4px
-        ),
-        linear-gradient(160deg, #2a2018 0%, #3a2f28 30%, #3d4a2e 70%, #2d3a25 100%) !important;
+      background: linear-gradient(180deg, #f5f0e8 0%, #ebe4d8 100%) !important;
     }
     .cover-main .cover-main__title {
       font-family: var(--font-pixel);
       -webkit-font-smoothing: none;
-      color: #f0e6d0;
-      font-size: 3.6em;
-      letter-spacing: 0.25em;
+      color: #2d5016;
+      font-size: 5em;
+      letter-spacing: 0.3em;
       text-shadow:
-        0 0 40px rgba(200, 169, 110, 0.4),
-        0 0 80px rgba(200, 169, 110, 0.15),
-        4px 4px 0 #1a140e,
-        8px 8px 0 rgba(26, 20, 14, 0.5);
-      margin-bottom: 20px;
+        4px 4px 0 rgba(200, 169, 110, 0.5),
+        8px 8px 0 rgba(200, 169, 110, 0.2);
+      margin-bottom: 40px;
     }
     .cover-main .cover-main__description {
-      font-family: var(--font-cute);
-      color: #d4c0a0;
-      font-size: 1.15em;
-      max-width: 500px;
-      line-height: 2.2;
-      text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.4);
+      display: none;
     }
     .cover-main a.start {
-      font-family: var(--font-pixel);
-      -webkit-font-smoothing: none;
-      border: 2px solid #c8a96e !important;
-      color: #c8a96e !important;
+      font-family: var(--font-cute);
+      border: 3px solid #2d5016 !important;
+      color: #2d5016 !important;
       border-radius: 0;
-      padding: 14px 36px;
-      font-size: 0.7em;
-      letter-spacing: 0.15em;
-      box-shadow: 4px 4px 0 0 rgba(200, 169, 110, 0.4);
+      padding: 14px 40px;
+      font-size: 1.1em;
+      letter-spacing: 0.1em;
+      box-shadow: 4px 4px 0 0 rgba(45, 80, 22, 0.3);
       transition: all 0.15s;
     }
     .cover-main a.start:hover {
-      background-color: #c8a96e;
-      color: #2a2018 !important;
-      box-shadow: 2px 2px 0 0 rgba(200, 169, 110, 0.6);
+      background-color: #2d5016;
+      color: #f5f0e8 !important;
+      box-shadow: 2px 2px 0 0 rgba(45, 80, 22, 0.4);
       transform: translate(2px, 2px);
     }
     .cover-main a.start:active {
-      box-shadow: 1px 1px 0 0 rgba(200, 169, 110, 0.6);
+      box-shadow: 1px 1px 0 0 rgba(45, 80, 22, 0.4);
       transform: translate(3px, 3px);
-    }
-
-    /* 封面页装饰像素块 */
-    .cover-main::before {
-      content: '';
-      position: absolute;
-      bottom: 60px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 240px;
-      height: 4px;
-      background: repeating-linear-gradient(
-        90deg,
-        #c8a96e 0px, #c8a96e 8px,
-        transparent 8px, transparent 16px,
-        #4a7c3f 16px, #4a7c3f 24px,
-        transparent 24px, transparent 32px
-      );
-      opacity: 0.6;
     }
 
     /* === 响应式 === */
@@ -347,7 +312,7 @@
         font-size: 1.05em;
       }
       .cover-main .cover-main__title {
-        font-size: 2.2em;
+        font-size: 3em;
       }
     }
   </style>
