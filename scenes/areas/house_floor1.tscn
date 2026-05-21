@@ -40,7 +40,7 @@ position = Vector2(500, 255)
 [node name="ExitDoor" type="StaticBody2D" parent="."]
 position = Vector2(40, 200)
 script = ExtResource("3_trigger")
-target_scene = ExtResource("4_main_scene")
+target_scene_path = "res://scenes/main.tscn"
 target_area_id = "courtyard"
 transition_color = Color(0.95, 0.93, 0.88)
 prompt_text = "按 E 出去"
