@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
 [ext_resource type="PackedScene" path="res://scenes/player.tscn" id="3_player_scene"]
@@ -7,6 +7,10 @@
 [ext_resource type="PackedScene" path="res://scenes/npcs/npc_aunt.tscn" id="6_aunt"]
 [ext_resource type="PackedScene" path="res://scenes/npcs/npc_cousin2.tscn" id="7_cousin2"]
 [ext_resource type="PackedScene" path="res://scenes/npcs/npc_xiaoming.tscn" id="8_xiaoming"]
+[ext_resource type="Script" path="res://scripts/systems/transition_trigger.gd" id="9_trigger"]
+
+[sub_resource type="RectangleShape2D" id="trigger_house"]
+size = Vector2(20, 80)
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_main")
@@ -132,3 +136,13 @@ position = Vector2(480, 250)
 
 [node name="Xiaoming" parent="." instance=ExtResource("8_xiaoming")]
 position = Vector2(550, 220)
+
+[node name="HouseDoor" type="Area2D" parent="."]
+position = Vector2(130, 220)
+script = ExtResource("9_trigger")
+target_scene = "res://scenes/areas/house_floor1.tscn"
+target_area_id = "house_floor1"
+transition_color = Color(0.75, 0.7, 0.6, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HouseDoor"]
+shape = SubResource("trigger_house")

@@ -20,6 +20,7 @@ config/features=PackedStringArray("4.6")
 
 GameState="*res://scripts/autoload/game_state.gd"
 DialogueManager="*res://scripts/autoload/dialogue_manager.gd"
+SceneManager="*res://scripts/autoload/scene_manager.gd"
 
 [display]
 
