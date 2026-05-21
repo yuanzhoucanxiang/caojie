@@ -43,25 +43,27 @@ func start_dialogue(npc: Node, event_data: Dictionary) -> void:
 	_show_advance_hint()
 
 
-func _input(event: InputEvent) -> void:
+func _process(_delta: float) -> void:
 	if current_state == State.SHOWING_SPEECH:
-		# 按E / 鼠标左键 继续
-		if event.is_action_pressed("interact"):
-			_advance_from_speech()
-		elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		if Input.is_action_just_pressed("interact"):
 			_advance_from_speech()
 
 	elif current_state == State.SHOWING_CHOICES:
-		# 键盘左右切换
-		if event.is_action_pressed("move_left"):
+		if Input.is_action_just_pressed("move_left"):
 			_navigate_choices(-1)
-		elif event.is_action_pressed("move_right"):
+		elif Input.is_action_just_pressed("move_right"):
 			_navigate_choices(1)
-		# 键盘E确认
-		elif event.is_action_pressed("interact"):
+		elif Input.is_action_just_pressed("interact"):
 			_apply_choice(_selected_index)
-		# 鼠标左键
-		elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+
+
+func _input(event: InputEvent) -> void:
+	# 鼠标点击处理
+	if current_state == State.SHOWING_SPEECH:
+		if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+			_advance_from_speech()
+	elif current_state == State.SHOWING_CHOICES:
+		if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 			var clicked_index = _get_choice_at_position(event.position)
 			if clicked_index >= 0:
 				_apply_choice(clicked_index)
@@ -91,7 +93,6 @@ func _show_choice_bubbles() -> void:
 		_canvas_layer.add_child(bubble)
 		_choice_bubbles.append(bubble)
 
-	# 高亮第一个
 	if _choice_bubbles.size() > 0:
 		_choice_bubbles[0].highlight()
 
@@ -100,13 +101,8 @@ func _navigate_choices(direction: int) -> void:
 	if _choice_bubbles.is_empty():
 		return
 
-	# 取消当前高亮
 	_choice_bubbles[_selected_index].unhighlight()
-
-	# 计算新位置
 	_selected_index = (_selected_index + direction + _choice_bubbles.size()) % _choice_bubbles.size()
-
-	# 高亮新的
 	_choice_bubbles[_selected_index].highlight()
 
 
@@ -120,7 +116,6 @@ func _apply_choice(index: int) -> void:
 	if not _current_event_id.is_empty():
 		GameState.complete_event(_current_event_id)
 
-	# 移除所有选项气泡
 	for bubble in _choice_bubbles:
 		bubble.remove_bubble()
 	_choice_bubbles.clear()
@@ -129,7 +124,6 @@ func _apply_choice(index: int) -> void:
 
 
 func _get_choice_at_position(screen_pos: Vector2) -> int:
-	## 检查鼠标位置是否在某个选项气泡上
 	for i in range(_choice_bubbles.size()):
 		var bubble = _choice_bubbles[i]
 		var rect = Rect2(bubble.global_position, bubble.size)
