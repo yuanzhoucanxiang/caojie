@@ -1,9 +1,8 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://scripts/areas/house_floor1.gd" id="1_script"]
 [ext_resource type="PackedScene" path="res://scenes/player.tscn" id="2_player"]
 [ext_resource type="Script" path="res://scripts/systems/transition_trigger.gd" id="3_trigger"]
-[ext_resource type="PackedScene" path="res://scenes/main.tscn" id="4_main_scene"]
 
 [sub_resource type="RectangleShape2D" id="trigger_shape"]
 size = Vector2(20, 60)
@@ -42,7 +41,7 @@ position = Vector2(40, 200)
 script = ExtResource("3_trigger")
 target_scene_path = "res://scenes/main.tscn"
 target_area_id = "courtyard"
-transition_color = Color(0.95, 0.93, 0.88)
+transition_color = Color(0.95, 0.93, 0.88, 1)
 prompt_text = "按 E 出去"
 
 [node name="TriggerZone" type="Area2D" parent="ExitDoor"]
