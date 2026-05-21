@@ -23,13 +23,11 @@ func _draw() -> void:
 func _ready() -> void:
 	# 预加载目标场景
 	if target_scene_path != "":
-		print("【门】尝试加载: ", target_scene_path)
-		print("【门】文件存在: ", ResourceLoader.exists(target_scene_path))
 		_packed_scene = load(target_scene_path) as PackedScene
 		if _packed_scene == null:
-			print("【门】错误：无法加载")
+			print("【门】错误：无法加载 ", target_scene_path)
 		else:
-			print("【门】场景预加载成功")
+			print("【门】加载成功: ", target_scene_path)
 
 	trigger_zone.area_entered.connect(_on_area_entered)
 	trigger_zone.area_exited.connect(_on_area_exited)
