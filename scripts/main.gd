@@ -1,20 +1,31 @@
+## 职责：主场景控制器——绑定NPC、监听对话信号暂停/恢复玩家
+## 谁使用它：Godot 引擎（自动加载此场景）
+## 它使用谁：DialogueManager、Player、所有 NPC
+
 extends Node2D
 
-@onready var dialogue_ui: CanvasLayer = $DialogueUI
 @onready var player: CharacterBody2D = $Player
-@onready var grandmother: StaticBody2D = $Grandmother
 
 
 func _ready() -> void:
-	grandmother.dialogue_triggered.connect(_on_dialogue_triggered)
-	dialogue_ui.dialogue_finished.connect(_on_dialogue_finished)
 	player.add_to_group("player")
+	_bind_all_npcs()
+	DialogueManager.dialogue_started.connect(_on_dialogue_started)
+	DialogueManager.dialogue_finished.connect(_on_dialogue_finished)
 
 
-func _on_dialogue_triggered(npc_name: String, event_data: Dictionary) -> void:
+func _bind_all_npcs() -> void:
+	## 自动查找场景中所有 NPCBase 子类，连接它们的 dialogue_request 信号
+	for child in get_children():
+		if child.has_signal("dialogue_request"):
+			child.dialogue_request.connect(
+				func(npc, data): DialogueManager.start_dialogue(npc, data)
+			)
+
+
+func _on_dialogue_started() -> void:
 	player.set_physics_process(false)
 	player.set_process(false)
-	dialogue_ui.start_dialogue(npc_name, event_data)
 
 
 func _on_dialogue_finished() -> void:

@@ -1,4 +1,10 @@
+## 职责：玩家角色——四方向移动、深度缩放、按E广播交互信号
+## 谁使用它：Main（暂停/恢复控制）
+## 它使用谁：NPCBase（通过 interact_pressed 广播信号，NPC 自行判断）
+
 extends CharacterBody2D
+
+signal interact_pressed
 
 @export var speed: float = 200.0
 @export var depth_speed: float = 150.0
@@ -32,7 +38,7 @@ func _physics_process(delta: float) -> void:
 	position.y = clampf(position.y, DEPTH_MIN_Y, DEPTH_MAX_Y)
 
 	if Input.is_action_just_pressed("interact"):
-		_try_interact()
+		interact_pressed.emit()
 
 
 func _process(_delta: float) -> void:
@@ -43,14 +49,3 @@ func _update_depth_scale() -> void:
 	var t: float = clampf((position.y - DEPTH_MIN_Y) / (DEPTH_MAX_Y - DEPTH_MIN_Y), 0.0, 1.0)
 	var s: float = lerp(SCALE_MIN, SCALE_MAX, t)
 	scale = Vector2(s, s)
-
-
-func _try_interact() -> void:
-	var detector: Area2D = $InteractionDetector
-	var overlapping_areas: Array[Area2D] = detector.get_overlapping_areas()
-
-	for area in overlapping_areas:
-		var parent = area.get_parent()
-		if parent.has_method("trigger_dialogue"):
-			parent.trigger_dialogue()
-			return

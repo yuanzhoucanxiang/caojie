@@ -1,12 +1,19 @@
+## 职责：NPC基类——交互区域检测、提示显示、事件条件匹配、发出对话请求
+## 谁使用它：Main（自动绑定）、Player（通过 interact_pressed 广播信号）
+## 它使用谁：GameState（条件检查）、DialogueManager（通过信号间接调用）
+
+class_name NPCBase
 extends StaticBody2D
 
-signal dialogue_triggered(npc_name: String, event_data: Dictionary)
+signal dialogue_request(npc_node: Node, event_data: Dictionary)
 
-@export var npc_id: String = "grandmother"
-@export var npc_name: String = "外婆"
+@export var npc_id: String = ""
+@export var npc_name: String = ""
+@export var sprite_color: Color = Color(0.933, 0.533, 0.6, 1)
+@export var default_text: String = "..."
+@export var default_expression: String = "normal"
 
 const SPRITE_SIZE: Vector2 = Vector2(24, 42)
-const SPRITE_COLOR: Color = Color(0.933, 0.533, 0.6, 1)
 
 const DEPTH_MIN_Y: float = 150.0
 const DEPTH_MAX_Y: float = 270.0
@@ -15,12 +22,12 @@ const SCALE_MAX: float = 1.0
 
 @onready var interaction_zone: Area2D = $InteractionZone
 
-var _show_prompt: bool = false
+var _in_range: bool = false
 
 
 func _draw() -> void:
-	draw_rect(Rect2(-SPRITE_SIZE.x / 2, -SPRITE_SIZE.y, SPRITE_SIZE.x, SPRITE_SIZE.y), SPRITE_COLOR)
-	if _show_prompt:
+	draw_rect(Rect2(-SPRITE_SIZE.x / 2, -SPRITE_SIZE.y, SPRITE_SIZE.x, SPRITE_SIZE.y), sprite_color)
+	if _in_range:
 		var font: Font = ThemeDB.fallback_font
 		draw_string(font, Vector2(-40, -50), "按 E 对话", HORIZONTAL_ALIGNMENT_CENTER, -1, 12)
 
@@ -29,6 +36,31 @@ func _ready() -> void:
 	_update_depth_scale()
 	interaction_zone.area_entered.connect(_on_area_entered)
 	interaction_zone.area_exited.connect(_on_area_exited)
+	# 延迟一帧等场景树就绪，然后注册到玩家
+	_register_to_player()
+
+
+func _register_to_player() -> void:
+	await get_tree().process_frame
+	var player_node = get_tree().get_first_node_in_group("player")
+	if player_node and player_node.has_signal("interact_pressed"):
+		player_node.interact_pressed.connect(_on_player_interact)
+
+
+func _on_player_interact() -> void:
+	if not _in_range:
+		return
+	var event: Dictionary = _get_available_event()
+	if not event.is_empty():
+		dialogue_request.emit(self, event)
+	else:
+		var fallback: Dictionary = {
+			"id": "",
+			"text": default_text,
+			"expression": default_expression,
+			"choices": [{"text": "好的", "effects": {}}]
+		}
+		dialogue_request.emit(self, fallback)
 
 
 func _update_depth_scale() -> void:
@@ -37,81 +69,9 @@ func _update_depth_scale() -> void:
 	scale = Vector2(s, s)
 
 
+## 子类重写此方法，返回该NPC的事件列表
 func _get_events() -> Array[Dictionary]:
-	return [
-		{
-			"id": "event_1",
-			"conditions": [],
-			"text": "乖孙，过来帮外婆择菜。",
-			"choices": [
-				{
-					"text": "好的外婆！",
-					"effects": {"懂事": 1, "亲密": 1}
-				},
-				{
-					"text": "我想出去玩...",
-					"effects": {"好奇": 1, "亲密": -1}
-				}
-			]
-		},
-		{
-			"id": "event_2",
-			"conditions": ["event_completed:event_1"],
-			"text": "来，外婆给你讲个故事。从前啊……",
-			"choices": [
-				{
-					"text": "认真听外婆讲",
-					"effects": {"懂事": 1, "亲密": 1}
-				},
-				{
-					"text": "追着问各种问题",
-					"effects": {"好奇": 1, "勤劳": -1}
-				}
-			]
-		},
-		{
-			"id": "event_3",
-			"conditions": ["event_completed:event_2"],
-			"text": "院子的菜该浇水了，你要不要来试试？",
-			"choices": [
-				{
-					"text": "积极帮忙！",
-					"effects": {"勤劳": 1, "体力": 1, "亲密": 1}
-				},
-				{
-					"text": "装作没听见……",
-					"effects": {"懂事": -1}
-				}
-			]
-		}
-	]
-
-
-func _on_area_entered(area: Area2D) -> void:
-	if area.get_parent().is_in_group("player"):
-		_show_prompt = true
-		queue_redraw()
-
-
-func _on_area_exited(area: Area2D) -> void:
-	if area.get_parent().is_in_group("player"):
-		_show_prompt = false
-		queue_redraw()
-
-
-func trigger_dialogue() -> void:
-	var event: Dictionary = _get_available_event()
-	if not event.is_empty():
-		dialogue_triggered.emit(npc_name, event)
-	else:
-		var fallback: Dictionary = {
-			"id": "",
-			"text": "乖孙，今天没有特别的事。去找点事做吧。",
-			"choices": [
-				{"text": "好的外婆", "effects": {}}
-			]
-		}
-		dialogue_triggered.emit(npc_name, fallback)
+	return []
 
 
 func _get_available_event() -> Dictionary:
@@ -136,3 +96,15 @@ func _check_conditions(conditions: Array) -> bool:
 				if not GameState.check_attribute(attr_name, min_val):
 					return false
 	return true
+
+
+func _on_area_entered(area: Area2D) -> void:
+	if area.get_parent().is_in_group("player"):
+		_in_range = true
+		queue_redraw()
+
+
+func _on_area_exited(area: Area2D) -> void:
+	if area.get_parent().is_in_group("player"):
+		_in_range = false
+		queue_redraw()
