@@ -1,5 +1,5 @@
 ## 职责：场景切换管理——全屏过渡动画、室内外镜头切换
-## 谁使用它：场景边界触发器（Area2D）、Main
+## 谁使用它：场景边界触发器（StaticBody2D）
 ## 它使用谁：无（通过场景树操作）
 
 extends Node
@@ -9,7 +9,6 @@ signal transition_completed
 var _overlay: ColorRect
 var _is_transitioning: bool = false
 
-## 不同区域的镜头配置
 const CAMERA_CONFIGS = {
 	"courtyard": {"zoom": 1.0},
 	"house_floor1": {"zoom": 1.5},
@@ -22,62 +21,87 @@ var _current_area: String = "courtyard"
 
 
 func _ready() -> void:
-	# 创建全屏黑色遮罩（初始透明）
+	# 创建全屏遮罩
 	_overlay = ColorRect.new()
 	_overlay.color = Color(0, 0, 0, 0)
 	_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	# 加到最高层
-	var layer = CanvasLayer.new()
-	layer.layer = 100
-	layer.add_child(_overlay)
-	add_child(layer)
-	# 初始大小
-	_overlay.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_overlay.z_index = 4096
+	add_child(_overlay)
+
+
+func _process(_delta: float) -> void:
+	# 确保遮罩始终覆盖全屏
+	if _overlay and is_instance_valid(_overlay):
+		var viewport_size = get_viewport().get_visible_rect().size
+		_overlay.size = viewport_size
 
 
 func change_scene(scene_path: String, area_id: String = "courtyard", transition_color: Color = Color(0, 0, 0, 1)) -> void:
-	print("【场景】change_scene 被调用: ", scene_path, " 区域: ", area_id)
+	print("【场景】开始切换到: ", scene_path)
 	if _is_transitioning:
 		print("【场景】正在过渡中，忽略")
 		return
 	_is_transitioning = true
 
-	# 淡出（覆盖全屏）
+	# 淡出
+	print("【场景】淡出...")
 	_overlay.color = Color(transition_color.r, transition_color.g, transition_color.b, 0)
 	var tween_out = create_tween()
-	tween_out.tween_property(_overlay, "color:a", 1.0, 0.4).set_ease(Tween.EASE_IN)
+	tween_out.tween_property(_overlay, "color:a", 1.0, 0.4)
 	await tween_out.finished
+	print("【场景】淡出完成，遮罩alpha: ", _overlay.color.a)
 
-	# 切换场景
-	get_tree().change_scene_to_file(scene_path)
-	# 等待新场景加载完成
-	await get_tree().process_frame
-	await get_tree().process_frame
+	# 加载新场景
+	print("【场景】加载新场景...")
+	var new_scene = load(scene_path)
+	if new_scene == null:
+		print("【场景】错误：无法加载场景 ", scene_path)
+		_is_transitioning = false
+		return
 
-	# 应用镜头配置
-	_apply_camera_config(area_id)
+	var new_instance = new_scene.instantiate()
+	if new_instance == null:
+		print("【场景】错误：无法实例化场景")
+		_is_transitioning = false
+		return
+
+	# 移除旧场景，添加新场景
+	var old_scene = get_tree().current_scene
+	print("【场景】移除旧场景: ", old_scene.name if old_scene else "null")
+	get_tree().root.remove_child(old_scene)
+	old_scene.queue_free()
+
+	get_tree().root.add_child(new_instance)
+	get_tree().current_scene = new_instance
+	print("【场景】新场景已加载: ", new_instance.name)
+
+	# 应用镜头
 	_current_area = area_id
+	_apply_camera_config(area_id)
 
 	# 淡入
+	print("【场景】淡入...")
 	var tween_in = create_tween()
-	tween_in.tween_property(_overlay, "color:a", 0.0, 0.4).set_ease(Tween.EASE_OUT)
+	tween_in.tween_property(_overlay, "color:a", 0.0, 0.4)
 	await tween_in.finished
+	print("【场景】淡入完成")
 
-	# 确保遮罩完全透明且不阻挡输入
 	_overlay.color = Color(0, 0, 0, 0)
-
 	_is_transitioning = false
 	transition_completed.emit()
+	print("【场景】切换完成!")
 
 
 func _apply_camera_config(area_id: String) -> void:
 	await get_tree().process_frame
 	var camera = get_viewport().get_camera_2d()
 	if not camera:
+		print("【场景】警告：找不到 Camera2D")
 		return
 
 	var config = CAMERA_CONFIGS.get(area_id, {})
 	var target_zoom = config.get("zoom", 1.0)
+	print("【场景】应用镜头缩放: ", target_zoom)
 
 	var tween = create_tween()
 	tween.tween_property(camera, "zoom", Vector2(target_zoom, target_zoom), 0.6) \
