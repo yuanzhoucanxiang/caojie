@@ -1,11 +1,8 @@
-## 职责：漫画式选项气泡——从玩家旁边冒出，支持点击选择
-## 谁使用它：DialogueManager（创建和管理选项气泡）
-## 它使用谁：无
+## 职责：漫画式选项气泡——纯显示组件，输入由 DialogueManager 统一处理
+## 谁使用它：DialogueManager（创建、管理高亮、检测点击位置）
 
 class_name ChoiceBubble
 extends PanelContainer
-
-signal choice_clicked(index: int)
 
 var _index: int = 0
 var _is_selected: bool = false
@@ -19,14 +16,13 @@ func setup(index: int, text: String, total_choices: int) -> void:
 	var bubble_height: float = 36.0
 
 	custom_minimum_size = Vector2(bubble_width, bubble_height)
+	size = Vector2(bubble_width, bubble_height)
 
-	# 文本
 	var label = Label.new()
 	label.text = text
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	add_child(label)
 
-	# 背景样式
 	_update_style(false)
 
 	# 定位：在玩家上方水平排列
@@ -36,7 +32,6 @@ func setup(index: int, text: String, total_choices: int) -> void:
 	var y = 280.0 - (total_choices - 1 - index) * (bubble_height + 6)
 	position = Vector2(x - bubble_width / 2, y)
 
-	# 动画延迟
 	_anim_delay = index * 0.06
 	scale = Vector2.ZERO
 	pivot_offset = Vector2(bubble_width / 2, bubble_height / 2)
@@ -48,11 +43,6 @@ func _ready() -> void:
 	var tween = create_tween()
 	tween.tween_property(self, "scale", Vector2(1.08, 1.08), 0.1).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
 	tween.tween_property(self, "scale", Vector2(1.0, 1.0), 0.06).set_ease(Tween.EASE_IN)
-
-
-func _gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		choice_clicked.emit(_index)
 
 
 func highlight() -> void:
