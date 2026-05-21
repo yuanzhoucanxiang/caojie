@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" path="res://scenes/npcs/npc_aunt.tscn" id="6_aunt"]
 [ext_resource type="PackedScene" path="res://scenes/npcs/npc_cousin2.tscn" id="7_cousin2"]
 [ext_resource type="PackedScene" path="res://scenes/npcs/npc_xiaoming.tscn" id="8_xiaoming"]
-[ext_resource type="Script" path="res://scripts/systems/transition_trigger.gd" id="9_trigger"]
+[ext_resource type="Script" path="res://scripts/triggers/transition_trigger.gd" id="9_trigger"]
 [ext_resource type="PackedScene" path="res://scenes/areas/house_floor1.tscn" id="10_house_scene"]
 
 [sub_resource type="RectangleShape2D" id="trigger_house"]

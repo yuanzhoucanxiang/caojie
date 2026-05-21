@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3]
 
-[ext_resource type="Script" path="res://scripts/areas/house_floor1.gd" id="1_script"]
+[ext_resource type="Script" path="res://scripts/scenes/house_floor1.gd" id="1_script"]
 [ext_resource type="PackedScene" path="res://scenes/player.tscn" id="2_player"]
-[ext_resource type="Script" path="res://scripts/systems/transition_trigger.gd" id="3_trigger"]
+[ext_resource type="Script" path="res://scripts/triggers/transition_trigger.gd" id="3_trigger"]
 
 [sub_resource type="RectangleShape2D" id="trigger_shape"]
 size = Vector2(20, 60)
