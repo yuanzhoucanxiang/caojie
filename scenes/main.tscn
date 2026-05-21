@@ -11,111 +11,107 @@
 [node name="Main" type="Node2D"]
 script = ExtResource("1_main")
 
-[node name="BackgroundLayer" type="CanvasLayer" parent="."]
-layer = -2
+[node name="ParallaxBG" type="ParallaxBackground" parent="."]
 
-[node name="BGContainer" type="Control" parent="BackgroundLayer"]
-layout_mode = 0
-offset_right = 640.0
+[node name="Layer1_Sky" type="ParallaxLayer" parent="ParallaxBG"]
+motion_scale = Vector2(0.1, 0.1)
+
+[node name="Sky" type="ColorRect" parent="ParallaxBG/Layer1_Sky"]
+offset_right = 1280.0
 offset_bottom = 360.0
-
-[node name="Sky" type="ColorRect" parent="BackgroundLayer/BGContainer"]
-layout_mode = 0
-offset_right = 640.0
-offset_bottom = 140.0
 color = Color(0.29, 0.565, 0.851, 1)
 
-[node name="FarHills" type="ColorRect" parent="BackgroundLayer/BGContainer"]
-layout_mode = 0
+[node name="Layer2_Far" type="ParallaxLayer" parent="ParallaxBG"]
+motion_scale = Vector2(0.3, 0.2)
+
+[node name="FarHills" type="ColorRect" parent="ParallaxBG/Layer2_Far"]
 offset_top = 100.0
-offset_right = 640.0
+offset_right = 1280.0
 offset_bottom = 175.0
 color = Color(0.42, 0.62, 0.38, 1)
 
-[node name="MidHills" type="ColorRect" parent="BackgroundLayer/BGContainer"]
-layout_mode = 0
-offset_top = 140.0
-offset_right = 640.0
-offset_bottom = 205.0
-color = Color(0.47, 0.58, 0.32, 1)
-
-[node name="HouseBody" type="ColorRect" parent="BackgroundLayer/BGContainer"]
-layout_mode = 0
+[node name="HouseBody" type="ColorRect" parent="ParallaxBG/Layer2_Far"]
 offset_left = 70.0
 offset_top = 105.0
 offset_right = 190.0
 offset_bottom = 200.0
 color = Color(0.55, 0.45, 0.33, 1)
 
-[node name="HouseRoof" type="ColorRect" parent="BackgroundLayer/BGContainer"]
-layout_mode = 0
+[node name="HouseRoof" type="ColorRect" parent="ParallaxBG/Layer2_Far"]
 offset_left = 60.0
 offset_top = 85.0
 offset_right = 200.0
 offset_bottom = 110.0
 color = Color(0.65, 0.32, 0.25, 1)
 
-[node name="TreeFar" type="ColorRect" parent="BackgroundLayer/BGContainer"]
-layout_mode = 0
-offset_left = 470.0
+[node name="TreeFar" type="ColorRect" parent="ParallaxBG/Layer2_Far"]
+offset_left = 900.0
 offset_top = 115.0
-offset_right = 510.0
+offset_right = 940.0
 offset_bottom = 200.0
 color = Color(0.32, 0.5, 0.28, 1)
 
-[node name="TreeNear" type="ColorRect" parent="BackgroundLayer/BGContainer"]
-layout_mode = 0
-offset_left = 520.0
+[node name="Layer3_Mid" type="ParallaxLayer" parent="ParallaxBG"]
+motion_scale = Vector2(0.5, 0.3)
+
+[node name="MidHills" type="ColorRect" parent="ParallaxBG/Layer3_Mid"]
+offset_top = 140.0
+offset_right = 1280.0
+offset_bottom = 205.0
+color = Color(0.47, 0.58, 0.32, 1)
+
+[node name="TreeNear" type="ColorRect" parent="ParallaxBG/Layer3_Mid"]
+offset_left = 1100.0
 offset_top = 130.0
-offset_right = 570.0
+offset_right = 1150.0
 offset_bottom = 230.0
 color = Color(0.35, 0.52, 0.3, 1)
 
-[node name="PathBack" type="ColorRect" parent="BackgroundLayer/BGContainer"]
-layout_mode = 0
+[node name="Layer4_Scene" type="ParallaxLayer" parent="ParallaxBG"]
+motion_scale = Vector2(1.0, 0.5)
+
+[node name="PathBack" type="ColorRect" parent="ParallaxBG/Layer4_Scene"]
 offset_left = 180.0
 offset_top = 185.0
-offset_right = 480.0
+offset_right = 1100.0
 offset_bottom = 210.0
 color = Color(0.55, 0.48, 0.35, 1)
 
-[node name="PathMid" type="ColorRect" parent="BackgroundLayer/BGContainer"]
-layout_mode = 0
+[node name="PathMid" type="ColorRect" parent="ParallaxBG/Layer4_Scene"]
 offset_left = 150.0
 offset_top = 205.0
-offset_right = 510.0
+offset_right = 1130.0
 offset_bottom = 245.0
 color = Color(0.5, 0.45, 0.33, 1)
 
-[node name="PathFront" type="ColorRect" parent="BackgroundLayer/BGContainer"]
-layout_mode = 0
-offset_left = 100.0
-offset_top = 235.0
-offset_right = 550.0
-offset_bottom = 280.0
-color = Color(0.45, 0.42, 0.3, 1)
-
-[node name="GrassBack" type="ColorRect" parent="BackgroundLayer/BGContainer"]
-layout_mode = 0
+[node name="GrassBack" type="ColorRect" parent="ParallaxBG/Layer4_Scene"]
 offset_left = 0.0
 offset_top = 180.0
-offset_right = 640.0
+offset_right = 1280.0
 offset_bottom = 220.0
 color = Color(0.42, 0.6, 0.3, 1)
 
-[node name="GrassMid" type="ColorRect" parent="BackgroundLayer/BGContainer"]
-layout_mode = 0
+[node name="Layer5_Front" type="ParallaxLayer" parent="ParallaxBG"]
+motion_scale = Vector2(1.3, 0.6)
+
+[node name="PathFront" type="ColorRect" parent="ParallaxBG/Layer5_Front"]
+offset_left = 100.0
+offset_top = 235.0
+offset_right = 1180.0
+offset_bottom = 280.0
+color = Color(0.45, 0.42, 0.3, 1)
+
+[node name="GrassMid" type="ColorRect" parent="ParallaxBG/Layer5_Front"]
 offset_left = 0.0
 offset_top = 218.0
-offset_right = 640.0
+offset_right = 1280.0
 offset_bottom = 270.0
 color = Color(0.38, 0.55, 0.28, 1)
 
-[node name="GrassFront" type="ColorRect" parent="BackgroundLayer/BGContainer"]
-layout_mode = 0
+[node name="GrassFront" type="ColorRect" parent="ParallaxBG/Layer5_Front"]
 offset_left = 0.0
 offset_top = 268.0
-offset_right = 640.0
+offset_right = 1280.0
 offset_bottom = 360.0
 color = Color(0.33, 0.5, 0.24, 1)
 

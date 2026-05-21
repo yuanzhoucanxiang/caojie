@@ -18,7 +18,7 @@ const SCALE_MIN: float = 0.65
 const SCALE_MAX: float = 1.0
 
 const LEFT_BOUND: float = 24.0
-const RIGHT_BOUND: float = 616.0
+const RIGHT_BOUND: float = 1256.0
 
 
 func _draw() -> void:
