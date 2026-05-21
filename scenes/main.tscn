@@ -137,12 +137,16 @@ position = Vector2(480, 250)
 [node name="Xiaoming" parent="." instance=ExtResource("8_xiaoming")]
 position = Vector2(550, 220)
 
-[node name="HouseDoor" type="Area2D" parent="."]
+[node name="HouseDoor" type="StaticBody2D" parent="."]
 position = Vector2(130, 220)
 script = ExtResource("9_trigger")
 target_scene = "res://scenes/areas/house_floor1.tscn"
 target_area_id = "house_floor1"
 transition_color = Color(0.75, 0.7, 0.6, 1)
+prompt_text = "按 E 进入"
+object_label = "门"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HouseDoor"]
+[node name="TriggerZone" type="Area2D" parent="HouseDoor"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HouseDoor/TriggerZone"]
 shape = SubResource("trigger_house")

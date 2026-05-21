@@ -36,12 +36,11 @@ func _ready() -> void:
 
 
 func change_scene(scene_path: String, area_id: String = "courtyard", transition_color: Color = Color(0, 0, 0, 1)) -> void:
-	## 切换场景，带过渡动画
 	if _is_transitioning:
 		return
 	_is_transitioning = true
 
-	# 淡出
+	# 淡出（覆盖全屏）
 	_overlay.color = Color(transition_color.r, transition_color.g, transition_color.b, 0)
 	var tween_out = create_tween()
 	tween_out.tween_property(_overlay, "color:a", 1.0, 0.4).set_ease(Tween.EASE_IN)
@@ -49,7 +48,9 @@ func change_scene(scene_path: String, area_id: String = "courtyard", transition_
 
 	# 切换场景
 	get_tree().change_scene_to_file(scene_path)
-	await get_tree().tree_changed
+	# 等待新场景加载完成
+	await get_tree().process_frame
+	await get_tree().process_frame
 
 	# 应用镜头配置
 	_apply_camera_config(area_id)
@@ -59,6 +60,9 @@ func change_scene(scene_path: String, area_id: String = "courtyard", transition_
 	var tween_in = create_tween()
 	tween_in.tween_property(_overlay, "color:a", 0.0, 0.4).set_ease(Tween.EASE_OUT)
 	await tween_in.finished
+
+	# 确保遮罩完全透明且不阻挡输入
+	_overlay.color = Color(0, 0, 0, 0)
 
 	_is_transitioning = false
 	transition_completed.emit()

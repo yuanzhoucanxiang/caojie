@@ -34,14 +34,18 @@ offset_bottom = 220.0
 color = Color(0.5, 0.35, 0.2, 1)
 
 [node name="Player" parent="." instance=ExtResource("2_player")]
-position = Vector2(100, 230)
+position = Vector2(550, 230)
 
-[node name="ExitTrigger" type="Area2D" parent="."]
-position = Vector2(10, 200)
+[node name="ExitDoor" type="StaticBody2D" parent="."]
+position = Vector2(30, 230)
 script = ExtResource("3_trigger")
 target_scene = "res://scenes/main.tscn"
 target_area_id = "courtyard"
 transition_color = Color(0.95, 0.93, 0.88)
+prompt_text = "按 E 出去"
+object_label = "门"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitTrigger"]
+[node name="TriggerZone" type="Area2D" parent="ExitDoor"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitDoor/TriggerZone"]
 shape = SubResource("trigger_shape")
