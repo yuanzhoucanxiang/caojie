@@ -8,8 +8,6 @@ func _ready() -> void:
 	player.add_to_group("player")
 	DialogueManager.dialogue_started.connect(_on_dialogue_started)
 	DialogueManager.dialogue_finished.connect(_on_dialogue_finished)
-	# 应用室内镜头
-	SceneManager._apply_camera_config("house_floor1")
 
 
 func _on_dialogue_started() -> void:
