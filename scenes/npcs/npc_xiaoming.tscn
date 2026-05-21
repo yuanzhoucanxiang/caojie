@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/npc/npc_xiaoming.gd" id="1_npc"]
 
 [sub_resource type="CircleShape2D" id="interact_zone_shape"]
-radius = 90.0
+radius = 30.0
 
 [node name="Xiaoming" type="StaticBody2D"]
 script = ExtResource("1_npc")
