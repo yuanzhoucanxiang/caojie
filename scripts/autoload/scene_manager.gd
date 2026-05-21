@@ -43,48 +43,40 @@ func change_scene(scene_path: String, area_id: String = "courtyard", transition_
 		return
 	_is_transitioning = true
 
-	# 淡出
-	print("【场景】淡出...")
-	_overlay.color = Color(transition_color.r, transition_color.g, transition_color.b, 0)
-	var tween_out = create_tween()
-	tween_out.tween_property(_overlay, "color:a", 1.0, 0.4)
-	await tween_out.finished
-	print("【场景】淡出完成，遮罩alpha: ", _overlay.color.a)
+	# 遮罩变黑
+	_overlay.color = transition_color
+	print("【场景】遮罩已变黑，alpha: ", _overlay.color.a)
 
-	# 加载新场景
-	print("【场景】加载新场景...")
-	var new_scene = load(scene_path)
-	if new_scene == null:
-		print("【场景】错误：无法加载场景 ", scene_path)
+	# 直接切换（不用 await，避免时序问题）
+	var packed_scene = load(scene_path) as PackedScene
+	if packed_scene == null:
+		print("【场景】错误：无法加载 ", scene_path)
+		_overlay.color = Color(0, 0, 0, 0)
 		_is_transitioning = false
 		return
 
-	var new_instance = new_scene.instantiate()
-	if new_instance == null:
-		print("【场景】错误：无法实例化场景")
-		_is_transitioning = false
-		return
+	print("【场景】场景加载成功，实例化中...")
+	var new_instance = packed_scene.instantiate()
 
-	# 移除旧场景，添加新场景
-	var old_scene = get_tree().current_scene
-	print("【场景】移除旧场景: ", old_scene.name if old_scene else "null")
-	get_tree().root.remove_child(old_scene)
-	old_scene.queue_free()
+	# 移除旧场景
+	var old = get_tree().current_scene
+	if old:
+		get_tree().root.remove_child(old)
+		old.queue_free()
 
+	# 添加新场景
 	get_tree().root.add_child(new_instance)
 	get_tree().current_scene = new_instance
-	print("【场景】新场景已加载: ", new_instance.name)
-
-	# 应用镜头
 	_current_area = area_id
+	print("【场景】新场景已就位: ", new_instance.name)
+
+	# 等一帧后开始淡入
+	await get_tree().process_frame
 	_apply_camera_config(area_id)
 
-	# 淡入
-	print("【场景】淡入...")
-	var tween_in = create_tween()
-	tween_in.tween_property(_overlay, "color:a", 0.0, 0.4)
-	await tween_in.finished
-	print("【场景】淡入完成")
+	var tween = create_tween()
+	tween.tween_property(_overlay, "color:a", 0.0, 0.4)
+	await tween.finished
 
 	_overlay.color = Color(0, 0, 0, 0)
 	_is_transitioning = false
