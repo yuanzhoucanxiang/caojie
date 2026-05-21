@@ -36,26 +36,16 @@ func _process(_delta: float) -> void:
 		_overlay.size = viewport_size
 
 
-func change_scene(scene_path: String, area_id: String = "courtyard", transition_color: Color = Color(0, 0, 0, 1)) -> void:
-	print("【场景】开始切换到: ", scene_path)
+func change_to_packed(packed_scene: PackedScene, area_id: String = "courtyard", transition_color: Color = Color(0, 0, 0, 1)) -> void:
+	print("【场景】开始切换")
 	if _is_transitioning:
-		print("【场景】正在过渡中，忽略")
 		return
 	_is_transitioning = true
 
 	# 遮罩变黑
 	_overlay.color = transition_color
-	print("【场景】遮罩已变黑，alpha: ", _overlay.color.a)
 
-	# 直接切换（不用 await，避免时序问题）
-	var packed_scene = load(scene_path) as PackedScene
-	if packed_scene == null:
-		print("【场景】错误：无法加载 ", scene_path)
-		_overlay.color = Color(0, 0, 0, 0)
-		_is_transitioning = false
-		return
-
-	print("【场景】场景加载成功，实例化中...")
+	# 实例化新场景
 	var new_instance = packed_scene.instantiate()
 
 	# 移除旧场景
@@ -70,7 +60,7 @@ func change_scene(scene_path: String, area_id: String = "courtyard", transition_
 	_current_area = area_id
 	print("【场景】新场景已就位: ", new_instance.name)
 
-	# 等一帧后开始淡入
+	# 等一帧后淡入
 	await get_tree().process_frame
 	_apply_camera_config(area_id)
 

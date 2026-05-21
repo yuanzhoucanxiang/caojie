@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3]
+[gd_scene load_steps=14 format=3]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
 [ext_resource type="PackedScene" path="res://scenes/player.tscn" id="3_player_scene"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" path="res://scenes/npcs/npc_cousin2.tscn" id="7_cousin2"]
 [ext_resource type="PackedScene" path="res://scenes/npcs/npc_xiaoming.tscn" id="8_xiaoming"]
 [ext_resource type="Script" path="res://scripts/systems/transition_trigger.gd" id="9_trigger"]
+[ext_resource type="PackedScene" path="res://scenes/areas/house_floor1.tscn" id="10_house_scene"]
 
 [sub_resource type="RectangleShape2D" id="trigger_house"]
 size = Vector2(20, 60)
@@ -125,11 +126,10 @@ color = Color(0.55, 0.45, 0.33, 1)
 [node name="HouseDoor" type="StaticBody2D" parent="House"]
 position = Vector2(55, 55)
 script = ExtResource("9_trigger")
-target_scene = "res://scenes/areas/house_floor1.tscn"
+target_scene = ExtResource("10_house_scene")
 target_area_id = "house_floor1"
 transition_color = Color(0.75, 0.7, 0.6, 1)
 prompt_text = "按 E 进入"
-object_label = "门"
 
 [node name="TriggerZone" type="Area2D" parent="House/HouseDoor"]
 
