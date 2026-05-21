@@ -36,7 +36,9 @@ func _ready() -> void:
 
 
 func change_scene(scene_path: String, area_id: String = "courtyard", transition_color: Color = Color(0, 0, 0, 1)) -> void:
+	print("【场景】change_scene 被调用: ", scene_path, " 区域: ", area_id)
 	if _is_transitioning:
+		print("【场景】正在过渡中，忽略")
 		return
 	_is_transitioning = true
 

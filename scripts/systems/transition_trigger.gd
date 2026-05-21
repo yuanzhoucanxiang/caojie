@@ -36,11 +36,16 @@ func _register_to_player() -> void:
 	var player = get_tree().get_first_node_in_group("player")
 	if player and player.has_signal("interact_pressed"):
 		player.interact_pressed.connect(_on_player_interact)
+		print("【门】已连接到玩家信号")
+	else:
+		print("【门】找不到玩家或玩家没有 interact_pressed 信号")
 
 
 func _on_player_interact() -> void:
+	print("【门】收到交互信号，范围内: ", _in_range, " 目标: ", target_scene)
 	if _in_range and not SceneManager.is_transitioning():
 		if target_scene != "":
+			print("【门】触发场景切换!")
 			SceneManager.change_scene(target_scene, target_area_id, transition_color)
 
 
