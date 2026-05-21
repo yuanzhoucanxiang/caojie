@@ -126,7 +126,7 @@ color = Color(0.55, 0.45, 0.33, 1)
 [node name="HouseDoor" type="StaticBody2D" parent="House"]
 position = Vector2(55, 55)
 script = ExtResource("9_trigger")
-target_scene_path = "res://scenes/areas/indoor_test.tscn"
+target_scene_path = "res://scenes/areas/house_floor1.tscn"
 target_area_id = "house_floor1"
 transition_color = Color(0.75, 0.7, 0.6, 1)
 prompt_text = "按 E 进入"
