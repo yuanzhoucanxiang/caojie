@@ -52,10 +52,10 @@ func _input(event: InputEvent) -> void:
 		if event.is_action_pressed("interact"):
 			_on_advance_from_speech()
 	elif current_state == State.SHOWING_CHOICES:
-		# 键盘选择：数字键或方向键
-		if event.is_action_pressed("move_up"):
+		# 键盘选择：左右方向键
+		if event.is_action_pressed("move_left"):
 			_navigate_choices(-1)
-		elif event.is_action_pressed("move_down"):
+		elif event.is_action_pressed("move_right"):
 			_navigate_choices(1)
 		elif event.is_action_pressed("interact"):
 			_confirm_choice()
