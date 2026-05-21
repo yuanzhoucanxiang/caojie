@@ -183,7 +183,7 @@ func _remove_advance_hint() -> void:
 func _world_to_screen(world_pos: Vector2) -> Vector2:
 	var camera = get_viewport().get_camera_2d()
 	if camera:
-		var viewport_size = get_viewport_rect().size
+		var viewport_size = get_viewport().get_visible_rect().size
 		return world_pos - camera.global_position + viewport_size / 2.0
 	return world_pos
 
