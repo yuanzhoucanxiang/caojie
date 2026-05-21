@@ -6,7 +6,7 @@
 size = Vector2(24, 42)
 
 [sub_resource type="CircleShape2D" id="interact_shape"]
-radius = 80.0
+radius = 25.0
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_player")

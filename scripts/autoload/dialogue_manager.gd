@@ -18,6 +18,7 @@ var _current_bubble: Control = null
 var _choice_bubbles: Array = []
 var _advance_hint: Label = null
 var _selected_index: int = 0
+var _input_cooldown: float = 0.0  # 防止连续触发
 
 
 func _ready() -> void:
@@ -34,6 +35,7 @@ func start_dialogue(npc: Node, event_data: Dictionary) -> void:
 	_current_event_id = event_data.get("id", "")
 	_current_choices = event_data.get("choices", [])
 	_selected_index = 0
+	_input_cooldown = 0.15  # 短暂冷却，防止按键延续
 	current_state = State.SHOWING_SPEECH
 	dialogue_started.emit()
 
@@ -43,7 +45,12 @@ func start_dialogue(npc: Node, event_data: Dictionary) -> void:
 	_show_advance_hint()
 
 
-func _process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
+	# 输入冷却，防止按键从上一个状态延续过来
+	if _input_cooldown > 0:
+		_input_cooldown -= delta
+		return
+
 	if current_state == State.SHOWING_SPEECH:
 		if Input.is_action_just_pressed("interact"):
 			_advance_from_speech()
@@ -59,6 +66,9 @@ func _process(_delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	# 鼠标点击处理
+	if _input_cooldown > 0:
+		return
+
 	if current_state == State.SHOWING_SPEECH:
 		if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 			_advance_from_speech()
@@ -77,6 +87,7 @@ func _advance_from_speech() -> void:
 
 	if _current_choices.size() > 0:
 		current_state = State.SHOWING_CHOICES
+		_input_cooldown = 0.1  # 防止E延续到选项确认
 		_show_choice_bubbles()
 	else:
 		_finish_dialogue()
