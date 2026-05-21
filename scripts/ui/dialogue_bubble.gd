@@ -65,8 +65,16 @@ func setup(speaker_screen_pos: Vector2, text: String, expr: String = "normal") -
 	# 定位气泡
 	_position_bubble(speaker_screen_pos)
 
-	# 弹出动画
-	_popup_animation()
+	# 动画初始状态（实际动画在 _ready 中执行）
+	scale = Vector2.ZERO
+	pivot_offset = Vector2(140, 40)
+
+
+func _ready() -> void:
+	# 加入场景树后执行弹出动画
+	var tween = create_tween()
+	tween.tween_property(self, "scale", Vector2(1.05, 1.05), 0.12).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+	tween.tween_property(self, "scale", Vector2(1.0, 1.0), 0.08).set_ease(Tween.EASE_IN)
 
 
 func _position_bubble(speaker_pos: Vector2) -> void:
@@ -89,14 +97,6 @@ func _position_bubble(speaker_pos: Vector2) -> void:
 	# 尾巴指向 NPC
 	var tail_x = clampf(speaker_pos.x - 6, x + 10, x + bubble_w - 22)
 	_tail.position = Vector2(tail_x, y + bubble_h)
-
-
-func _popup_animation() -> void:
-	scale = Vector2.ZERO
-	pivot_offset = Vector2(140, 40)
-	var tween = create_tween()
-	tween.tween_property(self, "scale", Vector2(1.05, 1.05), 0.12).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
-	tween.tween_property(self, "scale", Vector2(1.0, 1.0), 0.08).set_ease(Tween.EASE_IN)
 
 
 func remove_bubble() -> void:

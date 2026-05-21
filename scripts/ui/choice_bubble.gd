@@ -11,6 +11,7 @@ var _index: int = 0
 var _bg: PanelContainer
 var _label: Label
 var _is_selected: bool = false
+var _anim_delay: float = 0.0
 
 
 func setup(index: int, text: String, total_choices: int) -> void:
@@ -32,21 +33,22 @@ func setup(index: int, text: String, total_choices: int) -> void:
 	_bg.add_child(_label)
 
 	# 定位：在玩家上方水平排列
-	var player_screen_x = 280.0  # 玩家在屏幕上的大致 X
+	var player_screen_x = 280.0
 	var start_x = player_screen_x - (total_choices * (bubble_width + 10)) / 2 + bubble_width / 2
 	var x = start_x + index * (bubble_width + 10)
 	var y = 280.0 - (total_choices - 1 - index) * (bubble_height + 6)
 
 	_bg.position = Vector2(x - bubble_width / 2, y)
 
-	# 弹出动画（延迟一点出现）
-	_popup_animation(index * 0.06)
-
-
-func _popup_animation(delay: float) -> void:
+	# 记录动画延迟，等加入场景树后再执行
+	_anim_delay = index * 0.06
 	scale = Vector2.ZERO
 	pivot_offset = Vector2(100, 18)
-	await get_tree().create_timer(delay).timeout
+
+
+func _ready() -> void:
+	if _anim_delay > 0:
+		await get_tree().create_timer(_anim_delay).timeout
 	var tween = create_tween()
 	tween.tween_property(self, "scale", Vector2(1.08, 1.08), 0.1).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
 	tween.tween_property(self, "scale", Vector2(1.0, 1.0), 0.06).set_ease(Tween.EASE_IN)
