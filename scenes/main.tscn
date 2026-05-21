@@ -1,7 +1,6 @@
 [gd_scene load_steps=9 format=3]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
-[ext_resource type="Script" path="res://scripts/ui/dialogue_panel.gd" id="2_dialogue_ui"]
 [ext_resource type="PackedScene" path="res://scenes/player.tscn" id="3_player_scene"]
 [ext_resource type="PackedScene" path="res://scenes/npcs/npc_grandmother.tscn" id="4_grandmother"]
 [ext_resource type="PackedScene" path="res://scenes/npcs/npc_uncle.tscn" id="5_uncle"]
@@ -137,51 +136,3 @@ position = Vector2(480, 250)
 
 [node name="Xiaoming" parent="." instance=ExtResource("8_xiaoming")]
 position = Vector2(550, 220)
-
-[node name="DialogueUI" type="CanvasLayer" parent="."]
-layer = 10
-script = ExtResource("2_dialogue_ui")
-
-[node name="UIContainer" type="Control" parent="DialogueUI"]
-layout_mode = 0
-offset_right = 640.0
-offset_bottom = 360.0
-
-[node name="DimBackground" type="ColorRect" parent="DialogueUI/UIContainer"]
-visible = false
-layout_mode = 0
-offset_right = 640.0
-offset_bottom = 360.0
-color = Color(0, 0, 0, 0.5)
-
-[node name="DialogueBox" type="Panel" parent="DialogueUI/UIContainer"]
-visible = false
-layout_mode = 0
-offset_left = 60.0
-offset_top = 80.0
-offset_right = 580.0
-offset_bottom = 310.0
-
-[node name="NPCName" type="Label" parent="DialogueUI/UIContainer/DialogueBox"]
-layout_mode = 0
-offset_left = 15.0
-offset_top = 10.0
-offset_right = 505.0
-offset_bottom = 36.0
-text = ""
-
-[node name="DialogueText" type="Label" parent="DialogueUI/UIContainer/DialogueBox"]
-layout_mode = 0
-offset_left = 15.0
-offset_top = 40.0
-offset_right = 505.0
-offset_bottom = 90.0
-text = ""
-autowrap_mode = 2
-
-[node name="ChoiceContainer" type="VBoxContainer" parent="DialogueUI/UIContainer/DialogueBox"]
-layout_mode = 0
-offset_left = 15.0
-offset_top = 95.0
-offset_right = 505.0
-offset_bottom = 220.0
