@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3]
+[gd_scene load_steps=12 format=3]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
 [ext_resource type="PackedScene" path="res://scenes/player.tscn" id="3_player_scene"]
@@ -10,7 +10,7 @@
 [ext_resource type="Script" path="res://scripts/systems/transition_trigger.gd" id="9_trigger"]
 
 [sub_resource type="RectangleShape2D" id="trigger_house"]
-size = Vector2(20, 80)
+size = Vector2(20, 60)
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_main")
@@ -33,20 +33,6 @@ offset_top = 100.0
 offset_right = 1280.0
 offset_bottom = 175.0
 color = Color(0.42, 0.62, 0.38, 1)
-
-[node name="HouseBody" type="ColorRect" parent="ParallaxBG/Layer2_Far"]
-offset_left = 70.0
-offset_top = 105.0
-offset_right = 190.0
-offset_bottom = 200.0
-color = Color(0.55, 0.45, 0.33, 1)
-
-[node name="HouseRoof" type="ColorRect" parent="ParallaxBG/Layer2_Far"]
-offset_left = 60.0
-offset_top = 85.0
-offset_right = 200.0
-offset_bottom = 110.0
-color = Color(0.65, 0.32, 0.25, 1)
 
 [node name="TreeFar" type="ColorRect" parent="ParallaxBG/Layer2_Far"]
 offset_left = 900.0
@@ -119,26 +105,25 @@ offset_right = 1280.0
 offset_bottom = 360.0
 color = Color(0.33, 0.5, 0.24, 1)
 
-[node name="Player" parent="." instance=ExtResource("3_player_scene")]
-position = Vector2(280, 230)
+[node name="House" type="Node2D" parent="."]
+position = Vector2(100, 150)
 
-[node name="Grandmother" parent="." instance=ExtResource("4_grandmother")]
-position = Vector2(370, 185)
+[node name="HouseRoof" type="ColorRect" parent="House"]
+offset_left = -10.0
+offset_top = 0.0
+offset_right = 140.0
+offset_bottom = 25.0
+color = Color(0.65, 0.32, 0.25, 1)
 
-[node name="Uncle" parent="." instance=ExtResource("5_uncle")]
-position = Vector2(150, 240)
+[node name="HouseBody" type="ColorRect" parent="House"]
+offset_left = 0.0
+offset_top = 20.0
+offset_right = 130.0
+offset_bottom = 100.0
+color = Color(0.55, 0.45, 0.33, 1)
 
-[node name="Aunt" parent="." instance=ExtResource("6_aunt")]
-position = Vector2(120, 200)
-
-[node name="Cousin2" parent="." instance=ExtResource("7_cousin2")]
-position = Vector2(480, 250)
-
-[node name="Xiaoming" parent="." instance=ExtResource("8_xiaoming")]
-position = Vector2(550, 220)
-
-[node name="HouseDoor" type="StaticBody2D" parent="."]
-position = Vector2(130, 220)
+[node name="HouseDoor" type="StaticBody2D" parent="House"]
+position = Vector2(55, 55)
 script = ExtResource("9_trigger")
 target_scene = "res://scenes/areas/house_floor1.tscn"
 target_area_id = "house_floor1"
@@ -146,7 +131,25 @@ transition_color = Color(0.75, 0.7, 0.6, 1)
 prompt_text = "按 E 进入"
 object_label = "门"
 
-[node name="TriggerZone" type="Area2D" parent="HouseDoor"]
+[node name="TriggerZone" type="Area2D" parent="House/HouseDoor"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HouseDoor/TriggerZone"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="House/HouseDoor/TriggerZone"]
 shape = SubResource("trigger_house")
+
+[node name="Player" parent="." instance=ExtResource("3_player_scene")]
+position = Vector2(300, 255)
+
+[node name="Grandmother" parent="." instance=ExtResource("4_grandmother")]
+position = Vector2(220, 250)
+
+[node name="Uncle" parent="." instance=ExtResource("5_uncle")]
+position = Vector2(500, 260)
+
+[node name="Aunt" parent="." instance=ExtResource("6_aunt")]
+position = Vector2(700, 250)
+
+[node name="Cousin2" parent="." instance=ExtResource("7_cousin2")]
+position = Vector2(900, 265)
+
+[node name="Xiaoming" parent="." instance=ExtResource("8_xiaoming")]
+position = Vector2(1100, 255)

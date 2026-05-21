@@ -15,9 +15,9 @@ signal dialogue_request(npc_node: Node, event_data: Dictionary)
 
 const SPRITE_SIZE: Vector2 = Vector2(24, 42)
 
-const DEPTH_MIN_Y: float = 150.0
-const DEPTH_MAX_Y: float = 270.0
-const SCALE_MIN: float = 0.65
+const DEPTH_MIN_Y: float = 235.0
+const DEPTH_MAX_Y: float = 275.0
+const SCALE_MIN: float = 0.85
 const SCALE_MAX: float = 1.0
 
 @onready var interaction_zone: Area2D = $InteractionZone
