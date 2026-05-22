@@ -29,8 +29,7 @@ func _setup_post_process() -> void:
 	overlay.z_index = 1000
 	add_child(overlay)
 
-	var size := get_viewport().get_visible_rect().size
-	overlay.size = size
+	overlay.size = Vector2(1280, 360)
 
 
 func _bind_all_npcs() -> void:
