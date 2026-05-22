@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>《草芥》— 开发日志</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=ZCOOL+KuaiLe&family=Quicksand:wght@400;600;700&display=swap">
+  <style>
+    :root {
+      --sidebar-width: 240px;
+      --theme-color: #8b6e4e;
+      --theme-color-dark: #5c4a3a;
+      --pixel-shadow: #2a2018;
+      --pixel-size: 2px;
+      --font-cute: "ZCOOL KuaiLe", "PingFang SC", "Microsoft YaHei", sans-serif;
+      --font-pixel: "Press Start 2P", monospace;
+    }
+
+    body {
+      background-color: #f5f0e8;
+      color: #3a2f28;
+      font-family: var(--font-cute);
+      font-size: 16px;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      z-index: 9999;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent, transparent 2px,
+        rgba(0,0,0,0.015) 2px, rgba(0,0,0,0.015) 4px
+      );
+    }
+
+    .sidebar {
+      background-color: #ebe4d8;
+      border-right: var(--pixel-size) solid #c8a96e;
+      box-shadow: var(--pixel-size) 0 0 0 #b89a5e;
+    }
+    .sidebar .sidebar-nav { padding-top: 12px; }
+    .sidebar .app-name {
+      font-family: var(--font-pixel);
+      -webkit-font-smoothing: none;
+      color: var(--theme-color-dark);
+      font-size: 0.55em;
+      padding: 20px 16px 10px;
+      letter-spacing: 0.08em;
+      line-height: 2;
+    }
+    .sidebar ul li a {
+      color: #5c4a3a;
+      font-size: 0.85em;
+      padding: 5px 20px;
+      transition: color 0.15s, background-color 0.15s;
+      border-left: 3px solid transparent;
+    }
+    .sidebar ul li a:hover {
+      color: var(--theme-color-dark);
+      background-color: #ddd5c5;
+      border-left-color: #c8a96e;
+    }
+    .sidebar ul li.active > a {
+      color: var(--theme-color-dark);
+      font-weight: 600;
+      border-left: 3px solid var(--theme-color);
+      background-color: #e0d8c8;
+    }
+
+    .markdown-section {
+      max-width: 800px;
+      color: #3a2f28;
+      font-size: 1.1em;
+      line-height: 1.9;
+    }
+    .markdown-section h1 {
+      font-family: var(--font-cute);
+      font-size: 1.6em;
+      color: var(--theme-color-dark);
+      border-bottom: none;
+      padding-bottom: 12px;
+    }
+    .markdown-section h1::after {
+      content: '';
+      display: block;
+      margin-top: 12px;
+      height: 4px;
+      background: repeating-linear-gradient(
+        90deg,
+        #c8a96e 0px, #c8a96e 8px,
+        transparent 8px, transparent 12px,
+        #8b6e4e 12px, #8b6e4e 20px,
+        transparent 20px, transparent 24px
+      );
+    }
+    .markdown-section h2 {
+      font-family: var(--font-cute);
+      font-size: 1.2em;
+      color: #6b5540;
+      border-bottom: none;
+      padding-bottom: 8px;
+      margin-top: 28px;
+    }
+    .markdown-section h2::after {
+      content: '';
+      display: block;
+      margin-top: 8px;
+      height: 2px;
+      background: repeating-linear-gradient(
+        90deg,
+        #8b6e4e 0px, #8b6e4e 4px,
+        transparent 4px, transparent 8px
+      );
+    }
+    .markdown-section h3 {
+      font-family: var(--font-cute);
+      font-size: 1.05em;
+      color: #5c4a3a;
+      border-left: 4px solid #c8a96e;
+      padding-left: 12px;
+    }
+    .markdown-section a {
+      color: var(--theme-color);
+      text-decoration: none;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.15s;
+    }
+    .markdown-section a:hover {
+      color: var(--theme-color-dark);
+      border-bottom-color: var(--theme-color);
+    }
+    .markdown-section blockquote {
+      border-left: none;
+      background-color: #efe9db;
+      color: #5c4a3a;
+      padding: 14px 18px;
+      box-shadow: 4px 0 0 0 #c8a96e, 2px 2px 0 0 #c8a96e, -2px 0 0 0 #d4cbb8, 0 -2px 0 0 #d4cbb8, 0 4px 0 0 #d4cbb8;
+    }
+    .markdown-section code {
+      background-color: #e8e0d0;
+      color: #6b4c3b;
+      border-radius: 0;
+      padding: 2px 6px;
+      box-shadow: 2px 2px 0 0 rgba(42,32,24,0.15);
+    }
+    .markdown-section pre {
+      background-color: #3a2f28;
+      border-radius: 0;
+      box-shadow: 4px 4px 0 0 rgba(42,32,24,0.4);
+      border: 2px solid #5c4a3a;
+    }
+    .markdown-section pre code {
+      background-color: transparent;
+      color: #e8dcc8;
+      box-shadow: none;
+    }
+    .markdown-section table {
+      border: 2px solid #c8a96e;
+      border-radius: 0;
+      box-shadow: 3px 3px 0 0 rgba(42,32,24,0.2);
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+    .markdown-section table th {
+      background-color: #e8e0d0;
+      color: var(--theme-color-dark);
+      border-bottom: 2px solid #c8a96e;
+      font-weight: 700;
+    }
+    .markdown-section table td { border-color: #d4cbb8; }
+    .markdown-section table tr:hover td { background-color: #f0eade; }
+    .markdown-section hr {
+      border: none;
+      height: 4px;
+      background: repeating-linear-gradient(
+        90deg,
+        #c8a96e 0px, #c8a96e 4px,
+        transparent 4px, transparent 8px,
+        #d4cbb8 8px, #d4cbb8 12px,
+        transparent 12px, transparent 16px
+      );
+      margin: 24px 0;
+    }
+    .markdown-section ul li::marker { color: var(--theme-color); }
+    .markdown-section ol li::marker { color: var(--theme-color-dark); font-weight: 700; }
+
+    .search input {
+      font-family: var(--font-cute);
+      background-color: #ebe4d8 !important;
+      border: 2px solid #c8a96e !important;
+      border-radius: 0 !important;
+      color: #3a2f28 !important;
+      box-shadow: 2px 2px 0 0 rgba(42,32,24,0.15);
+    }
+
+    .cover-main {
+      background: linear-gradient(180deg, #f5f0e8 0%, #ebe4d8 100%) !important;
+    }
+    .cover-main .cover-main__title {
+      font-family: var(--font-pixel);
+      -webkit-font-smoothing: none;
+      color: #5c4a3a;
+      font-size: 3em;
+      letter-spacing: 0.15em;
+      text-shadow: 4px 4px 0 rgba(200,169,110,0.5), 8px 8px 0 rgba(200,169,110,0.2);
+      margin-bottom: 20px;
+    }
+    .cover-main .cover-main__description {
+      font-family: var(--font-cute);
+      color: #6b5540;
+      font-size: 1.2em;
+    }
+    .cover-main a.start {
+      font-family: var(--font-cute);
+      border: 3px solid #5c4a3a !important;
+      color: #5c4a3a !important;
+      border-radius: 0;
+      padding: 14px 40px;
+      font-size: 1.1em;
+      letter-spacing: 0.1em;
+      box-shadow: 4px 4px 0 0 rgba(92,74,58,0.3);
+      transition: all 0.15s;
+    }
+    .cover-main a.start:hover {
+      background-color: #5c4a3a;
+      color: #f5f0e8 !important;
+      box-shadow: 2px 2px 0 0 rgba(92,74,58,0.4);
+      transform: translate(2px, 2px);
+    }
+
+    @media screen and (max-width: 768px) {
+      .markdown-section { max-width: 100%; font-size: 1em; }
+      .cover-main .cover-main__title { font-size: 2em; }
+    }
+  </style>
+</head>
+<body>
+  <div id="app">加载中...</div>
+  <script>
+    window.$docsify = {
+      name: '开发日志',
+      repo: '',
+      loadSidebar: true,
+      coverpage: true,
+      subMaxLevel: 3,
+      search: {
+        placeholder: '搜索日志...',
+        noData: '没有结果',
+        paths: 'auto'
+      }
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
+</body>
+</html>
