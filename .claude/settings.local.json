@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git *)",
+      "Bash(ssh-keygen *)",
+      "Bash(ssh *)",
+      "WebFetch(domain:github.com)",
+      "Bash(curl -sL \"https://raw.githubusercontent.com/larksuite/cli/main/README.zh.md\")",
+      "Bash(gh repo *)",
+      "Bash(gh api *)",
+      "Bash(curl -v \"https://raw.githubusercontent.com/larksuite/cli/main/README.zh.md\")",
+      "Bash(curl -sL -o /tmp/lark_readme.md \"https://raw.githubusercontent.com/larksuite/cli/main/README.zh.md\")",
+      "Read(//tmp/**)",
+      "Bash(npm --version)",
+      "Bash(npx *)",
+      "Bash(lark-cli *)",
+      "Bash(curl -sL \"https://raw.githubusercontent.com/jackwener/opencli/main/README.md\")",
+      "Bash(npm install *)",
+      "Bash(opencli *)",
+      "Bash(winget install *)",
+      "Bash(gh *)",
+      "Bash(export PATH=\"$PATH:/c/Program Files/GitHub CLI\")",
+      "Bash(curl -sL \"https://raw.githubusercontent.com/google-gemini/gemini-cli/main/README.md\")",
+      "Bash(gemini *)",
+      "Skill(update-config)",
+      "Bash(python3 -c \"import json; json.load\\(open\\(r'C:\\\\Users\\\\15818\\\\.claude\\\\settings.json'\\)\\); print\\('JSON 合法'\\)\")",
+      "Bash(python -c \"import json; json.load\\(open\\(r'C:\\\\Users\\\\15818\\\\.claude\\\\settings.json'\\)\\); print\\('JSON 合法'\\)\")",
+      "Bash(node *)",
+      "Bash(bash *)",
+      "Bash(curl -sL \"https://raw.githubusercontent.com/anthropics/claude-code/main/plugins/commit-commands/README.md\")",
+      "Bash(curl -sL \"https://api.github.com/repos/anthropics/claude-code/contents/plugins/commit-commands\")",
+      "Bash(python3 -c \"import sys,json; data=json.load\\(sys.stdin\\); [print\\(f['name']\\) for f in data]\")",
+      "Bash(claude plugins *)"
+    ]
+  }
+}

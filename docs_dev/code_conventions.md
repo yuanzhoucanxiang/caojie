@@ -65,6 +65,14 @@ scenes/                    # 场景文件（.tscn）
 | 类名 | `PascalCase` | `NPCBase` |
 | 私有变量/函数 | `_` 开头 | `_in_range`, `_show_prompt` |
 
+## Autoload 规则（重要！）
+
+**当前 autoload 列表：** `GameState`, `DialogueManager`, `SceneManager`（在 `scripts/autoload/` 下）
+
+- Autoload 脚本**不要加 `class_name`**，Autoload 注册名已经是全局引用
+- 写新脚本前先检查 `project.godot` 的 autoload 列表，避免冲突
+- 非 autoload 脚本可以正常使用 `class_name`
+
 ## 节点树命名
 
 - 节点名：`PascalCase`（如 `InteractionZone`, `DialogueBox`）

@@ -1,426 +1,422 @@
-[gd_scene format=3 uid="uid://bvh2ya103r4xc"]
+[gd_scene format=3]
 
-[ext_resource type="Script" uid="uid://0c57ya6p7by4" path="res://scripts/main.gd" id="1_main"]
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
 [ext_resource type="PackedScene" path="res://scenes/player.tscn" id="3_player_scene"]
 [ext_resource type="PackedScene" path="res://scenes/npcs/npc_uncle.tscn" id="5_uncle"]
 [ext_resource type="PackedScene" path="res://scenes/npcs/npc_cousin2.tscn" id="7_cousin2"]
 [ext_resource type="PackedScene" path="res://scenes/npcs/npc_xiaoming.tscn" id="8_xiaoming"]
-[ext_resource type="Script" uid="uid://c26cm3fhpxvp2" path="res://scripts/triggers/transition_trigger.gd" id="9_trigger"]
+[ext_resource type="Script" path="res://scripts/triggers/transition_trigger.gd" id="9_trigger"]
 
 [sub_resource type="RectangleShape2D" id="trigger_house"]
-size = Vector2(20, 60)
+size = Vector2(27, 80)
 
-[node name="Main" type="Node2D" unique_id=722141435]
+[node name="Main" type="Node2D"]
 script = ExtResource("1_main")
 
-[node name="ParallaxBG" type="ParallaxBackground" parent="." unique_id=1914515680]
+[node name="ParallaxBG" type="ParallaxBackground" parent="."]
 
-[node name="Layer1_Sky" type="ParallaxLayer" parent="ParallaxBG" unique_id=1513679938]
+[node name="Layer1_Sky" type="ParallaxLayer" parent="ParallaxBG"]
 motion_scale = Vector2(0.1, 0.1)
 
-[node name="Sky" type="ColorRect" parent="ParallaxBG/Layer1_Sky" unique_id=756003021]
-offset_right = 1600.0
-offset_bottom = 360.0
+[node name="Sky" type="ColorRect" parent="ParallaxBG/Layer1_Sky"]
+offset_right = 2000.0
+offset_bottom = 480.0
 color = Color(0.68, 0.6, 0.45, 1)
 
-[node name="Layer2_Far" type="ParallaxLayer" parent="ParallaxBG" unique_id=911439834]
+[node name="Layer2_Far" type="ParallaxLayer" parent="ParallaxBG"]
 motion_scale = Vector2(0.3, 0.2)
 
-[node name="FarHills" type="ColorRect" parent="ParallaxBG/Layer2_Far" unique_id=1869660120]
-offset_top = 100.0
-offset_right = 1600.0
-offset_bottom = 175.0
+[node name="FarHills" type="ColorRect" parent="ParallaxBG/Layer2_Far"]
+offset_top = 133.0
+offset_right = 2000.0
+offset_bottom = 233.0
 color = Color(0.45, 0.48, 0.33, 1)
 
-[node name="TreeFar" type="ColorRect" parent="ParallaxBG/Layer2_Far" unique_id=1932902779]
-offset_left = 900.0
-offset_top = 115.0
-offset_right = 940.0
-offset_bottom = 200.0
+[node name="TreeFar" type="ColorRect" parent="ParallaxBG/Layer2_Far"]
+offset_left = 1200.0
+offset_top = 153.0
+offset_right = 1254.0
+offset_bottom = 267.0
 color = Color(0.35, 0.4, 0.25, 1)
 
-[node name="Layer3_Mid" type="ParallaxLayer" parent="ParallaxBG" unique_id=753892579]
+[node name="Layer3_Mid" type="ParallaxLayer" parent="ParallaxBG"]
 motion_scale = Vector2(0.5, 0.3)
 
-[node name="MidHills" type="ColorRect" parent="ParallaxBG/Layer3_Mid" unique_id=1178658463]
-offset_top = 140.0
-offset_right = 1600.0
-offset_bottom = 205.0
+[node name="MidHills" type="ColorRect" parent="ParallaxBG/Layer3_Mid"]
+offset_top = 187.0
+offset_right = 2000.0
+offset_bottom = 273.0
 color = Color(0.48, 0.45, 0.32, 1)
 
-[node name="TreeNear" type="ColorRect" parent="ParallaxBG/Layer3_Mid" unique_id=445672749]
-offset_left = 1100.0
-offset_top = 130.0
-offset_right = 1150.0
-offset_bottom = 230.0
+[node name="TreeNear" type="ColorRect" parent="ParallaxBG/Layer3_Mid"]
+offset_left = 1467.0
+offset_top = 173.0
+offset_right = 1534.0
+offset_bottom = 307.0
 color = Color(0.38, 0.4, 0.26, 1)
 
-[node name="Layer4_Scene" type="ParallaxLayer" parent="ParallaxBG" unique_id=2126198859]
+[node name="Layer4_Scene" type="ParallaxLayer" parent="ParallaxBG"]
 motion_scale = Vector2(1, 0.5)
 
-[node name="PathBack" type="ColorRect" parent="ParallaxBG/Layer4_Scene" unique_id=1431680249]
-offset_left = 180.0
-offset_top = 185.0
-offset_right = 1600.0
-offset_bottom = 210.0
+[node name="PathBack" type="ColorRect" parent="ParallaxBG/Layer4_Scene"]
+offset_left = 240.0
+offset_top = 247.0
+offset_right = 2000.0
+offset_bottom = 280.0
 color = Color(0.52, 0.46, 0.33, 1)
 
-[node name="PathMid" type="ColorRect" parent="ParallaxBG/Layer4_Scene" unique_id=1005346769]
-offset_left = 150.0
-offset_top = 205.0
-offset_right = 1600.0
-offset_bottom = 245.0
+[node name="PathMid" type="ColorRect" parent="ParallaxBG/Layer4_Scene"]
+offset_left = 200.0
+offset_top = 273.0
+offset_right = 2000.0
+offset_bottom = 327.0
 color = Color(0.48, 0.43, 0.31, 1)
 
-[node name="GrassBack" type="ColorRect" parent="ParallaxBG/Layer4_Scene" unique_id=225271447]
-offset_top = 180.0
-offset_right = 1600.0
-offset_bottom = 220.0
+[node name="GrassBack" type="ColorRect" parent="ParallaxBG/Layer4_Scene"]
+offset_top = 240.0
+offset_right = 2000.0
+offset_bottom = 293.0
 color = Color(0.45, 0.52, 0.28, 1)
 
-[node name="Layer5_Front" type="ParallaxLayer" parent="ParallaxBG" unique_id=1154776642]
+[node name="Layer5_Front" type="ParallaxLayer" parent="ParallaxBG"]
 motion_scale = Vector2(1.3, 0.6)
 
-[node name="PathFront" type="ColorRect" parent="ParallaxBG/Layer5_Front" unique_id=1593794740]
-offset_left = 100.0
-offset_top = 235.0
-offset_right = 1600.0
-offset_bottom = 280.0
+[node name="PathFront" type="ColorRect" parent="ParallaxBG/Layer5_Front"]
+offset_left = 133.0
+offset_top = 313.0
+offset_right = 2000.0
+offset_bottom = 373.0
 color = Color(0.44, 0.4, 0.3, 1)
 
-[node name="GrassMid" type="ColorRect" parent="ParallaxBG/Layer5_Front" unique_id=800792218]
-offset_top = 218.0
-offset_right = 1600.0
-offset_bottom = 270.0
+[node name="GrassMid" type="ColorRect" parent="ParallaxBG/Layer5_Front"]
+offset_top = 291.0
+offset_right = 2000.0
+offset_bottom = 360.0
 color = Color(0.4, 0.47, 0.26, 1)
 
-[node name="GrassFront" type="ColorRect" parent="ParallaxBG/Layer5_Front" unique_id=1017232658]
-offset_top = 268.0
-offset_right = 1600.0
-offset_bottom = 360.0
+[node name="GrassFront" type="ColorRect" parent="ParallaxBG/Layer5_Front"]
+offset_top = 357.0
+offset_right = 2000.0
+offset_bottom = 480.0
 color = Color(0.35, 0.43, 0.23, 1)
 
 [node name="SunlightGradient" type="ColorRect" parent="."]
-offset_right = 1280.0
-offset_bottom = 360.0
+offset_right = 1710.0
+offset_bottom = 480.0
 color = Color(0.98, 0.9, 0.7, 0.12)
 z_index = -2
 mouse_filter = 2
 
 [node name="BuildingShadow" type="ColorRect" parent="."]
-offset_left = 55.0
-offset_top = 230.0
-offset_right = 285.0
-offset_bottom = 275.0
+offset_left = 73.0
+offset_top = 307.0
+offset_right = 380.0
+offset_bottom = 367.0
 color = Color(0.08, 0.06, 0.04, 0.25)
 z_index = -2
 mouse_filter = 2
 
-[node name="House" type="Node2D" parent="." unique_id=483940817]
-position = Vector2(60, 55)
+[node name="House" type="Node2D" parent="."]
+position = Vector2(80, 73)
 
-[node name="HouseBody" type="ColorRect" parent="House" unique_id=1669197868]
-offset_right = 160.0
-offset_bottom = 180.0
+[node name="HouseBody" type="ColorRect" parent="House"]
+offset_right = 214.0
+offset_bottom = 240.0
 color = Color(0.58, 0.35, 0.25, 1)
 
-[node name="HouseRoof" type="ColorRect" parent="House" unique_id=317945952]
-offset_left = -10.0
-offset_top = -25.0
-offset_right = 170.0
-offset_bottom = 5.0
+[node name="HouseRoof" type="ColorRect" parent="House"]
+offset_left = -13.0
+offset_top = -33.0
+offset_right = 227.0
+offset_bottom = 7.0
 color = Color(0.42, 0.2, 0.16, 1)
 
-[node name="Floor1Windows" type="ColorRect" parent="House" unique_id=1015625458]
-offset_left = 20.0
-offset_top = 20.0
-offset_right = 55.0
-offset_bottom = 48.0
+[node name="Floor1Windows" type="ColorRect" parent="House"]
+offset_left = 27.0
+offset_top = 27.0
+offset_right = 73.0
+offset_bottom = 64.0
 color = Color(0.75, 0.7, 0.55, 1)
 
-[node name="Floor2Windows" type="ColorRect" parent="House" unique_id=1384478402]
-offset_left = 20.0
-offset_top = 72.0
-offset_right = 55.0
-offset_bottom = 100.0
+[node name="Floor2Windows" type="ColorRect" parent="House"]
+offset_left = 27.0
+offset_top = 96.0
+offset_right = 73.0
+offset_bottom = 133.0
 color = Color(0.75, 0.7, 0.55, 1)
 
-[node name="Floor2Window2" type="ColorRect" parent="House" unique_id=33619040]
-offset_left = 105.0
-offset_top = 72.0
-offset_right = 140.0
-offset_bottom = 100.0
+[node name="Floor2Window2" type="ColorRect" parent="House"]
+offset_left = 140.0
+offset_top = 96.0
+offset_right = 187.0
+offset_bottom = 133.0
 color = Color(0.75, 0.7, 0.55, 1)
 
-[node name="Floor3Windows" type="ColorRect" parent="House" unique_id=1743232408]
-offset_left = 20.0
-offset_top = 124.0
-offset_right = 55.0
-offset_bottom = 152.0
+[node name="Floor3Windows" type="ColorRect" parent="House"]
+offset_left = 27.0
+offset_top = 165.0
+offset_right = 73.0
+offset_bottom = 203.0
 color = Color(0.75, 0.7, 0.55, 1)
 
-[node name="Floor3Window2" type="ColorRect" parent="House" unique_id=1058240139]
-offset_left = 105.0
-offset_top = 124.0
-offset_right = 140.0
-offset_bottom = 152.0
+[node name="Floor3Window2" type="ColorRect" parent="House"]
+offset_left = 140.0
+offset_top = 165.0
+offset_right = 187.0
+offset_bottom = 203.0
 color = Color(0.75, 0.7, 0.55, 1)
 
-[node name="HouseDoor" type="StaticBody2D" parent="House" unique_id=1480112531]
-position = Vector2(80, 155)
+[node name="HouseDoor" type="StaticBody2D" parent="House"]
+position = Vector2(107, 207)
 script = ExtResource("9_trigger")
 target_scene_path = "res://scenes/areas/house_floor1.tscn"
 target_area_id = "house_floor1"
 transition_color = Color(0.75, 0.7, 0.6, 1)
+prompt_text = "按 E 进入"
 
-[node name="TriggerZone" type="Area2D" parent="House/HouseDoor" unique_id=1678147187]
+[node name="TriggerZone" type="Area2D" parent="House/HouseDoor"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="House/HouseDoor/TriggerZone" unique_id=2118129993]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="House/HouseDoor/TriggerZone"]
 shape = SubResource("trigger_house")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="House/HouseDoor/TriggerZone" unique_id=41814473]
-shape = SubResource("trigger_house")
+[node name="OldHouse" type="Node2D" parent="."]
+position = Vector2(300, 220)
 
-[node name="TriggerZone2" type="Area2D" parent="House/HouseDoor" unique_id=1480632391]
-
-[node name="OldHouse" type="Node2D" parent="." unique_id=940136752]
-position = Vector2(225, 165)
-
-[node name="OldHouseWall" type="ColorRect" parent="OldHouse" unique_id=92513597]
-offset_right = 85.0
-offset_bottom = 70.0
+[node name="OldHouseWall" type="ColorRect" parent="OldHouse"]
+offset_right = 113.0
+offset_bottom = 93.0
 color = Color(0.68, 0.58, 0.4, 1)
 
-[node name="OldHouseRoof" type="ColorRect" parent="OldHouse" unique_id=1468758151]
-offset_left = -5.0
-offset_top = -18.0
-offset_right = 90.0
-offset_bottom = 5.0
+[node name="OldHouseRoof" type="ColorRect" parent="OldHouse"]
+offset_left = -7.0
+offset_top = -24.0
+offset_right = 120.0
+offset_bottom = 7.0
 color = Color(0.28, 0.22, 0.18, 1)
 
-[node name="YardTree" type="Node2D" parent="." unique_id=596434029]
-position = Vector2(200, 235)
+[node name="YardTree" type="Node2D" parent="."]
+position = Vector2(267, 313)
 
 [node name="TreeTrunk" type="ColorRect" parent="YardTree"]
-offset_left = -6.0
-offset_top = -50.0
-offset_right = 6.0
+offset_left = -8.0
+offset_top = -67.0
+offset_right = 8.0
 color = Color(0.28, 0.2, 0.13, 1)
 
 [node name="TreeCrown" type="ColorRect" parent="YardTree"]
-offset_left = -18.0
-offset_top = -72.0
-offset_right = 18.0
-offset_bottom = -46.0
+offset_left = -24.0
+offset_top = -96.0
+offset_right = 24.0
+offset_bottom = -61.0
 color = Color(0.38, 0.44, 0.25, 1)
 
-[node name="YardWell" type="Node2D" parent="." unique_id=1599085022]
-position = Vector2(370, 272)
+[node name="YardWell" type="Node2D" parent="."]
+position = Vector2(493, 363)
 
 [node name="WellBody" type="ColorRect" parent="YardWell"]
-offset_left = -10.0
-offset_top = -14.0
-offset_right = 10.0
+offset_left = -13.0
+offset_top = -19.0
+offset_right = 13.0
 offset_bottom = 0.0
 color = Color(0.42, 0.38, 0.33, 1)
 
 [node name="YardGround" type="ColorRect" parent="."]
-offset_top = 235.0
-offset_right = 1280.0
-offset_bottom = 360.0
+offset_top = 313.0
+offset_right = 1710.0
+offset_bottom = 480.0
 color = Color(0.48, 0.42, 0.3, 1)
 z_index = -1
 
 [node name="Clothesline" type="Node2D" parent="."]
-position = Vector2(430, 268)
+position = Vector2(573, 357)
 
 [node name="PoleLeft" type="ColorRect" parent="Clothesline"]
-offset_left = -2.0
-offset_top = -30.0
-offset_right = 2.0
+offset_left = -3.0
+offset_top = -40.0
+offset_right = 3.0
 color = Color(0.55, 0.48, 0.35, 1)
 
 [node name="PoleRight" type="ColorRect" parent="Clothesline"]
-offset_left = 38.0
-offset_top = -30.0
-offset_right = 42.0
+offset_left = 51.0
+offset_top = -40.0
+offset_right = 56.0
 color = Color(0.55, 0.48, 0.35, 1)
 
 [node name="Rope" type="ColorRect" parent="Clothesline"]
-offset_top = -30.0
-offset_right = 40.0
-offset_bottom = -28.0
+offset_top = -40.0
+offset_right = 53.0
+offset_bottom = -37.0
 color = Color(0.6, 0.55, 0.45, 1)
 
 [node name="ChickenCoop" type="ColorRect" parent="."]
-offset_left = 470.0
-offset_top = 248.0
-offset_right = 520.0
-offset_bottom = 268.0
+offset_left = 627.0
+offset_top = 331.0
+offset_right = 693.0
+offset_bottom = 357.0
 color = Color(0.5, 0.42, 0.3, 1)
 
 [node name="ForegroundTree" type="Node2D" parent="."]
-position = Vector2(1180, 230)
+position = Vector2(1574, 307)
 z_index = 295
 
 [node name="TreeCrown" type="ColorRect" parent="ForegroundTree"]
-offset_left = -40.0
-offset_top = -180.0
-offset_right = 40.0
-offset_bottom = -40.0
+offset_left = -53.0
+offset_top = -240.0
+offset_right = 53.0
+offset_bottom = -53.0
 color = Color(0.22, 0.32, 0.15, 0.85)
 
 [node name="TreeTrunk" type="ColorRect" parent="ForegroundTree"]
-offset_left = -10.0
-offset_top = -50.0
-offset_right = 10.0
-offset_bottom = 80.0
+offset_left = -13.0
+offset_top = -67.0
+offset_right = 13.0
+offset_bottom = 107.0
 color = Color(0.18, 0.15, 0.1, 0.9)
 
 [node name="TreeGroundShadow" type="ColorRect" parent="ForegroundTree"]
-offset_left = -15.0
-offset_top = 75.0
-offset_right = 15.0
-offset_bottom = 85.0
+offset_left = -20.0
+offset_top = 100.0
+offset_right = 20.0
+offset_bottom = 113.0
 color = Color(0.12, 0.1, 0.08, 0.4)
 z_index = -1
 
 [node name="ForegroundBush" type="ColorRect" parent="."]
-offset_left = 700.0
-offset_top = 270.0
-offset_right = 800.0
-offset_bottom = 310.0
+offset_left = 934.0
+offset_top = 360.0
+offset_right = 1067.0
+offset_bottom = 413.0
 color = Color(0.25, 0.35, 0.18, 0.8)
 z_index = 295
 
 [node name="BushGroundShadow" type="ColorRect" parent="."]
-offset_left = 695.0
-offset_top = 305.0
-offset_right = 805.0
-offset_bottom = 315.0
+offset_left = 927.0
+offset_top = 407.0
+offset_right = 1074.0
+offset_bottom = 420.0
 color = Color(0.12, 0.1, 0.08, 0.35)
 z_index = 200
 
 [node name="ForegroundBush2" type="ColorRect" parent="."]
-offset_left = 950.0
-offset_top = 285.0
-offset_right = 1080.0
-offset_bottom = 330.0
+offset_left = 1267.0
+offset_top = 380.0
+offset_right = 1440.0
+offset_bottom = 440.0
 color = Color(0.22, 0.3, 0.16, 0.85)
 z_index = 295
 
 [node name="ForegroundPost" type="ColorRect" parent="."]
-offset_left = 353.0
-offset_top = 210.0
-offset_right = 363.0
-offset_bottom = 290.0
+offset_left = 471.0
+offset_top = 280.0
+offset_right = 484.0
+offset_bottom = 387.0
 color = Color(0.22, 0.18, 0.12, 0.9)
 z_index = 290
 
 [node name="PostGroundShadow" type="ColorRect" parent="."]
-offset_left = 351.0
-offset_top = 288.0
-offset_right = 365.0
-offset_bottom = 294.0
+offset_left = 468.0
+offset_top = 384.0
+offset_right = 487.0
+offset_bottom = 392.0
 color = Color(0.12, 0.1, 0.08, 0.35)
 z_index = 200
 
 [node name="OldHouseEdge" type="ColorRect" parent="."]
-offset_left = 300.0
-offset_top = 190.0
-offset_right = 320.0
-offset_bottom = 285.0
+offset_left = 400.0
+offset_top = 253.0
+offset_right = 427.0
+offset_bottom = 380.0
 color = Color(0.28, 0.22, 0.15, 0.8)
 z_index = 290
 
 [node name="CloseFence" type="Node2D" parent="."]
-position = Vector2(560, 330)
+position = Vector2(747, 440)
 z_index = 300
 
 [node name="FencePost1" type="ColorRect" parent="CloseFence"]
 offset_left = 0.0
-offset_top = -100.0
-offset_right = 8.0
+offset_top = -133.0
+offset_right = 11.0
 color = Color(0.15, 0.12, 0.08, 0.95)
 
 [node name="FencePost2" type="ColorRect" parent="CloseFence"]
-offset_left = 40.0
-offset_top = -95.0
-offset_right = 48.0
+offset_left = 53.0
+offset_top = -127.0
+offset_right = 64.0
 color = Color(0.15, 0.12, 0.08, 0.95)
 
 [node name="FenceRail" type="ColorRect" parent="CloseFence"]
 offset_left = 0.0
-offset_top = -60.0
-offset_right = 48.0
-offset_bottom = -55.0
+offset_top = -80.0
+offset_right = 64.0
+offset_bottom = -73.0
 color = Color(0.17, 0.13, 0.08, 0.95)
 
 [node name="FenceRail2" type="ColorRect" parent="CloseFence"]
 offset_left = 0.0
-offset_top = -90.0
-offset_right = 48.0
-offset_bottom = -85.0
+offset_top = -120.0
+offset_right = 64.0
+offset_bottom = -113.0
 color = Color(0.17, 0.13, 0.08, 0.95)
 
 [node name="CloseGrassL" type="Node2D" parent="."]
-position = Vector2(60, 350)
+position = Vector2(80, 467)
 z_index = 300
 
 [node name="Blade1" type="ColorRect" parent="CloseGrassL"]
 offset_left = 0.0
-offset_top = -70.0
-offset_right = 6.0
-offset_bottom = 20.0
+offset_top = -93.0
+offset_right = 8.0
+offset_bottom = 27.0
 color = Color(0.2, 0.28, 0.13, 0.9)
 
 [node name="Blade2" type="ColorRect" parent="CloseGrassL"]
-offset_left = 12.0
-offset_top = -90.0
-offset_right = 18.0
-offset_bottom = 25.0
+offset_left = 16.0
+offset_top = -120.0
+offset_right = 24.0
+offset_bottom = 33.0
 color = Color(0.18, 0.25, 0.11, 0.9)
 
 [node name="Blade3" type="ColorRect" parent="CloseGrassL"]
-offset_left = 24.0
-offset_top = -55.0
-offset_right = 32.0
-offset_bottom = 15.0
+offset_left = 32.0
+offset_top = -73.0
+offset_right = 43.0
+offset_bottom = 20.0
 color = Color(0.22, 0.3, 0.15, 0.85)
 
 [node name="CloseGrassR" type="Node2D" parent="."]
-position = Vector2(1240, 355)
+position = Vector2(1654, 473)
 z_index = 300
 
 [node name="Blade1" type="ColorRect" parent="CloseGrassR"]
 offset_left = 0.0
-offset_top = -80.0
-offset_right = 8.0
-offset_bottom = 30.0
+offset_top = -107.0
+offset_right = 11.0
+offset_bottom = 40.0
 color = Color(0.18, 0.25, 0.11, 0.92)
 
 [node name="Blade2" type="ColorRect" parent="CloseGrassR"]
-offset_left = 14.0
-offset_top = -65.0
-offset_right = 22.0
-offset_bottom = 25.0
+offset_left = 19.0
+offset_top = -87.0
+offset_right = 29.0
+offset_bottom = 33.0
 color = Color(0.16, 0.22, 0.09, 0.92)
 
 [node name="Blade3" type="ColorRect" parent="CloseGrassR"]
-offset_left = 28.0
-offset_top = -55.0
-offset_right = 34.0
-offset_bottom = 20.0
+offset_left = 37.0
+offset_top = -73.0
+offset_right = 45.0
+offset_bottom = 27.0
 color = Color(0.2, 0.28, 0.14, 0.85)
 
-[node name="Player" parent="." unique_id=1440959884 instance=ExtResource("3_player_scene")]
-position = Vector2(300, 255)
+[node name="Player" parent="." instance=ExtResource("3_player_scene")]
+position = Vector2(400, 340)
 
-[node name="Uncle" parent="." unique_id=1305008092 instance=ExtResource("5_uncle")]
-position = Vector2(500, 258)
+[node name="Uncle" parent="." instance=ExtResource("5_uncle")]
+position = Vector2(667, 344)
 
-[node name="Cousin2" parent="." unique_id=367799723 instance=ExtResource("7_cousin2")]
-position = Vector2(850, 262)
+[node name="Cousin2" parent="." instance=ExtResource("7_cousin2")]
+position = Vector2(1134, 349)
 
-[node name="Xiaoming" parent="." unique_id=537075237 instance=ExtResource("8_xiaoming")]
-position = Vector2(1100, 245)
+[node name="Xiaoming" parent="." instance=ExtResource("8_xiaoming")]
+position = Vector2(1467, 327)
