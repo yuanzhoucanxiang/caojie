@@ -17,9 +17,7 @@ func _setup_post_process() -> void:
 	var mat := ShaderMaterial.new()
 	mat.shader = shader
 	mat.set_shader_parameter("vignette_intensity", 0.15)
-	mat.set_shader_parameter("brightness", 0.95)
-	mat.set_shader_parameter("saturation", 0.9)
-	mat.set_shader_parameter("tint_strength", 0.15)
+	mat.set_shader_parameter("tint_color", Color(1.0, 0.9, 0.75, 0.1))
 
 	var overlay := ColorRect.new()
 	overlay.name = "PostProcess"
