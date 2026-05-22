@@ -34,10 +34,16 @@ func _draw() -> void:
 
 func _ready() -> void:
 	_update_depth_scale()
+	_update_depth_sort()
 	interaction_zone.area_entered.connect(_on_area_entered)
 	interaction_zone.area_exited.connect(_on_area_exited)
 	# 延迟一帧等场景树就绪，然后注册到玩家
 	_register_to_player()
+
+
+func _process(_delta: float) -> void:
+	_update_depth_scale()
+	_update_depth_sort()
 
 
 func _register_to_player() -> void:
@@ -67,6 +73,10 @@ func _update_depth_scale() -> void:
 	var t: float = clampf((position.y - DEPTH_MIN_Y) / (DEPTH_MAX_Y - DEPTH_MIN_Y), 0.0, 1.0)
 	var s: float = lerp(SCALE_MIN, SCALE_MAX, t)
 	scale = Vector2(s, s)
+
+
+func _update_depth_sort() -> void:
+	z_index = int(position.y)
 
 
 ## 子类重写此方法，返回该NPC的事件列表

@@ -13,7 +13,7 @@ var _noise_texture: NoiseTexture2D
 var _is_transitioning: bool = false
 
 const CAMERA_CONFIGS = {
-	"courtyard": {"zoom": 1.0},
+	"courtyard": {"zoom": 1.25},
 	"house_floor1": {"zoom": 1.5},
 	"house_floor2": {"zoom": 1.5},
 	"house_floor3": {"zoom": 1.8},

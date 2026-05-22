@@ -43,9 +43,14 @@ func _physics_process(delta: float) -> void:
 
 func _process(_delta: float) -> void:
 	_update_depth_scale()
+	_update_depth_sort()
 
 
 func _update_depth_scale() -> void:
 	var t: float = clampf((position.y - DEPTH_MIN_Y) / (DEPTH_MAX_Y - DEPTH_MIN_Y), 0.0, 1.0)
 	var s: float = lerp(SCALE_MIN, SCALE_MAX, t)
 	scale = Vector2(s, s)
+
+
+func _update_depth_sort() -> void:
+	z_index = int(position.y)
