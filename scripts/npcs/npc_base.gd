@@ -7,22 +7,21 @@ extends StaticBody2D
 
 signal dialogue_request(npc_node: Node, event_data: Dictionary)
 
+const SPRITE_SIZE: Vector2 = Vector2(24, 42)
+const DEPTH_MIN_Y: float = 225.0
+const DEPTH_MAX_Y: float = 285.0
+const SCALE_MIN: float = 0.85
+const SCALE_MAX: float = 1.0
+
 @export var npc_id: String = ""
 @export var npc_name: String = ""
 @export var sprite_color: Color = Color(0.933, 0.533, 0.6, 1)
 @export var default_text: String = "..."
 @export var default_expression: String = "normal"
 
-const SPRITE_SIZE: Vector2 = Vector2(24, 42)
-
-const DEPTH_MIN_Y: float = 225.0
-const DEPTH_MAX_Y: float = 285.0
-const SCALE_MIN: float = 0.85
-const SCALE_MAX: float = 1.0
+var _in_range: bool = false
 
 @onready var interaction_zone: Area2D = $InteractionZone
-
-var _in_range: bool = false
 
 
 func _draw() -> void:
@@ -33,12 +32,23 @@ func _draw() -> void:
 
 
 func _ready() -> void:
+	_add_body_collision()
 	_update_depth_scale()
 	_update_depth_sort()
 	interaction_zone.area_entered.connect(_on_area_entered)
 	interaction_zone.area_exited.connect(_on_area_exited)
 	# 延迟一帧等场景树就绪，然后注册到玩家
 	_register_to_player()
+
+
+func _add_body_collision() -> void:
+	var body_collision = CollisionShape2D.new()
+	var body_shape = RectangleShape2D.new()
+	body_shape.size = SPRITE_SIZE
+	body_collision.shape = body_shape
+	body_collision.position = Vector2(0, -SPRITE_SIZE.y)
+	body_collision.name = "BodyCollision"
+	add_child(body_collision)
 
 
 func _process(_delta: float) -> void:
