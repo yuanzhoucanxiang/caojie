@@ -20,7 +20,7 @@ script = ExtResource("1_main")
 motion_scale = Vector2(0.1, 0.1)
 
 [node name="Sky" type="ColorRect" parent="ParallaxBG/Layer1_Sky"]
-offset_right = 1280.0
+offset_right = 1600.0
 offset_bottom = 360.0
 color = Color(0.29, 0.565, 0.851, 1)
 
@@ -29,7 +29,7 @@ motion_scale = Vector2(0.3, 0.2)
 
 [node name="FarHills" type="ColorRect" parent="ParallaxBG/Layer2_Far"]
 offset_top = 100.0
-offset_right = 1280.0
+offset_right = 1600.0
 offset_bottom = 175.0
 color = Color(0.42, 0.62, 0.38, 1)
 
@@ -45,7 +45,7 @@ motion_scale = Vector2(0.5, 0.3)
 
 [node name="MidHills" type="ColorRect" parent="ParallaxBG/Layer3_Mid"]
 offset_top = 140.0
-offset_right = 1280.0
+offset_right = 1600.0
 offset_bottom = 205.0
 color = Color(0.47, 0.58, 0.32, 1)
 
@@ -62,21 +62,21 @@ motion_scale = Vector2(1.0, 0.5)
 [node name="PathBack" type="ColorRect" parent="ParallaxBG/Layer4_Scene"]
 offset_left = 180.0
 offset_top = 185.0
-offset_right = 1100.0
+offset_right = 1600.0
 offset_bottom = 210.0
 color = Color(0.55, 0.48, 0.35, 1)
 
 [node name="PathMid" type="ColorRect" parent="ParallaxBG/Layer4_Scene"]
 offset_left = 150.0
 offset_top = 205.0
-offset_right = 1130.0
+offset_right = 1600.0
 offset_bottom = 245.0
 color = Color(0.5, 0.45, 0.33, 1)
 
 [node name="GrassBack" type="ColorRect" parent="ParallaxBG/Layer4_Scene"]
 offset_left = 0.0
 offset_top = 180.0
-offset_right = 1280.0
+offset_right = 1600.0
 offset_bottom = 220.0
 color = Color(0.42, 0.6, 0.3, 1)
 
@@ -86,21 +86,21 @@ motion_scale = Vector2(1.3, 0.6)
 [node name="PathFront" type="ColorRect" parent="ParallaxBG/Layer5_Front"]
 offset_left = 100.0
 offset_top = 235.0
-offset_right = 1180.0
+offset_right = 1600.0
 offset_bottom = 280.0
 color = Color(0.45, 0.42, 0.3, 1)
 
 [node name="GrassMid" type="ColorRect" parent="ParallaxBG/Layer5_Front"]
 offset_left = 0.0
 offset_top = 218.0
-offset_right = 1280.0
+offset_right = 1600.0
 offset_bottom = 270.0
 color = Color(0.38, 0.55, 0.28, 1)
 
 [node name="GrassFront" type="ColorRect" parent="ParallaxBG/Layer5_Front"]
 offset_left = 0.0
 offset_top = 268.0
-offset_right = 1280.0
+offset_right = 1600.0
 offset_bottom = 360.0
 color = Color(0.33, 0.5, 0.24, 1)
 
