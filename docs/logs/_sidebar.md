@@ -1,4 +1,5 @@
 * [日志总览](README.md)
+* [← 回到策划案](https://yuanzhoucanxiang.github.io/caojie/)
 * **2026-05-22**
   * [工具链搭建+CLAUDE.md完善](2026-05-22.md)
 * **2026-05-21**

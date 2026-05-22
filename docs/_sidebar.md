@@ -28,4 +28,4 @@
   * [小明妈](characters/小明妈.md)
   * [小凤妈](characters/小凤妈.md)
   * [村民群像](characters/村民群像.md)
-* [开发日志](logs/)
+* [开发日志](https://yuanzhoucanxiang.github.io/caojie/logs/)
