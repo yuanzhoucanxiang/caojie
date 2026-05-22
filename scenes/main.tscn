@@ -1,10 +1,8 @@
-[gd_scene load_steps=14 format=3]
+[gd_scene load_steps=12 format=3]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
 [ext_resource type="PackedScene" path="res://scenes/player.tscn" id="3_player_scene"]
-[ext_resource type="PackedScene" path="res://scenes/npcs/npc_grandmother.tscn" id="4_grandmother"]
 [ext_resource type="PackedScene" path="res://scenes/npcs/npc_uncle.tscn" id="5_uncle"]
-[ext_resource type="PackedScene" path="res://scenes/npcs/npc_aunt.tscn" id="6_aunt"]
 [ext_resource type="PackedScene" path="res://scenes/npcs/npc_cousin2.tscn" id="7_cousin2"]
 [ext_resource type="PackedScene" path="res://scenes/npcs/npc_xiaoming.tscn" id="8_xiaoming"]
 [ext_resource type="Script" path="res://scripts/triggers/transition_trigger.gd" id="9_trigger"]
@@ -139,14 +137,8 @@ shape = SubResource("trigger_house")
 [node name="Player" parent="." instance=ExtResource("3_player_scene")]
 position = Vector2(300, 255)
 
-[node name="Grandmother" parent="." instance=ExtResource("4_grandmother")]
-position = Vector2(220, 250)
-
 [node name="Uncle" parent="." instance=ExtResource("5_uncle")]
 position = Vector2(500, 260)
-
-[node name="Aunt" parent="." instance=ExtResource("6_aunt")]
-position = Vector2(700, 250)
 
 [node name="Cousin2" parent="." instance=ExtResource("7_cousin2")]
 position = Vector2(900, 265)
