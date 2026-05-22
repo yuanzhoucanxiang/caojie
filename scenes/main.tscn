@@ -1,422 +1,421 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://cttt0bc5bk1mi"]
 
-[ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
+[ext_resource type="Script" uid="uid://0c57ya6p7by4" path="res://scripts/main.gd" id="1_main"]
 [ext_resource type="PackedScene" path="res://scenes/player.tscn" id="3_player_scene"]
 [ext_resource type="PackedScene" path="res://scenes/npcs/npc_uncle.tscn" id="5_uncle"]
 [ext_resource type="PackedScene" path="res://scenes/npcs/npc_cousin2.tscn" id="7_cousin2"]
 [ext_resource type="PackedScene" path="res://scenes/npcs/npc_xiaoming.tscn" id="8_xiaoming"]
-[ext_resource type="Script" path="res://scripts/triggers/transition_trigger.gd" id="9_trigger"]
+[ext_resource type="Script" uid="uid://c26cm3fhpxvp2" path="res://scripts/triggers/transition_trigger.gd" id="9_trigger"]
 
 [sub_resource type="RectangleShape2D" id="trigger_house"]
 size = Vector2(27, 80)
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Node2D" unique_id=1734019916]
 script = ExtResource("1_main")
 
-[node name="ParallaxBG" type="ParallaxBackground" parent="."]
+[node name="ParallaxBG" type="ParallaxBackground" parent="." unique_id=1348866718]
 
-[node name="Layer1_Sky" type="ParallaxLayer" parent="ParallaxBG"]
+[node name="Layer1_Sky" type="ParallaxLayer" parent="ParallaxBG" unique_id=1723126173]
 motion_scale = Vector2(0.1, 0.1)
 
-[node name="Sky" type="ColorRect" parent="ParallaxBG/Layer1_Sky"]
+[node name="Sky" type="ColorRect" parent="ParallaxBG/Layer1_Sky" unique_id=1112772651]
 offset_right = 2000.0
 offset_bottom = 480.0
 color = Color(0.68, 0.6, 0.45, 1)
 
-[node name="Layer2_Far" type="ParallaxLayer" parent="ParallaxBG"]
+[node name="Layer2_Far" type="ParallaxLayer" parent="ParallaxBG" unique_id=2013968006]
 motion_scale = Vector2(0.3, 0.2)
 
-[node name="FarHills" type="ColorRect" parent="ParallaxBG/Layer2_Far"]
+[node name="FarHills" type="ColorRect" parent="ParallaxBG/Layer2_Far" unique_id=2077284446]
 offset_top = 133.0
 offset_right = 2000.0
 offset_bottom = 233.0
 color = Color(0.45, 0.48, 0.33, 1)
 
-[node name="TreeFar" type="ColorRect" parent="ParallaxBG/Layer2_Far"]
+[node name="TreeFar" type="ColorRect" parent="ParallaxBG/Layer2_Far" unique_id=846105546]
 offset_left = 1200.0
 offset_top = 153.0
 offset_right = 1254.0
 offset_bottom = 267.0
 color = Color(0.35, 0.4, 0.25, 1)
 
-[node name="Layer3_Mid" type="ParallaxLayer" parent="ParallaxBG"]
+[node name="Layer3_Mid" type="ParallaxLayer" parent="ParallaxBG" unique_id=922454380]
 motion_scale = Vector2(0.5, 0.3)
 
-[node name="MidHills" type="ColorRect" parent="ParallaxBG/Layer3_Mid"]
+[node name="MidHills" type="ColorRect" parent="ParallaxBG/Layer3_Mid" unique_id=739916551]
 offset_top = 187.0
 offset_right = 2000.0
 offset_bottom = 273.0
 color = Color(0.48, 0.45, 0.32, 1)
 
-[node name="TreeNear" type="ColorRect" parent="ParallaxBG/Layer3_Mid"]
+[node name="TreeNear" type="ColorRect" parent="ParallaxBG/Layer3_Mid" unique_id=1003119627]
 offset_left = 1467.0
 offset_top = 173.0
 offset_right = 1534.0
 offset_bottom = 307.0
 color = Color(0.38, 0.4, 0.26, 1)
 
-[node name="Layer4_Scene" type="ParallaxLayer" parent="ParallaxBG"]
+[node name="Layer4_Scene" type="ParallaxLayer" parent="ParallaxBG" unique_id=391545209]
 motion_scale = Vector2(1, 0.5)
 
-[node name="PathBack" type="ColorRect" parent="ParallaxBG/Layer4_Scene"]
+[node name="PathBack" type="ColorRect" parent="ParallaxBG/Layer4_Scene" unique_id=1502816106]
 offset_left = 240.0
 offset_top = 247.0
 offset_right = 2000.0
 offset_bottom = 280.0
 color = Color(0.52, 0.46, 0.33, 1)
 
-[node name="PathMid" type="ColorRect" parent="ParallaxBG/Layer4_Scene"]
+[node name="PathMid" type="ColorRect" parent="ParallaxBG/Layer4_Scene" unique_id=1928299275]
 offset_left = 200.0
 offset_top = 273.0
 offset_right = 2000.0
 offset_bottom = 327.0
 color = Color(0.48, 0.43, 0.31, 1)
 
-[node name="GrassBack" type="ColorRect" parent="ParallaxBG/Layer4_Scene"]
+[node name="GrassBack" type="ColorRect" parent="ParallaxBG/Layer4_Scene" unique_id=1406367491]
 offset_top = 240.0
 offset_right = 2000.0
 offset_bottom = 293.0
 color = Color(0.45, 0.52, 0.28, 1)
 
-[node name="Layer5_Front" type="ParallaxLayer" parent="ParallaxBG"]
+[node name="Layer5_Front" type="ParallaxLayer" parent="ParallaxBG" unique_id=805828033]
 motion_scale = Vector2(1.3, 0.6)
 
-[node name="PathFront" type="ColorRect" parent="ParallaxBG/Layer5_Front"]
+[node name="PathFront" type="ColorRect" parent="ParallaxBG/Layer5_Front" unique_id=178068247]
 offset_left = 133.0
 offset_top = 313.0
 offset_right = 2000.0
 offset_bottom = 373.0
 color = Color(0.44, 0.4, 0.3, 1)
 
-[node name="GrassMid" type="ColorRect" parent="ParallaxBG/Layer5_Front"]
+[node name="GrassMid" type="ColorRect" parent="ParallaxBG/Layer5_Front" unique_id=1701706078]
 offset_top = 291.0
 offset_right = 2000.0
 offset_bottom = 360.0
 color = Color(0.4, 0.47, 0.26, 1)
 
-[node name="GrassFront" type="ColorRect" parent="ParallaxBG/Layer5_Front"]
+[node name="GrassFront" type="ColorRect" parent="ParallaxBG/Layer5_Front" unique_id=74384684]
 offset_top = 357.0
 offset_right = 2000.0
 offset_bottom = 480.0
 color = Color(0.35, 0.43, 0.23, 1)
 
-[node name="SunlightGradient" type="ColorRect" parent="."]
+[node name="SunlightGradient" type="ColorRect" parent="." unique_id=1767356587]
+z_index = -2
 offset_right = 1710.0
 offset_bottom = 480.0
-color = Color(0.98, 0.9, 0.7, 0.12)
-z_index = -2
 mouse_filter = 2
+color = Color(0.98, 0.9, 0.7, 0.12)
 
-[node name="BuildingShadow" type="ColorRect" parent="."]
+[node name="BuildingShadow" type="ColorRect" parent="." unique_id=213827750]
+z_index = -2
 offset_left = 73.0
 offset_top = 307.0
 offset_right = 380.0
 offset_bottom = 367.0
-color = Color(0.08, 0.06, 0.04, 0.25)
-z_index = -2
 mouse_filter = 2
+color = Color(0.08, 0.06, 0.04, 0.25)
 
-[node name="House" type="Node2D" parent="."]
+[node name="House" type="Node2D" parent="." unique_id=315820722]
+z_index = 313
 position = Vector2(80, 73)
 
-[node name="HouseBody" type="ColorRect" parent="House"]
+[node name="HouseBody" type="ColorRect" parent="House" unique_id=732231702]
 offset_right = 214.0
 offset_bottom = 240.0
 color = Color(0.58, 0.35, 0.25, 1)
 
-[node name="HouseRoof" type="ColorRect" parent="House"]
+[node name="HouseRoof" type="ColorRect" parent="House" unique_id=1795532575]
 offset_left = -13.0
 offset_top = -33.0
 offset_right = 227.0
 offset_bottom = 7.0
 color = Color(0.42, 0.2, 0.16, 1)
 
-[node name="Floor1Windows" type="ColorRect" parent="House"]
+[node name="Floor1Windows" type="ColorRect" parent="House" unique_id=1485809906]
 offset_left = 27.0
 offset_top = 27.0
 offset_right = 73.0
 offset_bottom = 64.0
 color = Color(0.75, 0.7, 0.55, 1)
 
-[node name="Floor2Windows" type="ColorRect" parent="House"]
+[node name="Floor2Windows" type="ColorRect" parent="House" unique_id=1342889529]
 offset_left = 27.0
 offset_top = 96.0
 offset_right = 73.0
 offset_bottom = 133.0
 color = Color(0.75, 0.7, 0.55, 1)
 
-[node name="Floor2Window2" type="ColorRect" parent="House"]
+[node name="Floor2Window2" type="ColorRect" parent="House" unique_id=416212329]
 offset_left = 140.0
 offset_top = 96.0
 offset_right = 187.0
 offset_bottom = 133.0
 color = Color(0.75, 0.7, 0.55, 1)
 
-[node name="Floor3Windows" type="ColorRect" parent="House"]
+[node name="Floor3Windows" type="ColorRect" parent="House" unique_id=20567228]
 offset_left = 27.0
 offset_top = 165.0
 offset_right = 73.0
 offset_bottom = 203.0
 color = Color(0.75, 0.7, 0.55, 1)
 
-[node name="Floor3Window2" type="ColorRect" parent="House"]
+[node name="Floor3Window2" type="ColorRect" parent="House" unique_id=1795646589]
 offset_left = 140.0
 offset_top = 165.0
 offset_right = 187.0
 offset_bottom = 203.0
 color = Color(0.75, 0.7, 0.55, 1)
 
-[node name="HouseDoor" type="StaticBody2D" parent="House"]
+[node name="HouseDoor" type="StaticBody2D" parent="House" unique_id=1473928808]
 position = Vector2(107, 207)
 script = ExtResource("9_trigger")
 target_scene_path = "res://scenes/areas/house_floor1.tscn"
 target_area_id = "house_floor1"
 transition_color = Color(0.75, 0.7, 0.6, 1)
-prompt_text = "按 E 进入"
 
-[node name="TriggerZone" type="Area2D" parent="House/HouseDoor"]
+[node name="TriggerZone" type="Area2D" parent="House/HouseDoor" unique_id=1583901794]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="House/HouseDoor/TriggerZone"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="House/HouseDoor/TriggerZone" unique_id=914895869]
 shape = SubResource("trigger_house")
 
-[node name="OldHouse" type="Node2D" parent="."]
+[node name="OldHouse" type="Node2D" parent="." unique_id=1264977627]
+z_index = 313
 position = Vector2(300, 220)
 
-[node name="OldHouseWall" type="ColorRect" parent="OldHouse"]
+[node name="OldHouseWall" type="ColorRect" parent="OldHouse" unique_id=1581502384]
 offset_right = 113.0
 offset_bottom = 93.0
 color = Color(0.68, 0.58, 0.4, 1)
 
-[node name="OldHouseRoof" type="ColorRect" parent="OldHouse"]
+[node name="OldHouseRoof" type="ColorRect" parent="OldHouse" unique_id=555355639]
 offset_left = -7.0
 offset_top = -24.0
 offset_right = 120.0
 offset_bottom = 7.0
 color = Color(0.28, 0.22, 0.18, 1)
 
-[node name="YardTree" type="Node2D" parent="."]
+[node name="YardTree" type="Node2D" parent="." unique_id=1309557850]
+z_index = 313
 position = Vector2(267, 313)
 
-[node name="TreeTrunk" type="ColorRect" parent="YardTree"]
+[node name="TreeTrunk" type="ColorRect" parent="YardTree" unique_id=1866293589]
 offset_left = -8.0
 offset_top = -67.0
 offset_right = 8.0
 color = Color(0.28, 0.2, 0.13, 1)
 
-[node name="TreeCrown" type="ColorRect" parent="YardTree"]
+[node name="TreeCrown" type="ColorRect" parent="YardTree" unique_id=195888115]
 offset_left = -24.0
 offset_top = -96.0
 offset_right = 24.0
 offset_bottom = -61.0
 color = Color(0.38, 0.44, 0.25, 1)
 
-[node name="YardWell" type="Node2D" parent="."]
+[node name="YardWell" type="Node2D" parent="." unique_id=1672171698]
+z_index = 363
 position = Vector2(493, 363)
 
-[node name="WellBody" type="ColorRect" parent="YardWell"]
+[node name="WellBody" type="ColorRect" parent="YardWell" unique_id=1855407847]
 offset_left = -13.0
 offset_top = -19.0
 offset_right = 13.0
-offset_bottom = 0.0
 color = Color(0.42, 0.38, 0.33, 1)
 
-[node name="YardGround" type="ColorRect" parent="."]
+[node name="YardGround" type="ColorRect" parent="." unique_id=536142436]
+z_index = -1
 offset_top = 313.0
 offset_right = 1710.0
 offset_bottom = 480.0
 color = Color(0.48, 0.42, 0.3, 1)
-z_index = -1
 
-[node name="Clothesline" type="Node2D" parent="."]
+[node name="Clothesline" type="Node2D" parent="." unique_id=747632896]
+z_index = 357
 position = Vector2(573, 357)
 
-[node name="PoleLeft" type="ColorRect" parent="Clothesline"]
+[node name="PoleLeft" type="ColorRect" parent="Clothesline" unique_id=761734849]
 offset_left = -3.0
 offset_top = -40.0
 offset_right = 3.0
 color = Color(0.55, 0.48, 0.35, 1)
 
-[node name="PoleRight" type="ColorRect" parent="Clothesline"]
+[node name="PoleRight" type="ColorRect" parent="Clothesline" unique_id=1622095073]
 offset_left = 51.0
 offset_top = -40.0
 offset_right = 56.0
 color = Color(0.55, 0.48, 0.35, 1)
 
-[node name="Rope" type="ColorRect" parent="Clothesline"]
+[node name="Rope" type="ColorRect" parent="Clothesline" unique_id=1390214885]
 offset_top = -40.0
 offset_right = 53.0
 offset_bottom = -37.0
 color = Color(0.6, 0.55, 0.45, 1)
 
-[node name="ChickenCoop" type="ColorRect" parent="."]
+[node name="ChickenCoop" type="ColorRect" parent="." unique_id=1627340277]
+z_index = 357
 offset_left = 627.0
 offset_top = 331.0
 offset_right = 693.0
 offset_bottom = 357.0
 color = Color(0.5, 0.42, 0.3, 1)
 
-[node name="ForegroundTree" type="Node2D" parent="."]
+[node name="ForegroundTree" type="Node2D" parent="." unique_id=186962476]
+z_index = 395
 position = Vector2(1574, 307)
-z_index = 295
 
-[node name="TreeCrown" type="ColorRect" parent="ForegroundTree"]
+[node name="TreeCrown" type="ColorRect" parent="ForegroundTree" unique_id=710037616]
 offset_left = -53.0
 offset_top = -240.0
 offset_right = 53.0
 offset_bottom = -53.0
 color = Color(0.22, 0.32, 0.15, 0.85)
 
-[node name="TreeTrunk" type="ColorRect" parent="ForegroundTree"]
+[node name="TreeTrunk" type="ColorRect" parent="ForegroundTree" unique_id=458239611]
 offset_left = -13.0
 offset_top = -67.0
 offset_right = 13.0
 offset_bottom = 107.0
 color = Color(0.18, 0.15, 0.1, 0.9)
 
-[node name="TreeGroundShadow" type="ColorRect" parent="ForegroundTree"]
+[node name="TreeGroundShadow" type="ColorRect" parent="ForegroundTree" unique_id=391378857]
+z_index = -1
 offset_left = -20.0
 offset_top = 100.0
 offset_right = 20.0
 offset_bottom = 113.0
 color = Color(0.12, 0.1, 0.08, 0.4)
-z_index = -1
 
-[node name="ForegroundBush" type="ColorRect" parent="."]
+[node name="ForegroundBush" type="ColorRect" parent="." unique_id=1877504914]
+z_index = 395
 offset_left = 934.0
 offset_top = 360.0
 offset_right = 1067.0
 offset_bottom = 413.0
 color = Color(0.25, 0.35, 0.18, 0.8)
-z_index = 295
 
-[node name="BushGroundShadow" type="ColorRect" parent="."]
+[node name="BushGroundShadow" type="ColorRect" parent="." unique_id=68559073]
+z_index = 200
 offset_left = 927.0
 offset_top = 407.0
 offset_right = 1074.0
 offset_bottom = 420.0
 color = Color(0.12, 0.1, 0.08, 0.35)
-z_index = 200
 
-[node name="ForegroundBush2" type="ColorRect" parent="."]
+[node name="ForegroundBush2" type="ColorRect" parent="." unique_id=1666700689]
+z_index = 395
 offset_left = 1267.0
 offset_top = 380.0
 offset_right = 1440.0
 offset_bottom = 440.0
 color = Color(0.22, 0.3, 0.16, 0.85)
-z_index = 295
 
-[node name="ForegroundPost" type="ColorRect" parent="."]
+[node name="ForegroundPost" type="ColorRect" parent="." unique_id=787324315]
+z_index = 390
 offset_left = 471.0
 offset_top = 280.0
 offset_right = 484.0
 offset_bottom = 387.0
 color = Color(0.22, 0.18, 0.12, 0.9)
-z_index = 290
 
-[node name="PostGroundShadow" type="ColorRect" parent="."]
+[node name="PostGroundShadow" type="ColorRect" parent="." unique_id=1715220464]
+z_index = 200
 offset_left = 468.0
 offset_top = 384.0
 offset_right = 487.0
 offset_bottom = 392.0
 color = Color(0.12, 0.1, 0.08, 0.35)
-z_index = 200
 
-[node name="OldHouseEdge" type="ColorRect" parent="."]
+[node name="OldHouseEdge" type="ColorRect" parent="." unique_id=807617824]
+z_index = 390
 offset_left = 400.0
 offset_top = 253.0
 offset_right = 427.0
 offset_bottom = 380.0
 color = Color(0.28, 0.22, 0.15, 0.8)
-z_index = 290
 
-[node name="CloseFence" type="Node2D" parent="."]
+[node name="CloseFence" type="Node2D" parent="." unique_id=1912538558]
+z_index = 400
 position = Vector2(747, 440)
-z_index = 300
 
-[node name="FencePost1" type="ColorRect" parent="CloseFence"]
-offset_left = 0.0
+[node name="FencePost1" type="ColorRect" parent="CloseFence" unique_id=1939392093]
 offset_top = -133.0
 offset_right = 11.0
 color = Color(0.15, 0.12, 0.08, 0.95)
 
-[node name="FencePost2" type="ColorRect" parent="CloseFence"]
+[node name="FencePost2" type="ColorRect" parent="CloseFence" unique_id=1388497456]
 offset_left = 53.0
 offset_top = -127.0
 offset_right = 64.0
 color = Color(0.15, 0.12, 0.08, 0.95)
 
-[node name="FenceRail" type="ColorRect" parent="CloseFence"]
-offset_left = 0.0
+[node name="FenceRail" type="ColorRect" parent="CloseFence" unique_id=723346230]
 offset_top = -80.0
 offset_right = 64.0
 offset_bottom = -73.0
 color = Color(0.17, 0.13, 0.08, 0.95)
 
-[node name="FenceRail2" type="ColorRect" parent="CloseFence"]
-offset_left = 0.0
+[node name="FenceRail2" type="ColorRect" parent="CloseFence" unique_id=1909337299]
 offset_top = -120.0
 offset_right = 64.0
 offset_bottom = -113.0
 color = Color(0.17, 0.13, 0.08, 0.95)
 
-[node name="CloseGrassL" type="Node2D" parent="."]
+[node name="CloseGrassL" type="Node2D" parent="." unique_id=1983730070]
+z_index = 400
 position = Vector2(80, 467)
-z_index = 300
 
-[node name="Blade1" type="ColorRect" parent="CloseGrassL"]
-offset_left = 0.0
+[node name="Blade1" type="ColorRect" parent="CloseGrassL" unique_id=160617780]
 offset_top = -93.0
 offset_right = 8.0
 offset_bottom = 27.0
 color = Color(0.2, 0.28, 0.13, 0.9)
 
-[node name="Blade2" type="ColorRect" parent="CloseGrassL"]
+[node name="Blade2" type="ColorRect" parent="CloseGrassL" unique_id=685424291]
 offset_left = 16.0
 offset_top = -120.0
 offset_right = 24.0
 offset_bottom = 33.0
 color = Color(0.18, 0.25, 0.11, 0.9)
 
-[node name="Blade3" type="ColorRect" parent="CloseGrassL"]
+[node name="Blade3" type="ColorRect" parent="CloseGrassL" unique_id=7272162]
 offset_left = 32.0
 offset_top = -73.0
 offset_right = 43.0
 offset_bottom = 20.0
 color = Color(0.22, 0.3, 0.15, 0.85)
 
-[node name="CloseGrassR" type="Node2D" parent="."]
+[node name="CloseGrassR" type="Node2D" parent="." unique_id=654970756]
+z_index = 400
 position = Vector2(1654, 473)
-z_index = 300
 
-[node name="Blade1" type="ColorRect" parent="CloseGrassR"]
-offset_left = 0.0
+[node name="Blade1" type="ColorRect" parent="CloseGrassR" unique_id=1754794061]
 offset_top = -107.0
 offset_right = 11.0
 offset_bottom = 40.0
 color = Color(0.18, 0.25, 0.11, 0.92)
 
-[node name="Blade2" type="ColorRect" parent="CloseGrassR"]
+[node name="Blade2" type="ColorRect" parent="CloseGrassR" unique_id=1022756486]
 offset_left = 19.0
 offset_top = -87.0
 offset_right = 29.0
 offset_bottom = 33.0
 color = Color(0.16, 0.22, 0.09, 0.92)
 
-[node name="Blade3" type="ColorRect" parent="CloseGrassR"]
+[node name="Blade3" type="ColorRect" parent="CloseGrassR" unique_id=2041416059]
 offset_left = 37.0
 offset_top = -73.0
 offset_right = 45.0
 offset_bottom = 27.0
 color = Color(0.2, 0.28, 0.14, 0.85)
 
-[node name="Player" parent="." instance=ExtResource("3_player_scene")]
+[node name="Player" parent="." unique_id=1348009633 instance=ExtResource("3_player_scene")]
 position = Vector2(400, 340)
 
-[node name="Uncle" parent="." instance=ExtResource("5_uncle")]
+[node name="Uncle" parent="." unique_id=1372506829 instance=ExtResource("5_uncle")]
 position = Vector2(667, 344)
 
-[node name="Cousin2" parent="." instance=ExtResource("7_cousin2")]
+[node name="Cousin2" parent="." unique_id=1114886079 instance=ExtResource("7_cousin2")]
 position = Vector2(1134, 349)
 
-[node name="Xiaoming" parent="." instance=ExtResource("8_xiaoming")]
+[node name="Xiaoming" parent="." unique_id=1612897510 instance=ExtResource("8_xiaoming")]
 position = Vector2(1467, 327)

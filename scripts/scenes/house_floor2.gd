@@ -5,6 +5,7 @@ extends Node2D
 
 
 func _ready() -> void:
+	_apply_textures()
 	_setup_post_process()
 	player.add_to_group("player")
 	_bind_all_npcs()
@@ -27,6 +28,19 @@ func _setup_post_process() -> void:
 	add_child(overlay)
 
 	overlay.size = Vector2(640, 480)
+
+
+func _apply_textures() -> void:
+	var rules := {
+		"Cousin2Room": [TextureSetup.Pattern.NOISE, 80.0, 0.06],
+		"UncleRoom": [TextureSetup.Pattern.NOISE, 80.0, 0.06],
+		"GrandparentsRoom": [TextureSetup.Pattern.NOISE, 80.0, 0.06],
+		"BackWall": [TextureSetup.Pattern.NOISE, 100.0, 0.06],
+		"LeftWall": [TextureSetup.Pattern.NOISE, 100.0, 0.05],
+		"RightWall": [TextureSetup.Pattern.NOISE, 100.0, 0.05],
+		"Floor": [TextureSetup.Pattern.WOOD_H, 80.0, 0.1],
+	}
+	TextureSetup.apply_by_name(self, rules)
 
 
 func _bind_all_npcs() -> void:

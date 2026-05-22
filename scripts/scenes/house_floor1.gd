@@ -5,6 +5,7 @@ extends Node2D
 
 
 func _ready() -> void:
+	_apply_textures()
 	_setup_post_process()
 	player.add_to_group("player")
 	_bind_all_npcs()
@@ -27,6 +28,25 @@ func _setup_post_process() -> void:
 	add_child(overlay)
 
 	overlay.size = Vector2(750, 480)
+
+
+func _apply_textures() -> void:
+	var rules := {
+		"StorageDoor": [TextureSetup.Pattern.WOOD_V, 60.0, 0.1],
+		"StoveTop": [TextureSetup.Pattern.NOISE, 40.0, 0.08],
+		"Stove": [TextureSetup.Pattern.NOISE, 60.0, 0.1],
+		"Chair": [TextureSetup.Pattern.WOOD_H, 40.0, 0.1],
+		"RoundTable": [TextureSetup.Pattern.WOOD_H, 40.0, 0.12],
+		"Shelves": [TextureSetup.Pattern.WOOD_H, 50.0, 0.1],
+		"Counter": [TextureSetup.Pattern.WOOD_H, 50.0, 0.1],
+		"WaterTank": [TextureSetup.Pattern.NOISE, 60.0, 0.08],
+		"TV": [TextureSetup.Pattern.NOISE, 40.0, 0.04],
+		"BackWall": [TextureSetup.Pattern.NOISE, 100.0, 0.06],
+		"LeftWall": [TextureSetup.Pattern.NOISE, 100.0, 0.05],
+		"RightWall": [TextureSetup.Pattern.NOISE, 100.0, 0.05],
+		"Floor": [TextureSetup.Pattern.WOOD_H, 80.0, 0.1],
+	}
+	TextureSetup.apply_by_name(self, rules)
 
 
 func _bind_all_npcs() -> void:
