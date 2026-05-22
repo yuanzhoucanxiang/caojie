@@ -245,7 +245,7 @@ color = Color(0.55, 0.48, 0.35, 1)
 
 [node name="ForegroundTree" type="Node2D" parent="."]
 position = Vector2(1180, 230)
-z_index = 5
+z_index = 295
 
 [node name="TreeCrown" type="ColorRect" parent="ForegroundTree"]
 offset_left = -40.0
@@ -275,7 +275,7 @@ offset_top = 270.0
 offset_right = 800.0
 offset_bottom = 310.0
 color = Color(0.25, 0.35, 0.18, 0.8)
-z_index = 5
+z_index = 295
 
 [node name="BushGroundShadow" type="ColorRect" parent="."]
 offset_left = 695.0
@@ -283,7 +283,7 @@ offset_top = 305.0
 offset_right = 805.0
 offset_bottom = 315.0
 color = Color(0.12, 0.1, 0.08, 0.35)
-z_index = 4
+z_index = 200
 
 [node name="ForegroundBush2" type="ColorRect" parent="."]
 offset_left = 950.0
@@ -291,7 +291,7 @@ offset_top = 285.0
 offset_right = 1080.0
 offset_bottom = 330.0
 color = Color(0.22, 0.3, 0.16, 0.85)
-z_index = 5
+z_index = 295
 
 [node name="ForegroundPost" type="ColorRect" parent="."]
 offset_left = 353.0
@@ -299,7 +299,7 @@ offset_top = 210.0
 offset_right = 363.0
 offset_bottom = 290.0
 color = Color(0.22, 0.18, 0.12, 0.9)
-z_index = 3
+z_index = 290
 
 [node name="PostGroundShadow" type="ColorRect" parent="."]
 offset_left = 351.0
@@ -307,7 +307,7 @@ offset_top = 288.0
 offset_right = 365.0
 offset_bottom = 294.0
 color = Color(0.12, 0.1, 0.08, 0.35)
-z_index = 2
+z_index = 200
 
 [node name="OldHouseEdge" type="ColorRect" parent="."]
 offset_left = 300.0
@@ -315,11 +315,11 @@ offset_top = 190.0
 offset_right = 320.0
 offset_bottom = 285.0
 color = Color(0.28, 0.22, 0.15, 0.8)
-z_index = 3
+z_index = 290
 
 [node name="CloseFence" type="Node2D" parent="."]
 position = Vector2(560, 330)
-z_index = 10
+z_index = 300
 
 [node name="FencePost1" type="ColorRect" parent="CloseFence"]
 offset_left = 0.0
@@ -349,7 +349,7 @@ color = Color(0.17, 0.13, 0.08, 0.95)
 
 [node name="CloseGrassL" type="Node2D" parent="."]
 position = Vector2(60, 350)
-z_index = 10
+z_index = 300
 
 [node name="Blade1" type="ColorRect" parent="CloseGrassL"]
 offset_left = 0.0
@@ -374,7 +374,7 @@ color = Color(0.22, 0.3, 0.15, 0.85)
 
 [node name="CloseGrassR" type="Node2D" parent="."]
 position = Vector2(1240, 355)
-z_index = 10
+z_index = 300
 
 [node name="Blade1" type="ColorRect" parent="CloseGrassR"]
 offset_left = 0.0
