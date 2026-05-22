@@ -105,29 +105,102 @@ offset_bottom = 360.0
 color = Color(0.33, 0.5, 0.24, 1)
 
 [node name="House" type="Node2D" parent="."]
-position = Vector2(100, 150)
+position = Vector2(60, 80)
+
+[node name="HouseBody" type="ColorRect" parent="House"]
+offset_left = 0.0
+offset_top = 25.0
+offset_right = 160.0
+offset_bottom = 240.0
+color = Color(0.65, 0.4, 0.28, 1)
 
 [node name="HouseRoof" type="ColorRect" parent="House"]
 offset_left = -10.0
 offset_top = 0.0
-offset_right = 140.0
-offset_bottom = 25.0
-color = Color(0.65, 0.32, 0.25, 1)
+offset_right = 170.0
+offset_bottom = 30.0
+color = Color(0.5, 0.25, 0.2, 1)
 
-[node name="HouseBody" type="ColorRect" parent="House"]
-offset_left = 0.0
-offset_top = 20.0
-offset_right = 130.0
-offset_bottom = 100.0
-color = Color(0.55, 0.45, 0.33, 1)
+[node name="Floor1Windows" type="ColorRect" parent="House"]
+offset_left = 20.0
+offset_top = 40.0
+offset_right = 55.0
+offset_bottom = 70.0
+color = Color(0.75, 0.7, 0.55, 1)
+
+[node name="Floor2Windows" type="ColorRect" parent="House"]
+offset_left = 20.0
+offset_top = 100.0
+offset_right = 55.0
+offset_bottom = 130.0
+color = Color(0.75, 0.7, 0.55, 1)
+
+[node name="Floor2Window2" type="ColorRect" parent="House"]
+offset_left = 105.0
+offset_top = 100.0
+offset_right = 140.0
+offset_bottom = 130.0
+color = Color(0.75, 0.7, 0.55, 1)
+
+[node name="Floor3Windows" type="ColorRect" parent="House"]
+offset_left = 20.0
+offset_top = 160.0
+offset_right = 55.0
+offset_bottom = 190.0
+color = Color(0.75, 0.7, 0.55, 1)
+
+[node name="Floor3Window2" type="ColorRect" parent="House"]
+offset_left = 105.0
+offset_top = 160.0
+offset_right = 140.0
+offset_bottom = 190.0
+color = Color(0.75, 0.7, 0.55, 1)
 
 [node name="HouseDoor" type="StaticBody2D" parent="House"]
-position = Vector2(55, 55)
+position = Vector2(80, 170)
 script = ExtResource("9_trigger")
 target_scene_path = "res://scenes/areas/house_floor1.tscn"
 target_area_id = "house_floor1"
 transition_color = Color(0.75, 0.7, 0.6, 1)
 prompt_text = "按 E 进入"
+
+[node name="TriggerZone" type="Area2D" parent="House/HouseDoor"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="House/HouseDoor/TriggerZone"]
+shape = SubResource("trigger_house")
+
+[node name="OldHouse" type="Node2D" parent="."]
+position = Vector2(220, 135)
+
+[node name="OldHouseWall" type="ColorRect" parent="OldHouse"]
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 90.0
+offset_bottom = 85.0
+color = Color(0.72, 0.65, 0.45, 1)
+
+[node name="OldHouseRoof" type="ColorRect" parent="OldHouse"]
+offset_left = -5.0
+offset_top = -15.0
+offset_right = 95.0
+offset_bottom = 5.0
+color = Color(0.3, 0.25, 0.2, 1)
+
+[node name="YardTree" type="ColorRect" parent="."]
+position = Vector2(200, 230)
+offset_left = -15.0
+offset_top = -40.0
+offset_right = 15.0
+offset_bottom = 0.0
+color = Color(0.35, 0.52, 0.3, 1)
+
+[node name="YardWell" type="ColorRect" parent="."]
+position = Vector2(360, 260)
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+color = Color(0.45, 0.42, 0.38, 1)
 
 [node name="TriggerZone" type="Area2D" parent="House/HouseDoor"]
 
