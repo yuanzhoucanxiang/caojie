@@ -68,6 +68,7 @@ target_scene_path = "res://scenes/areas/house_floor1.tscn"
 target_area_id = "house_floor1"
 transition_color = Color(0.75, 0.7, 0.6, 1)
 prompt_text = "按 E 下楼"
+spawn_id = "from_2f_down"
 
 [node name="TriggerZone" type="Area2D" parent="StairsDown"]
 
@@ -81,6 +82,7 @@ target_scene_path = "res://scenes/areas/house_floor3.tscn"
 target_area_id = "house_floor2"
 transition_color = Color(0.65, 0.6, 0.5, 1)
 prompt_text = "按 E 上楼"
+spawn_id = "from_2f_up"
 
 [node name="TriggerZone" type="Area2D" parent="StairsUp"]
 

@@ -149,6 +149,18 @@ TransitionTrigger ──→ SceneManager.change_to_packed()               │
 SceneManager.transition_completed ──→ 新场景的 _ready() 自动执行绑定
 ```
 
+## 场景切换出生点规则
+
+每个场景定义 `const SPAWN_POINTS`（`signal → const → @export → var → @onready`）：
+```gdscript
+const SPAWN_POINTS := {
+    "from_<来源>": Vector2(x, y),
+}
+```
+- 过渡触发器（TransitionTrigger）加 `@export var spawn_id: String`，指向目标场景的出生点
+- 场景 `_ready()` 调 `_apply_spawn()`：`SceneManager.get_pending_spawn()` → 查找 SPAWN_POINTS → 放置玩家
+- 新增场景切换一律遵循此模式
+
 ## 找 Bug 的顺序
 
 1. 先看 `scripts/autoload/`（全局状态可能被改了）

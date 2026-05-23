@@ -5,11 +5,12 @@ extends StaticBody2D
 @export var target_area_id: String = "courtyard"
 @export var transition_color: Color = Color(0.95, 0.93, 0.88)
 @export var prompt_text: String = "按 E 进入"
-
-@onready var trigger_zone: Area2D = $TriggerZone
+@export var spawn_id: String = ""
 
 var _in_range: bool = false
 var _packed_scene: PackedScene = null
+
+@onready var trigger_zone: Area2D = $TriggerZone
 
 
 func _draw() -> void:
@@ -44,7 +45,9 @@ func _register_to_player() -> void:
 func _on_player_interact() -> void:
 	if _in_range and not SceneManager.is_transitioning():
 		if _packed_scene != null:
-			SceneManager.change_to_packed(_packed_scene, target_area_id, transition_color)
+			SceneManager.change_to_packed(
+				_packed_scene, target_area_id, transition_color, spawn_id,
+			)
 
 
 func _on_area_entered(area: Area2D) -> void:

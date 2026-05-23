@@ -6,12 +6,6 @@ extends Node
 
 signal transition_completed
 
-var _overlay: ColorRect
-var _fade_overlay: ColorRect
-var _shader_material: ShaderMaterial
-var _noise_texture: NoiseTexture2D
-var _is_transitioning: bool = false
-
 const CAMERA_CONFIGS = {
 	"courtyard": {"zoom": 1.25},
 	"house_floor1": {"zoom": 1.5},
@@ -20,7 +14,13 @@ const CAMERA_CONFIGS = {
 	"village_road": {"zoom": 0.9},
 }
 
+var _overlay: ColorRect
+var _fade_overlay: ColorRect
+var _shader_material: ShaderMaterial
+var _noise_texture: NoiseTexture2D
+var _is_transitioning: bool = false
 var _current_area: String = "courtyard"
+var _pending_spawn: String = ""
 
 
 func _ready() -> void:
@@ -70,11 +70,17 @@ func _process(_delta: float) -> void:
 		_fade_overlay.size = viewport_size
 
 
-func change_to_packed(packed_scene: PackedScene, area_id: String = "courtyard", transition_color: Color = Color(0, 0, 0, 1)) -> void:
+func change_to_packed(
+	packed_scene: PackedScene,
+	area_id: String = "courtyard",
+	transition_color: Color = Color(0, 0, 0, 1),
+	spawn_id: String = "",
+) -> void:
 	print("【场景】开始切换")
 	if _is_transitioning:
 		return
 	_is_transitioning = true
+	_pending_spawn = spawn_id
 
 	# 设置水彩颜色 + 褪色层用场景主色调（初始透明）
 	_shader_material.set_shader_parameter("tint", transition_color)
@@ -105,7 +111,7 @@ func change_to_packed(packed_scene: PackedScene, area_id: String = "courtyard", 
 	print("【场景】新场景已就位: ", new_instance.name)
 
 	await get_tree().process_frame
-	_apply_camera_config(area_id)
+	_set_camera_zoom(area_id)
 
 	# 水彩退去（1→0）+ 画面恢复（alpha 0.5→0）
 	var tween_in = create_tween()
@@ -127,20 +133,23 @@ func _set_dissolve(value: float) -> void:
 	_shader_material.set_shader_parameter("dissolve", value)
 
 
-func _apply_camera_config(area_id: String) -> void:
-	await get_tree().process_frame
+func _set_camera_zoom(area_id: String) -> void:
 	var camera = get_viewport().get_camera_2d()
 	if not camera:
-		print("【场景】警告：找不到 Camera2D")
 		return
-
 	var config = CAMERA_CONFIGS.get(area_id, {})
 	var target_zoom = config.get("zoom", 1.0)
-	print("【场景】应用镜头缩放: ", target_zoom)
+	camera.zoom = Vector2(target_zoom, target_zoom)
 
-	var tween = create_tween()
-	tween.tween_property(camera, "zoom", Vector2(target_zoom, target_zoom), 0.6) \
-		.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+
+func get_current_area() -> String:
+	return _current_area
+
+
+func get_pending_spawn() -> String:
+	var id := _pending_spawn
+	_pending_spawn = ""
+	return id
 
 
 func is_transitioning() -> bool:

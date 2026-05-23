@@ -1,16 +1,36 @@
 ## 职责：二楼场景控制器——管理对话暂停/恢复玩家
 extends Node2D
 
+
+const SPAWN_POINTS := {
+	"from_1f_up": Vector2(85, 335),
+	"from_3f_down": Vector2(560, 335),
+}
 @onready var player: CharacterBody2D = $Player
 
 
 func _ready() -> void:
 	_apply_textures()
 	_setup_post_process()
+	_add_pause_menu()
+	_apply_spawn()
 	player.add_to_group("player")
 	_bind_all_npcs()
 	DialogueManager.dialogue_started.connect(_on_dialogue_started)
 	DialogueManager.dialogue_finished.connect(_on_dialogue_finished)
+
+
+func _apply_spawn() -> void:
+	var sid := SceneManager.get_pending_spawn()
+	if sid.is_empty():
+		return
+	var pos: Vector2 = SPAWN_POINTS.get(sid, Vector2.ZERO)
+	if pos != Vector2.ZERO:
+		player.position = pos
+
+
+func _add_pause_menu() -> void:
+	add_child(load("res://scenes/ui/pause_menu.tscn").instantiate())
 
 
 func _setup_post_process() -> void:

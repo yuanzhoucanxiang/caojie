@@ -44,9 +44,9 @@ func _ready() -> void:
 func _add_body_collision() -> void:
 	var body_collision = CollisionShape2D.new()
 	var body_shape = RectangleShape2D.new()
-	body_shape.size = SPRITE_SIZE
+	body_shape.size = Vector2(SPRITE_SIZE.x, 8)
 	body_collision.shape = body_shape
-	body_collision.position = Vector2(0, -SPRITE_SIZE.y)
+	body_collision.position = Vector2(0, -4)
 	body_collision.name = "BodyCollision"
 	add_child(body_collision)
 

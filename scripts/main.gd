@@ -4,6 +4,10 @@
 
 extends Node2D
 
+const SPAWN_POINTS := {
+	"from_house": Vector2(200, 335),
+}
+
 var _foreground_data: Array[Dictionary] = []
 
 @onready var player: CharacterBody2D = $Player
@@ -13,6 +17,9 @@ func _ready() -> void:
 	_apply_textures()
 	_setup_post_process()
 	_setup_foreground_transparency()
+	_add_building_collisions()
+	_add_pause_menu()
+	_apply_spawn()
 	player.add_to_group("player")
 	_bind_all_npcs()
 	DialogueManager.dialogue_started.connect(_on_dialogue_started)
@@ -136,6 +143,58 @@ func _tween_transparency(node: Node, target: float) -> void:
 		tw.tween_property(node as CanvasItem, "modulate:a", target, 0.2)
 	for child in node.get_children():
 		_tween_transparency(child, target)
+
+
+func _add_building_collisions() -> void:
+	_collide_at_bottom("House", 214, 240, Vector2(190, 4))
+	_collide_at_bottom("OldHouse", 113, 93, Vector2(100, 4))
+	_collide_at_bottom("YardTree", 18, 70, Vector2(12, 4))
+	_collide_at_bottom("YardWell", 28, 22, Vector2(22, 4))
+	_add_static_body_at(Vector2(660, 353), Vector2(56, 4))
+
+
+func _collide_at_bottom(
+	parent_path: String, body_w: float, body_h: float, foot_size: Vector2,
+) -> void:
+	var parent := get_node_or_null(parent_path)
+	if not parent:
+		return
+	var body := StaticBody2D.new()
+	body.collision_layer = 1
+	body.collision_mask = 0
+	var shape := CollisionShape2D.new()
+	var rect := RectangleShape2D.new()
+	rect.size = foot_size
+	shape.shape = rect
+	shape.position = Vector2(body_w / 2.0, body_h - foot_size.y)
+	body.add_child(shape)
+	parent.add_child(body)
+
+
+func _add_static_body_at(world_center: Vector2, size: Vector2) -> void:
+	var body := StaticBody2D.new()
+	body.position = world_center
+	body.collision_layer = 1
+	body.collision_mask = 0
+	var shape := CollisionShape2D.new()
+	var rect := RectangleShape2D.new()
+	rect.size = size
+	shape.shape = rect
+	body.add_child(shape)
+	add_child(body)
+
+
+func _apply_spawn() -> void:
+	var sid := SceneManager.get_pending_spawn()
+	if sid.is_empty():
+		return
+	var pos: Vector2 = SPAWN_POINTS.get(sid, Vector2.ZERO)
+	if pos != Vector2.ZERO:
+		player.position = pos
+
+
+func _add_pause_menu() -> void:
+	add_child(load("res://scenes/ui/pause_menu.tscn").instantiate())
 
 
 func _bind_all_npcs() -> void:

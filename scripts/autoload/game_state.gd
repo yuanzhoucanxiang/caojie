@@ -30,5 +30,16 @@ func is_event_completed(event_id: String) -> bool:
 	return event_id in completed_events
 
 
+func reset() -> void:
+	attributes = {
+		"懂事": 0,
+		"好奇": 0,
+		"勤劳": 0,
+		"体力": 0,
+		"亲密": 0,
+	}
+	completed_events.clear()
+
+
 func check_attribute(attr_name: String, min_value: int) -> bool:
 	return attributes.get(attr_name, 0) >= min_value

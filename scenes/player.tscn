@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1_player"]
 
 [sub_resource type="RectangleShape2D" id="player_collision"]
-size = Vector2(32, 54)
+size = Vector2(20, 10)
 
 [sub_resource type="CircleShape2D" id="interact_shape"]
 radius = 32.0
@@ -12,7 +12,7 @@ radius = 32.0
 script = ExtResource("1_player")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -27)
+position = Vector2(0, -5)
 shape = SubResource("player_collision")
 
 [node name="InteractionDetector" type="Area2D" parent="."]

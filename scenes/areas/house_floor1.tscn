@@ -128,6 +128,7 @@ target_scene_path = "res://scenes/main.tscn"
 target_area_id = "courtyard"
 transition_color = Color(0.95, 0.93, 0.88, 1)
 prompt_text = "按 E 出去"
+spawn_id = "from_house"
 
 [node name="TriggerZone" type="Area2D" parent="ExitDoor"]
 
@@ -141,6 +142,7 @@ target_scene_path = "res://scenes/areas/house_floor2.tscn"
 target_area_id = "house_floor2"
 transition_color = Color(0.68, 0.62, 0.48, 1)
 prompt_text = "按 E 上楼"
+spawn_id = "from_1f_up"
 
 [node name="TriggerZone" type="Area2D" parent="StairsUp"]
 

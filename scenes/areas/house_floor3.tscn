@@ -75,6 +75,7 @@ target_scene_path = "res://scenes/areas/house_floor2.tscn"
 target_area_id = "house_floor2"
 transition_color = Color(0.65, 0.6, 0.5, 1)
 prompt_text = "按 E 下楼"
+spawn_id = "from_3f_down"
 
 [node name="TriggerZone" type="Area2D" parent="StairsDown"]
 
