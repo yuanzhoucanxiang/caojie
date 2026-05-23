@@ -5,7 +5,7 @@
 - **引擎**：Godot 4.6.2
 - **脚本**：GDScript（Godot 4 语法，不用 Godot 3 兼容写法）
 - **渲染**：gl_compatibility（像素美术，`default_texture_filter=0` 禁过滤）
-- **视口**：640×360，`canvas_items` 拉伸模式
+- **视口**：854×480，`canvas_items` 拉伸模式
 
 ## 项目概述
 
@@ -28,7 +28,8 @@ caojie/
 │   ├── autoload/                    # 全局单例（project.godot 注册）
 │   │   ├── game_state.gd            # 全局属性、事件标记
 │   │   ├── dialogue_manager.gd      # 对话调度、气泡UI管理
-│   │   └── scene_manager.gd         # 场景切换、镜头缩放、水彩过渡
+│   │   ├── scene_manager.gd         # 场景切换、镜头缩放、水彩过渡
+│   │   └── save_manager.gd          # 存档/读档、JSON 序列化
 │   ├── player/
 │   │   └── player.gd                # 玩家移动、depth缩放、广播 interact_pressed
 │   ├── npcs/                        # 所有 NPC 脚本
@@ -128,7 +129,7 @@ caojie/
 
 ## Autoload 规则（重要！）
 
-**当前 autoload 列表：** `GameState`, `DialogueManager`, `SceneManager`（在 `scripts/autoload/` 下）
+**当前 autoload 列表：** `GameState`, `DialogueManager`, `SceneManager`, `SaveManager`（在 `scripts/autoload/` 下）
 
 - Autoload 脚本**不要加 `class_name`**，Autoload 注册名已经是全局引用
 - 写新脚本前先检查 `project.godot` 的 autoload 列表，避免冲突
@@ -232,10 +233,10 @@ const SPAWN_POINTS := {
 | 信息 | 值 |
 |------|------|
 | Godot 版本 | 4.6.2 |
-| 视口 | 640×360 |
+| 视口 | 854×480 |
 | 渲染 | gl_compatibility |
-| 主场景 | `res://scenes/main.tscn` |
-| Autoload | GameState, DialogueManager, SceneManager |
+| 主场景 | `res://scenes/ui/title_screen.tscn` |
+| Autoload | GameState, DialogueManager, SceneManager, SaveManager |
 | 策划案 wiki | yuanzhoucanxiang.github.io/caojie/ |
 | 开发日志 wiki | yuanzhoucanxiang.github.io/caojie/logs/ |
 | 仓库 | git@github.com:yuanzhoucanxiang/caojie.git |
