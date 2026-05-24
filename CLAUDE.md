@@ -209,6 +209,20 @@ const SPAWN_POINTS := {
 - 过渡 easing 用 `TRANS_SINE` + `EASE_IN_OUT`
 - Autoload 脚本不加 `class_name`
 
+## Git 提交规范
+
+格式：`<type>: <简短中文描述>` + 改动点列表
+
+| 前缀 | 用途 |
+|------|------|
+| `feat:` | 新功能/新系统 |
+| `fix:` | 修 bug |
+| `docs:` | 文档/策划案/wiki |
+| `refactor:` | 重写已有代码，不改功能 |
+| `style:` | 格式/命名调整（gdlint、代码规范） |
+
+提交时机：每完成一个可独立运行的小里程碑就提交。出问题时可以精准回退。
+
 ## 策划案同步规则
 
 - 修改策划案内容时，先修订 `WORLD.md`（源文件）
