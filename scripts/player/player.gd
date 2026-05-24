@@ -19,10 +19,6 @@ const RIGHT_BOUND: float = 1680.0
 @export var depth_speed: float = 200.0
 
 
-func _ready() -> void:
-	SaveManager.apply_position(self)
-
-
 func _draw() -> void:
 	draw_rect(Rect2(-SPRITE_SIZE.x / 2, -SPRITE_SIZE.y, SPRITE_SIZE.x, SPRITE_SIZE.y), SPRITE_COLOR)
 
