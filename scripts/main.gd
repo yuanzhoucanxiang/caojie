@@ -8,16 +8,13 @@ const SPAWN_POINTS := {
 	"from_house": Vector2(200, 385),
 }
 
-var _foreground_data: Array[Dictionary] = []
-
 @onready var player: CharacterBody2D = $Player
 
 
 func _ready() -> void:
 	_apply_textures()
 	_setup_post_process()
-	_setup_foreground_transparency()
-	_add_building_collisions()
+	_add_collisions()
 	_add_pause_menu()
 	_apply_spawn()
 	player.add_to_group("player")
@@ -76,82 +73,20 @@ func _apply_textures() -> void:
 	TextureSetup.apply_by_name(self, rules)
 
 
-func _setup_foreground_transparency() -> void:
-	var fg_names := PackedStringArray([
-		"ForegroundTree", "ForegroundBush", "ForegroundBush2",
-		"ForegroundPost", "OldHouseEdge",
-		"CloseFence", "CloseGrassL", "CloseGrassR",
-		"YardTree", "OldHouse", "YardWell", "Clothesline", "ChickenCoop",
-	])
-	for node_name in fg_names:
-		var node := get_node_or_null(node_name)
-		if not node:
-			continue
-		var bounds := _compute_world_bounds(node)
-		_foreground_data.append({
-			node = node,
-			bounds = bounds,
-			faded = false,
-		})
-
-
-func _compute_world_bounds(node: Node) -> Rect2:
-	if node is ColorRect:
-		var cr := node as ColorRect
-		var parent_pos := Vector2.ZERO
-		if node.get_parent() is Node2D:
-			parent_pos = (node.get_parent() as Node2D).position
-		return Rect2(
-			parent_pos.x + cr.offset_left, parent_pos.y + cr.offset_top,
-			cr.offset_right - cr.offset_left, cr.offset_bottom - cr.offset_top,
-		)
-	# Node2D — 计算所有子节点的包围盒
-	var nd := node as Node2D
-	var min_x := INF; var min_y := INF
-	var max_x := -INF; var max_y := -INF
-	for child in nd.get_children():
-		if child is ColorRect:
-			var cr := child as ColorRect
-			min_x = minf(min_x, cr.offset_left)
-			min_y = minf(min_y, cr.offset_top)
-			max_x = maxf(max_x, cr.offset_right)
-			max_y = maxf(max_y, cr.offset_bottom)
-	if min_x == INF:
-		return Rect2()
-	return Rect2(
-		nd.position.x + min_x, nd.position.y + min_y,
-		max_x - min_x, max_y - min_y,
-	)
-
-
-func _physics_process(_delta: float) -> void:
-	if not player:
-		return
-	var pp := player.position
-	for data in _foreground_data:
-		var node: Node = data["node"]
-		var bounds: Rect2 = data["bounds"]
-		var inside := bounds.has_point(pp)
-		if data["faded"] != inside:
-			data["faded"] = inside
-			_tween_transparency(node, 0.35 if inside else 1.0)
-
-
-func _tween_transparency(node: Node, target: float) -> void:
-	if node is CanvasItem:
-		var tw := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-		tw.tween_property(node as CanvasItem, "modulate:a", target, 0.2)
-	for child in node.get_children():
-		_tween_transparency(child, target)
-
-
-func _add_building_collisions() -> void:
+func _add_collisions() -> void:
+	# 建筑
 	_collide_at_bottom("House", 214, 240, Vector2(190, 8))
 	_collide_at_bottom("OldHouse", 113, 93, Vector2(100, 8))
+	# 树/井/设施
 	_collide_at_bottom("YardTree", 18, 0, Vector2(12, 6))
 	_collide_at_bottom("YardWell", 28, 0, Vector2(22, 6))
 	_collide_at_bottom("Clothesline", 56, 0, Vector2(50, 6))
+	_collide_at_bottom("ForegroundTree", 26, 107, Vector2(20, 6))
+	_collide_at_bottom("CloseFence", 64, 0, Vector2(60, 6))
+	# 前景
 	_add_static_body_at(Vector2(660, 417), Vector2(56, 6))
+	_add_static_body_at(Vector2(413.5, 440), Vector2(27, 6))
+	_add_static_body_at(Vector2(477.5, 447), Vector2(13, 6))
 
 
 func _collide_at_bottom(
