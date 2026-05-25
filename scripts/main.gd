@@ -76,12 +76,12 @@ func _add_collisions() -> void:
 	_collide_at_bottom("House", 214, 240, Vector2(190, 20))
 	_collide_at_bottom("OldHouse", 113, 93, Vector2(100, 16))
 	# 树/井/设施
-	_collide_at_bottom("YardTree", 16, 0, Vector2(16, 20))
-	_collide_at_bottom("YardWell", 28, 0, Vector2(22, 12))
-	_collide_at_bottom("Clothesline", 56, 0, Vector2(50, 12))
-	_add_static_body_at(Vector2(793, 417), Vector2(56, 12))
-	_add_static_body_at(Vector2(1000.5, 473), Vector2(133, 12))
-	_add_static_body_at(Vector2(1353.5, 500), Vector2(173, 12))
+	_collide_at_bottom("YardTree", 16, 0, Vector2(16, 40))
+	_collide_at_bottom("YardWell", 28, 0, Vector2(22, 20))
+	_collide_at_bottom("Clothesline", 56, 0, Vector2(50, 20))
+	_add_static_body_at(Vector2(793, 417), Vector2(56, 20))
+	_add_static_body_at(Vector2(1000.5, 473), Vector2(133, 20))
+	_add_static_body_at(Vector2(1353.5, 500), Vector2(173, 20))
 
 
 func _collide_at_bottom(
@@ -97,7 +97,7 @@ func _collide_at_bottom(
 	var rect := RectangleShape2D.new()
 	rect.size = foot_size
 	shape.shape = rect
-	shape.position = Vector2(body_w / 2.0, body_h - foot_size.y / 2.0)
+	shape.position = Vector2(body_w / 2.0, body_h)
 	body.add_child(shape)
 	parent.add_child(body)
 
