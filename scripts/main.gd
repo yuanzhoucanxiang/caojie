@@ -5,7 +5,7 @@
 extends Node2D
 
 const SPAWN_POINTS := {
-	"from_house": Vector2(200, 395),
+	"from_house": Vector2(200, 385),
 }
 
 var _foreground_data: Array[Dictionary] = []
