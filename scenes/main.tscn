@@ -254,7 +254,7 @@ offset_bottom = -37.0
 color = Color(0.6, 0.55, 0.45, 1)
 
 [node name="ChickenCoop" type="ColorRect" parent="." unique_id=1627340277]
-z_index = 357
+z_index = 417
 offset_left = 627.0
 offset_top = 391.0
 offset_right = 693.0
@@ -262,7 +262,7 @@ offset_bottom = 417.0
 color = Color(0.5, 0.42, 0.3, 1)
 
 [node name="ForegroundTree" type="Node2D" parent="." unique_id=186962476]
-z_index = 395
+z_index = 540
 position = Vector2(1574, 367)
 
 [node name="TreeCrown" type="ColorRect" parent="ForegroundTree" unique_id=710037616]
@@ -288,7 +288,7 @@ offset_bottom = 173.0
 color = Color(0.12, 0.1, 0.08, 0.4)
 
 [node name="ForegroundBush" type="ColorRect" parent="." unique_id=1877504914]
-z_index = 395
+z_index = 540
 offset_left = 934.0
 offset_top = 420.0
 offset_right = 1067.0
@@ -304,7 +304,7 @@ offset_bottom = 480.0
 color = Color(0.12, 0.1, 0.08, 0.35)
 
 [node name="ForegroundBush2" type="ColorRect" parent="." unique_id=1666700689]
-z_index = 395
+z_index = 540
 offset_left = 1267.0
 offset_top = 440.0
 offset_right = 1440.0
@@ -312,7 +312,7 @@ offset_bottom = 500.0
 color = Color(0.22, 0.3, 0.16, 0.85)
 
 [node name="ForegroundPost" type="ColorRect" parent="." unique_id=787324315]
-z_index = 390
+z_index = 530
 offset_left = 471.0
 offset_top = 340.0
 offset_right = 484.0
@@ -328,7 +328,7 @@ offset_bottom = 452.0
 color = Color(0.12, 0.1, 0.08, 0.35)
 
 [node name="OldHouseEdge" type="ColorRect" parent="." unique_id=807617824]
-z_index = 390
+z_index = 530
 offset_left = 400.0
 offset_top = 313.0
 offset_right = 427.0
@@ -336,7 +336,7 @@ offset_bottom = 440.0
 color = Color(0.28, 0.22, 0.15, 0.8)
 
 [node name="CloseFence" type="Node2D" parent="." unique_id=1912538558]
-z_index = 400
+z_index = 550
 position = Vector2(747, 500)
 
 [node name="FencePost1" type="ColorRect" parent="CloseFence" unique_id=1939392093]
@@ -363,7 +363,7 @@ offset_bottom = -113.0
 color = Color(0.17, 0.13, 0.08, 0.95)
 
 [node name="CloseGrassL" type="Node2D" parent="." unique_id=1983730070]
-z_index = 400
+z_index = 550
 position = Vector2(80, 527)
 
 [node name="Blade1" type="ColorRect" parent="CloseGrassL" unique_id=160617780]
@@ -387,7 +387,7 @@ offset_bottom = 20.0
 color = Color(0.22, 0.3, 0.15, 0.85)
 
 [node name="CloseGrassR" type="Node2D" parent="." unique_id=654970756]
-z_index = 400
+z_index = 550
 position = Vector2(1654, 533)
 
 [node name="Blade1" type="ColorRect" parent="CloseGrassR" unique_id=1754794061]
