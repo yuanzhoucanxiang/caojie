@@ -119,7 +119,7 @@ color = Color(0.08, 0.06, 0.04, 0.25)
 
 [node name="House" type="Node2D" parent="." unique_id=315820722]
 z_index = 300
-position = Vector2(80, 60)
+position = Vector2(80, 120)
 
 [node name="HouseBody" type="ColorRect" parent="House" unique_id=732231702]
 offset_right = 214.0
@@ -183,7 +183,7 @@ shape = SubResource("trigger_house")
 
 [node name="OldHouse" type="Node2D" parent="." unique_id=1264977627]
 z_index = 300
-position = Vector2(300, 207)
+position = Vector2(300, 267)
 
 [node name="OldHouseWall" type="ColorRect" parent="OldHouse" unique_id=1581502384]
 offset_right = 113.0
@@ -199,7 +199,7 @@ color = Color(0.28, 0.22, 0.18, 1)
 
 [node name="YardTree" type="Node2D" parent="." unique_id=1309557850]
 z_index = 300
-position = Vector2(267, 300)
+position = Vector2(267, 360)
 
 [node name="TreeTrunk" type="ColorRect" parent="YardTree" unique_id=1866293589]
 offset_left = -8.0
@@ -216,7 +216,7 @@ color = Color(0.38, 0.44, 0.25, 1)
 
 [node name="YardWell" type="Node2D" parent="." unique_id=1672171698]
 z_index = 363
-position = Vector2(493, 363)
+position = Vector2(493, 423)
 
 [node name="WellBody" type="ColorRect" parent="YardWell" unique_id=1855407847]
 offset_left = -13.0
@@ -233,7 +233,7 @@ color = Color(0.48, 0.42, 0.3, 1)
 
 [node name="Clothesline" type="Node2D" parent="." unique_id=747632896]
 z_index = 357
-position = Vector2(573, 357)
+position = Vector2(573, 417)
 
 [node name="PoleLeft" type="ColorRect" parent="Clothesline" unique_id=761734849]
 offset_left = -3.0
@@ -256,14 +256,14 @@ color = Color(0.6, 0.55, 0.45, 1)
 [node name="ChickenCoop" type="ColorRect" parent="." unique_id=1627340277]
 z_index = 357
 offset_left = 627.0
-offset_top = 331.0
+offset_top = 391.0
 offset_right = 693.0
-offset_bottom = 357.0
+offset_bottom = 417.0
 color = Color(0.5, 0.42, 0.3, 1)
 
 [node name="ForegroundTree" type="Node2D" parent="." unique_id=186962476]
 z_index = 395
-position = Vector2(1574, 307)
+position = Vector2(1574, 367)
 
 [node name="TreeCrown" type="ColorRect" parent="ForegroundTree" unique_id=710037616]
 offset_left = -53.0
@@ -282,62 +282,62 @@ color = Color(0.18, 0.15, 0.1, 0.9)
 [node name="TreeGroundShadow" type="ColorRect" parent="ForegroundTree" unique_id=391378857]
 z_index = -1
 offset_left = -20.0
-offset_top = 100.0
+offset_top = 160.0
 offset_right = 20.0
-offset_bottom = 113.0
+offset_bottom = 173.0
 color = Color(0.12, 0.1, 0.08, 0.4)
 
 [node name="ForegroundBush" type="ColorRect" parent="." unique_id=1877504914]
 z_index = 395
 offset_left = 934.0
-offset_top = 360.0
+offset_top = 420.0
 offset_right = 1067.0
-offset_bottom = 413.0
+offset_bottom = 473.0
 color = Color(0.25, 0.35, 0.18, 0.8)
 
 [node name="BushGroundShadow" type="ColorRect" parent="." unique_id=68559073]
 z_index = 200
 offset_left = 927.0
-offset_top = 407.0
+offset_top = 467.0
 offset_right = 1074.0
-offset_bottom = 420.0
+offset_bottom = 480.0
 color = Color(0.12, 0.1, 0.08, 0.35)
 
 [node name="ForegroundBush2" type="ColorRect" parent="." unique_id=1666700689]
 z_index = 395
 offset_left = 1267.0
-offset_top = 380.0
+offset_top = 440.0
 offset_right = 1440.0
-offset_bottom = 440.0
+offset_bottom = 500.0
 color = Color(0.22, 0.3, 0.16, 0.85)
 
 [node name="ForegroundPost" type="ColorRect" parent="." unique_id=787324315]
 z_index = 390
 offset_left = 471.0
-offset_top = 280.0
+offset_top = 340.0
 offset_right = 484.0
-offset_bottom = 387.0
+offset_bottom = 447.0
 color = Color(0.22, 0.18, 0.12, 0.9)
 
 [node name="PostGroundShadow" type="ColorRect" parent="." unique_id=1715220464]
 z_index = 200
 offset_left = 468.0
-offset_top = 384.0
+offset_top = 444.0
 offset_right = 487.0
-offset_bottom = 392.0
+offset_bottom = 452.0
 color = Color(0.12, 0.1, 0.08, 0.35)
 
 [node name="OldHouseEdge" type="ColorRect" parent="." unique_id=807617824]
 z_index = 390
 offset_left = 400.0
-offset_top = 253.0
+offset_top = 313.0
 offset_right = 427.0
-offset_bottom = 380.0
+offset_bottom = 440.0
 color = Color(0.28, 0.22, 0.15, 0.8)
 
 [node name="CloseFence" type="Node2D" parent="." unique_id=1912538558]
 z_index = 400
-position = Vector2(747, 440)
+position = Vector2(747, 500)
 
 [node name="FencePost1" type="ColorRect" parent="CloseFence" unique_id=1939392093]
 offset_top = -133.0
@@ -364,7 +364,7 @@ color = Color(0.17, 0.13, 0.08, 0.95)
 
 [node name="CloseGrassL" type="Node2D" parent="." unique_id=1983730070]
 z_index = 400
-position = Vector2(80, 467)
+position = Vector2(80, 527)
 
 [node name="Blade1" type="ColorRect" parent="CloseGrassL" unique_id=160617780]
 offset_top = -93.0
@@ -388,7 +388,7 @@ color = Color(0.22, 0.3, 0.15, 0.85)
 
 [node name="CloseGrassR" type="Node2D" parent="." unique_id=654970756]
 z_index = 400
-position = Vector2(1654, 473)
+position = Vector2(1654, 533)
 
 [node name="Blade1" type="ColorRect" parent="CloseGrassR" unique_id=1754794061]
 offset_top = -107.0
@@ -414,10 +414,10 @@ color = Color(0.2, 0.28, 0.14, 0.85)
 position = Vector2(400, 340)
 
 [node name="Uncle" parent="." unique_id=1372506829 instance=ExtResource("5_uncle")]
-position = Vector2(667, 344)
+position = Vector2(667, 404)
 
 [node name="Cousin2" parent="." unique_id=1114886079 instance=ExtResource("7_cousin2")]
-position = Vector2(1134, 349)
+position = Vector2(1134, 409)
 
 [node name="Xiaoming" parent="." unique_id=1612897510 instance=ExtResource("8_xiaoming")]
-position = Vector2(1467, 327)
+position = Vector2(1467, 387)

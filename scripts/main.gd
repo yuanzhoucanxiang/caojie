@@ -5,7 +5,7 @@
 extends Node2D
 
 const SPAWN_POINTS := {
-	"from_house": Vector2(200, 335),
+	"from_house": Vector2(200, 395),
 }
 
 var _foreground_data: Array[Dictionary] = []
@@ -150,7 +150,7 @@ func _add_building_collisions() -> void:
 	_collide_at_bottom("OldHouse", 113, 93, Vector2(100, 4))
 	_collide_at_bottom("YardTree", 18, 70, Vector2(12, 4))
 	_collide_at_bottom("YardWell", 28, 22, Vector2(22, 4))
-	_add_static_body_at(Vector2(660, 353), Vector2(56, 4))
+	_add_static_body_at(Vector2(660, 413), Vector2(56, 4))
 
 
 func _collide_at_bottom(
