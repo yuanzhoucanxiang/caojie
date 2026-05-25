@@ -319,7 +319,7 @@ offset_right = 487.0
 offset_bottom = 452.0
 color = Color(0.12, 0.1, 0.08, 0.35)
 z_index = 550
-position = Vector2(747, 500)
+position = Vector2(900, 360)
 
 [node name="FencePost1" type="ColorRect" parent="CloseFence" unique_id=1939392093]
 offset_top = -133.0
@@ -346,7 +346,7 @@ color = Color(0.17, 0.13, 0.08, 0.95)
 
 [node name="CloseGrassL" type="Node2D" parent="." unique_id=1983730070]
 z_index = 550
-position = Vector2(80, 527)
+position = Vector2(80, 400)
 
 [node name="Blade1" type="ColorRect" parent="CloseGrassL" unique_id=160617780]
 offset_top = -93.0
@@ -370,7 +370,7 @@ color = Color(0.22, 0.3, 0.15, 0.85)
 
 [node name="CloseGrassR" type="Node2D" parent="." unique_id=654970756]
 z_index = 550
-position = Vector2(1654, 533)
+position = Vector2(1654, 420)
 
 [node name="Blade1" type="ColorRect" parent="CloseGrassR" unique_id=1754794061]
 offset_top = -107.0

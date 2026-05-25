@@ -76,7 +76,7 @@ func _add_collisions() -> void:
 	_collide_at_bottom("House", 214, 240, Vector2(190, 20))
 	_collide_at_bottom("OldHouse", 113, 93, Vector2(100, 16))
 	# 树/井/设施
-	_collide_at_bottom("YardTree", 18, 0, Vector2(12, 12))
+	_collide_at_bottom("YardTree", 16, 0, Vector2(16, 20))
 	_collide_at_bottom("YardWell", 28, 0, Vector2(22, 12))
 	_collide_at_bottom("Clothesline", 56, 0, Vector2(50, 12))
 	_add_static_body_at(Vector2(793, 417), Vector2(56, 12))
