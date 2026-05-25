@@ -219,3 +219,45 @@ position = Vector2(550, 409)
 
 [node name="Xiaoming" parent="." unique_id=1612897510 instance=ExtResource("8_xiaoming")]
 position = Vector2(700, 387)
+
+[node name="Tree1" type="Node2D" parent="."]
+z_as_relative = false
+position = Vector2(600, 400)
+
+[node name="TreeTrunk" type="ColorRect" parent="Tree1"]
+z_index = 400
+z_as_relative = false
+offset_left = -6.0
+offset_top = -50.0
+offset_right = 6.0
+color = Color(0.26, 0.18, 0.11, 1)
+
+[node name="TreeCrown" type="ColorRect" parent="Tree1"]
+z_index = 336
+z_as_relative = false
+offset_left = -20.0
+offset_top = -80.0
+offset_right = 20.0
+offset_bottom = -48.0
+color = Color(0.28, 0.4, 0.18, 1)
+
+[node name="Tree2" type="Node2D" parent="."]
+z_as_relative = false
+position = Vector2(800, 420)
+
+[node name="TreeTrunk" type="ColorRect" parent="Tree2"]
+z_index = 420
+z_as_relative = false
+offset_left = -8.0
+offset_top = -70.0
+offset_right = 8.0
+color = Color(0.26, 0.18, 0.11, 1)
+
+[node name="TreeCrown" type="ColorRect" parent="Tree2"]
+z_index = 331
+z_as_relative = false
+offset_left = -28.0
+offset_top = -110.0
+offset_right = 28.0
+offset_bottom = -68.0
+color = Color(0.32, 0.44, 0.2, 1)
