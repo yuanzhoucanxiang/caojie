@@ -1,4 +1,4 @@
-## 职责：音频管理——BGM 和 SFX 播放、音量控制
+## 职责：音频管理——BGM 和 SFX 播放、音量控制，无文件时合成占位音效
 ## 谁使用它：所有系统（场景切换、对话、UI、玩家）
 ## 它使用谁：Godot AudioServer
 
@@ -87,44 +87,51 @@ func _get_placeholder(path: String) -> AudioStream:
 		_:
 			gen = _tone_gen(440.0, 0.08, 0.2)
 
-	gen.mix_rate = SAMPLE_RATE
-	gen.buffer_length = 0.3
 	_placeholders[key] = gen
 	return gen
 
 
-func _tone_gen(freq: float, duration: float, volume: float) -> AudioStreamGenerator:
+func _new_gen() -> AudioStreamGenerator:
 	var gen := AudioStreamGenerator.new()
-	var playback := gen.get_stream_playback() as AudioStreamGeneratorPlayback
+	gen.mix_rate = SAMPLE_RATE
+	gen.buffer_length = 0.3
+	return gen
+
+
+func _tone_gen(freq: float, duration: float, volume: float) -> AudioStreamGenerator:
+	var gen := _new_gen()
+	var pb := gen.get_stream_playback() as AudioStreamGeneratorPlayback
 	var frames := int(SAMPLE_RATE * duration)
 	for i in frames:
 		var t := float(i) / SAMPLE_RATE
 		var env := 1.0 - t / duration
 		var s := sin(t * freq * TAU) * env * volume
-		playback.push_frame(Vector2(s, s))
+		pb.push_frame(Vector2(s, s))
 	return gen
 
 
-func _sweep_gen(f0: float, f1: float, duration: float, volume: float) -> AudioStreamGenerator:
-	var gen := AudioStreamGenerator.new()
-	var playback := gen.get_stream_playback() as AudioStreamGeneratorPlayback
+func _sweep_gen(
+	f0: float, f1: float, duration: float, volume: float,
+) -> AudioStreamGenerator:
+	var gen := _new_gen()
+	var pb := gen.get_stream_playback() as AudioStreamGeneratorPlayback
 	var frames := int(SAMPLE_RATE * duration)
 	for i in frames:
 		var t := float(i) / SAMPLE_RATE
 		var env := 1.0 - t / duration
 		var f := lerpf(f0, f1, t / duration)
 		var s := sin(t * f * TAU) * env * volume
-		playback.push_frame(Vector2(s, s))
+		pb.push_frame(Vector2(s, s))
 	return gen
 
 
 func _noise_gen(duration: float, volume: float) -> AudioStreamGenerator:
-	var gen := AudioStreamGenerator.new()
-	var playback := gen.get_stream_playback() as AudioStreamGeneratorPlayback
+	var gen := _new_gen()
+	var pb := gen.get_stream_playback() as AudioStreamGeneratorPlayback
 	var frames := int(SAMPLE_RATE * duration)
 	for i in frames:
 		var t := float(i) / SAMPLE_RATE
 		var env := 1.0 - t / duration
 		var s := (randf() * 2.0 - 1.0) * env * volume
-		playback.push_frame(Vector2(s, s))
+		pb.push_frame(Vector2(s, s))
 	return gen
