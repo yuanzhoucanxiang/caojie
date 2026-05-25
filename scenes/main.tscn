@@ -311,14 +311,6 @@ offset_right = 1440.0
 offset_bottom = 500.0
 color = Color(0.22, 0.3, 0.16, 0.85)
 
-[node name="ForegroundPost" type="ColorRect" parent="." unique_id=787324315]
-z_index = 530
-offset_left = 471.0
-offset_top = 340.0
-offset_right = 484.0
-offset_bottom = 447.0
-color = Color(0.22, 0.18, 0.12, 0.9)
-
 [node name="PostGroundShadow" type="ColorRect" parent="." unique_id=1715220464]
 z_index = 200
 offset_left = 468.0

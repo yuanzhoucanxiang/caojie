@@ -63,7 +63,6 @@ func _apply_textures() -> void:
 		"FenceRail": [TextureSetup.Pattern.WOOD_H, 40.0, 0.12],
 		"Blade": [TextureSetup.Pattern.GRASS, 40.0, 0.08],
 		"ForegroundBush": [TextureSetup.Pattern.GRASS, 60.0, 0.08],
-		"ForegroundPost": [TextureSetup.Pattern.WOOD_V, 40.0, 0.1],
 		"FarHills": [TextureSetup.Pattern.NOISE, 150.0, 0.04],
 		"MidHills": [TextureSetup.Pattern.NOISE, 120.0, 0.05],
 		"Sky": [TextureSetup.Pattern.NOISE, 200.0, 0.03],
