@@ -19,41 +19,41 @@ script = ExtResource("1_main")
 motion_scale = Vector2(0.1, 0.1)
 
 [node name="Sky" type="ColorRect" parent="ParallaxBG/Layer1_Sky" unique_id=1112772651]
-offset_top = -200.0
+offset_top = -400.0
 offset_right = 2000.0
-offset_bottom = 680.0
+offset_bottom = 600.0
 color = Color(0.68, 0.6, 0.45, 1)
 
 [node name="Layer2_Far" type="ParallaxLayer" parent="ParallaxBG" unique_id=2013968006]
 motion_scale = Vector2(0.3, 0.2)
 
 [node name="FarHills" type="ColorRect" parent="ParallaxBG/Layer2_Far" unique_id=2077284446]
-offset_top = 133.0
+offset_top = 180.0
 offset_right = 2000.0
-offset_bottom = 233.0
+offset_bottom = 330.0
 color = Color(0.45, 0.48, 0.33, 1)
 
 [node name="TreeFar" type="ColorRect" parent="ParallaxBG/Layer2_Far" unique_id=846105546]
 offset_left = 1200.0
-offset_top = 153.0
+offset_top = 200.0
 offset_right = 1254.0
-offset_bottom = 267.0
+offset_bottom = 310.0
 color = Color(0.35, 0.4, 0.25, 1)
 
 [node name="Layer3_Mid" type="ParallaxLayer" parent="ParallaxBG" unique_id=922454380]
 motion_scale = Vector2(0.5, 0.3)
 
 [node name="MidHills" type="ColorRect" parent="ParallaxBG/Layer3_Mid" unique_id=739916551]
-offset_top = 187.0
+offset_top = 230.0
 offset_right = 2000.0
-offset_bottom = 273.0
+offset_bottom = 310.0
 color = Color(0.48, 0.45, 0.32, 1)
 
 [node name="TreeNear" type="ColorRect" parent="ParallaxBG/Layer3_Mid" unique_id=1003119627]
 offset_left = 1467.0
-offset_top = 173.0
+offset_top = 220.0
 offset_right = 1534.0
-offset_bottom = 307.0
+offset_bottom = 350.0
 color = Color(0.38, 0.4, 0.26, 1)
 
 [node name="Layer4_Scene" type="ParallaxLayer" parent="ParallaxBG" unique_id=391545209]
@@ -61,22 +61,22 @@ motion_scale = Vector2(1, 0.5)
 
 [node name="PathBack" type="ColorRect" parent="ParallaxBG/Layer4_Scene" unique_id=1502816106]
 offset_left = 240.0
-offset_top = 234.0
+offset_top = 360.0
 offset_right = 2000.0
-offset_bottom = 267.0
+offset_bottom = 320.0
 color = Color(0.52, 0.46, 0.33, 1)
 
 [node name="PathMid" type="ColorRect" parent="ParallaxBG/Layer4_Scene" unique_id=1928299275]
 offset_left = 200.0
-offset_top = 260.0
+offset_top = 320.0
 offset_right = 2000.0
-offset_bottom = 314.0
+offset_bottom = 370.0
 color = Color(0.48, 0.43, 0.31, 1)
 
 [node name="GrassBack" type="ColorRect" parent="ParallaxBG/Layer4_Scene" unique_id=1406367491]
-offset_top = 227.0
+offset_top = 290.0
 offset_right = 2000.0
-offset_bottom = 280.0
+offset_bottom = 330.0
 color = Color(0.45, 0.52, 0.28, 1)
 
 [node name="Layer5_Front" type="ParallaxLayer" parent="ParallaxBG" unique_id=805828033]
@@ -84,19 +84,19 @@ motion_scale = Vector2(1.3, 0.6)
 
 [node name="PathFront" type="ColorRect" parent="ParallaxBG/Layer5_Front" unique_id=178068247]
 offset_left = 133.0
-offset_top = 300.0
+offset_top = 360.0
 offset_right = 2000.0
-offset_bottom = 360.0
+offset_bottom = 420.0
 color = Color(0.44, 0.4, 0.3, 1)
 
 [node name="GrassMid" type="ColorRect" parent="ParallaxBG/Layer5_Front" unique_id=1701706078]
-offset_top = 278.0
+offset_top = 340.0
 offset_right = 2000.0
-offset_bottom = 347.0
+offset_bottom = 400.0
 color = Color(0.4, 0.47, 0.26, 1)
 
 [node name="GrassFront" type="ColorRect" parent="ParallaxBG/Layer5_Front" unique_id=74384684]
-offset_top = 344.0
+offset_top = 400.0
 offset_right = 2000.0
 offset_bottom = 800.0
 color = Color(0.35, 0.43, 0.23, 1)
@@ -111,9 +111,9 @@ color = Color(0.98, 0.9, 0.7, 0.12)
 [node name="BuildingShadow" type="ColorRect" parent="." unique_id=213827750]
 z_index = -2
 offset_left = 73.0
-offset_top = 294.0
+offset_top = 350.0
 offset_right = 380.0
-offset_bottom = 354.0
+offset_bottom = 410.0
 mouse_filter = 2
 color = Color(0.08, 0.06, 0.04, 0.25)
 
@@ -226,7 +226,7 @@ color = Color(0.42, 0.38, 0.33, 1)
 
 [node name="YardGround" type="ColorRect" parent="." unique_id=536142436]
 z_index = -1
-offset_top = 300.0
+offset_top = 360.0
 offset_right = 1710.0
 offset_bottom = 800.0
 color = Color(0.48, 0.42, 0.3, 1)
