@@ -13,8 +13,8 @@ const ZOOM_DEFAULT: float = 1.25
 
 const SPRITE_SIZE: Vector2 = Vector2(32, 54)
 const SPRITE_COLOR: Color = Color(0.267, 0.533, 0.8, 1)
-const DEPTH_MIN_Y: float = 340.0
-const DEPTH_MAX_Y: float = 420.0
+const DEPTH_MIN_Y: float = 360.0
+const DEPTH_MAX_Y: float = 520.0
 const SCALE_MIN: float = 0.85
 const SCALE_MAX: float = 1.0
 const LEFT_BOUND: float = 32.0

@@ -40,7 +40,7 @@ func _setup_post_process() -> void:
 	overlay.z_index = 1000
 	add_child(overlay)
 
-	overlay.size = Vector2(1710, 800)
+	overlay.size = Vector2(1710, 900)
 
 
 func _apply_textures() -> void:

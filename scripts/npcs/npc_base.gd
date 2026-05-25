@@ -8,8 +8,8 @@ extends StaticBody2D
 signal dialogue_request(npc_node: Node, event_data: Dictionary)
 
 const SPRITE_SIZE: Vector2 = Vector2(32, 54)
-const DEPTH_MIN_Y: float = 340.0
-const DEPTH_MAX_Y: float = 420.0
+const DEPTH_MIN_Y: float = 360.0
+const DEPTH_MAX_Y: float = 520.0
 const SCALE_MIN: float = 0.85
 const SCALE_MAX: float = 1.0
 
