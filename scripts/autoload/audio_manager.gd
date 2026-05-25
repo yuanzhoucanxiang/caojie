@@ -76,7 +76,7 @@ func _get_placeholder(path: String) -> AudioStream:
 	if _placeholders.has(key):
 		return _placeholders[key]
 
-	var gen: AudioStreamGenerator
+	var gen: AudioStream
 	match key:
 		"ui_click.ogg":
 			gen = _tone_gen(600.0, 0.06, 0.25)
@@ -91,47 +91,49 @@ func _get_placeholder(path: String) -> AudioStream:
 	return gen
 
 
-func _new_gen() -> AudioStreamGenerator:
-	var gen := AudioStreamGenerator.new()
-	gen.mix_rate = SAMPLE_RATE
-	gen.buffer_length = 0.3
-	return gen
+func _make_wav(samples: PackedByteArray) -> AudioStreamWAV:
+	var wav := AudioStreamWAV.new()
+	wav.data = samples
+	wav.format = AudioStreamWAV.FORMAT_16_BITS
+	wav.mix_rate = int(SAMPLE_RATE)
+	wav.stereo = false
+	return wav
 
 
-func _tone_gen(freq: float, duration: float, volume: float) -> AudioStreamGenerator:
-	var gen := _new_gen()
-	var pb := gen.get_stream_playback() as AudioStreamGeneratorPlayback
+func _tone_gen(freq: float, duration: float, volume: float) -> AudioStreamWAV:
 	var frames := int(SAMPLE_RATE * duration)
+	var data := PackedByteArray()
+	data.resize(frames * 2)
 	for i in frames:
 		var t := float(i) / SAMPLE_RATE
 		var env := 1.0 - t / duration
-		var s := sin(t * freq * TAU) * env * volume
-		pb.push_frame(Vector2(s, s))
-	return gen
+		var s := int(sin(t * freq * TAU) * env * volume * 16000)
+		data.encode_s16(i * 2, s)
+	return _make_wav(data)
 
 
 func _sweep_gen(
 	f0: float, f1: float, duration: float, volume: float,
-) -> AudioStreamGenerator:
-	var gen := _new_gen()
-	var pb := gen.get_stream_playback() as AudioStreamGeneratorPlayback
+) -> AudioStreamWAV:
 	var frames := int(SAMPLE_RATE * duration)
+	var data := PackedByteArray()
+	data.resize(frames * 2)
 	for i in frames:
 		var t := float(i) / SAMPLE_RATE
 		var env := 1.0 - t / duration
 		var f := lerpf(f0, f1, t / duration)
-		var s := sin(t * f * TAU) * env * volume
-		pb.push_frame(Vector2(s, s))
-	return gen
+		var s := int(sin(t * f * TAU) * env * volume * 16000)
+		data.encode_s16(i * 2, s)
+	return _make_wav(data)
 
 
-func _noise_gen(duration: float, volume: float) -> AudioStreamGenerator:
-	var gen := _new_gen()
-	var pb := gen.get_stream_playback() as AudioStreamGeneratorPlayback
+func _noise_gen(duration: float, volume: float) -> AudioStreamWAV:
 	var frames := int(SAMPLE_RATE * duration)
+	var data := PackedByteArray()
+	data.resize(frames * 2)
 	for i in frames:
 		var t := float(i) / SAMPLE_RATE
 		var env := 1.0 - t / duration
-		var s := (randf() * 2.0 - 1.0) * env * volume
-		pb.push_frame(Vector2(s, s))
-	return gen
+		var s := int((randf() * 2.0 - 1.0) * env * volume * 16000)
+		data.encode_s16(i * 2, s)
+	return _make_wav(data)
