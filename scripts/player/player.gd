@@ -6,6 +6,11 @@ extends CharacterBody2D
 
 signal interact_pressed
 
+const ZOOM_MIN: float = 0.9
+const ZOOM_MAX: float = 2.5
+const ZOOM_STEP: float = 0.1
+const ZOOM_DEFAULT: float = 1.25
+
 const SPRITE_SIZE: Vector2 = Vector2(32, 54)
 const SPRITE_COLOR: Color = Color(0.267, 0.533, 0.8, 1)
 const DEPTH_MIN_Y: float = 300.0
@@ -19,10 +24,14 @@ const RIGHT_BOUND: float = 1680.0
 @export var depth_speed: float = 200.0
 
 var _step_timer: float = 0.0
+var _target_zoom: float = ZOOM_DEFAULT
+
+@onready var camera: Camera2D = $Camera2D
 
 
 func _ready() -> void:
 	SaveManager.apply_position(self)
+	_target_zoom = camera.zoom.x
 
 
 func _draw() -> void:
@@ -51,6 +60,33 @@ func _physics_process(_delta: float) -> void:
 
 	if Input.is_action_just_pressed("interact"):
 		interact_pressed.emit()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if not _can_zoom():
+		return
+	if not event is InputEventMouseButton:
+		return
+	var mb := event as InputEventMouseButton
+	if not mb.pressed:
+		return
+	match mb.button_index:
+		MOUSE_BUTTON_WHEEL_UP:
+			_target_zoom = maxf(_target_zoom - ZOOM_STEP, ZOOM_MIN)
+			_apply_zoom()
+		MOUSE_BUTTON_WHEEL_DOWN:
+			_target_zoom = minf(_target_zoom + ZOOM_STEP, ZOOM_MAX)
+			_apply_zoom()
+
+
+func _can_zoom() -> bool:
+	var area := SceneManager.get_current_area()
+	return area == "courtyard" or area == "village_road"
+
+
+func _apply_zoom() -> void:
+	var tw := create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	tw.tween_property(camera, "zoom", Vector2(_target_zoom, _target_zoom), 0.25)
 
 
 func _process(_delta: float) -> void:
