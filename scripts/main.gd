@@ -74,14 +74,14 @@ func _apply_textures() -> void:
 
 
 func _add_collisions() -> void:
-	# 建筑（深度面 y≈360，与主角同空间，需要碰撞）
-	_collide_at_bottom("House", 214, 240, Vector2(190, 8))
-	_collide_at_bottom("OldHouse", 113, 93, Vector2(100, 8))
-	# 树/井/设施（深度面 y≈360，与主角同空间）
-	_collide_at_bottom("YardTree", 18, 0, Vector2(12, 6))
-	_collide_at_bottom("YardWell", 28, 0, Vector2(22, 6))
-	_collide_at_bottom("Clothesline", 56, 0, Vector2(50, 6))
-	_add_static_body_at(Vector2(660, 417), Vector2(56, 6))
+	# 建筑（深度面 y≈360）
+	_collide_at_bottom("House", 214, 240, Vector2(190, 20))
+	_collide_at_bottom("OldHouse", 113, 93, Vector2(100, 16))
+	# 树/井/设施
+	_collide_at_bottom("YardTree", 18, 0, Vector2(12, 12))
+	_collide_at_bottom("YardWell", 28, 0, Vector2(22, 12))
+	_collide_at_bottom("Clothesline", 56, 0, Vector2(50, 12))
+	_add_static_body_at(Vector2(660, 417), Vector2(56, 12))
 
 
 func _collide_at_bottom(
