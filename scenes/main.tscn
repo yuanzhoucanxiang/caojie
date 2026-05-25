@@ -19,8 +19,9 @@ script = ExtResource("1_main")
 motion_scale = Vector2(0.1, 0.1)
 
 [node name="Sky" type="ColorRect" parent="ParallaxBG/Layer1_Sky" unique_id=1112772651]
+offset_top = -200.0
 offset_right = 2000.0
-offset_bottom = 480.0
+offset_bottom = 680.0
 color = Color(0.68, 0.6, 0.45, 1)
 
 [node name="Layer2_Far" type="ParallaxLayer" parent="ParallaxBG" unique_id=2013968006]
@@ -97,13 +98,13 @@ color = Color(0.4, 0.47, 0.26, 1)
 [node name="GrassFront" type="ColorRect" parent="ParallaxBG/Layer5_Front" unique_id=74384684]
 offset_top = 344.0
 offset_right = 2000.0
-offset_bottom = 480.0
+offset_bottom = 800.0
 color = Color(0.35, 0.43, 0.23, 1)
 
 [node name="SunlightGradient" type="ColorRect" parent="." unique_id=1767356587]
 z_index = -2
 offset_right = 1710.0
-offset_bottom = 480.0
+offset_bottom = 800.0
 mouse_filter = 2
 color = Color(0.98, 0.9, 0.7, 0.12)
 
@@ -227,7 +228,7 @@ color = Color(0.42, 0.38, 0.33, 1)
 z_index = -1
 offset_top = 300.0
 offset_right = 1710.0
-offset_bottom = 480.0
+offset_bottom = 800.0
 color = Color(0.48, 0.42, 0.3, 1)
 
 [node name="Clothesline" type="Node2D" parent="." unique_id=747632896]
