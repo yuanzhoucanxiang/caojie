@@ -5,7 +5,7 @@
 extends Node2D
 
 const SPAWN_POINTS := {
-	"from_house": Vector2(200, 385),
+	"from_house": Vector2(1370, 385),
 }
 
 @onready var player: CharacterBody2D = $Player
@@ -81,7 +81,7 @@ func _add_collisions() -> void:
 	_collide_at_bottom("YardTree", 18, 0, Vector2(12, 12))
 	_collide_at_bottom("YardWell", 28, 0, Vector2(22, 12))
 	_collide_at_bottom("Clothesline", 56, 0, Vector2(50, 12))
-	_add_static_body_at(Vector2(1083, 417), Vector2(56, 12))
+	_add_static_body_at(Vector2(793, 417), Vector2(56, 12))
 
 
 func _collide_at_bottom(
