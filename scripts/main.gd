@@ -146,11 +146,11 @@ func _tween_transparency(node: Node, target: float) -> void:
 
 
 func _add_building_collisions() -> void:
-	_collide_at_bottom("House", 214, 240, Vector2(190, 4))
-	_collide_at_bottom("OldHouse", 113, 93, Vector2(100, 4))
-	_collide_at_bottom("YardTree", 18, 70, Vector2(12, 4))
-	_collide_at_bottom("YardWell", 28, 22, Vector2(22, 4))
-	_add_static_body_at(Vector2(660, 413), Vector2(56, 4))
+	_collide_at_bottom("House", 214, 240, Vector2(190, 8))
+	_collide_at_bottom("OldHouse", 113, 93, Vector2(100, 8))
+	_collide_at_bottom("YardTree", 18, 70, Vector2(12, 6))
+	_collide_at_bottom("YardWell", 28, 22, Vector2(22, 6))
+	_add_static_body_at(Vector2(660, 413), Vector2(56, 6))
 
 
 func _collide_at_bottom(

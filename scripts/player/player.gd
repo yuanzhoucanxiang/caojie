@@ -84,7 +84,7 @@ func _can_zoom() -> bool:
 	return area == "courtyard" or area == "village_road"
 
 
-const CAMERA_BASE_OFFSET: float = -60.0
+const CAMERA_BASE_OFFSET: float = -100.0
 
 var _zoom_tween: Tween
 

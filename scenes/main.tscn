@@ -169,7 +169,7 @@ offset_bottom = 203.0
 color = Color(0.75, 0.7, 0.55, 1)
 
 [node name="HouseDoor" type="StaticBody2D" parent="House" unique_id=1473928808]
-position = Vector2(107, 207)
+position = Vector2(107, 240)
 script = ExtResource("9_trigger")
 target_scene_path = "res://scenes/areas/house_floor1.tscn"
 target_area_id = "house_floor1"
