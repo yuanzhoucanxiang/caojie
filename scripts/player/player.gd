@@ -84,13 +84,19 @@ func _can_zoom() -> bool:
 	return area == "courtyard" or area == "village_road"
 
 
+const CAMERA_BASE_OFFSET: float = -60.0
+
 var _zoom_tween: Tween
 
 func _apply_zoom() -> void:
 	if _zoom_tween and _zoom_tween.is_valid():
 		_zoom_tween.kill()
+	var ratio := ZOOM_DEFAULT / _target_zoom
+	var target_offset := Vector2(0, CAMERA_BASE_OFFSET * ratio)
 	_zoom_tween = create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	_zoom_tween.set_parallel(true)
 	_zoom_tween.tween_property(camera, "zoom", Vector2(_target_zoom, _target_zoom), 0.25)
+	_zoom_tween.tween_property(camera, "position", target_offset, 0.25)
 
 
 func _process(_delta: float) -> void:
