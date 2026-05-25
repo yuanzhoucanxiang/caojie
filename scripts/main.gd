@@ -151,7 +151,11 @@ func _add_building_collisions() -> void:
 	_collide_at_bottom("YardTree", 18, 0, Vector2(12, 6))
 	_collide_at_bottom("YardWell", 28, 0, Vector2(22, 6))
 	_collide_at_bottom("Clothesline", 56, 0, Vector2(50, 6))
+	_collide_at_bottom("ForegroundTree", 26, 107, Vector2(20, 6))
+	_collide_at_bottom("CloseFence", 64, 0, Vector2(60, 6))
 	_add_static_body_at(Vector2(660, 417), Vector2(56, 6))
+	_add_static_body_at(Vector2(413.5, 440), Vector2(27, 6))
+	_add_static_body_at(Vector2(477.5, 447), Vector2(13, 6))
 
 
 func _collide_at_bottom(
