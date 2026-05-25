@@ -84,6 +84,8 @@ func _add_collisions() -> void:
 	_add_static_body_at(Vector2(793, 417), Vector2(56, 20))
 	_add_static_body_at(Vector2(1000.5, 473), Vector2(133, 20))
 	_add_static_body_at(Vector2(1353.5, 500), Vector2(173, 20))
+	_add_static_body_at(Vector2(101.5, 400), Vector2(43, 20))
+	_add_static_body_at(Vector2(1676.5, 420), Vector2(45, 20))
 
 
 func _collide_at_bottom(
