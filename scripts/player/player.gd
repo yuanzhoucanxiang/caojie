@@ -18,6 +18,12 @@ const RIGHT_BOUND: float = 1680.0
 @export var speed: float = 270.0
 @export var depth_speed: float = 200.0
 
+var _step_timer: float = 0.0
+
+
+func _ready() -> void:
+	SaveManager.apply_position(self)
+
 
 func _draw() -> void:
 	draw_rect(Rect2(-SPRITE_SIZE.x / 2, -SPRITE_SIZE.y, SPRITE_SIZE.x, SPRITE_SIZE.y), SPRITE_COLOR)
@@ -31,6 +37,14 @@ func _physics_process(_delta: float) -> void:
 	velocity.y = vertical * depth_speed
 
 	move_and_slide()
+
+	if velocity.length() > 10.0:
+		_step_timer += _delta
+		if _step_timer > 0.35:
+			_step_timer = 0.0
+			AudioManager.play_sfx("SFX/footstep.ogg")
+	else:
+		_step_timer = 0.0
 
 	position.x = clampf(position.x, LEFT_BOUND, RIGHT_BOUND)
 	position.y = clampf(position.y, DEPTH_MIN_Y, DEPTH_MAX_Y)
