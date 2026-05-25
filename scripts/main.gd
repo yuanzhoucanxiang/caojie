@@ -166,7 +166,7 @@ func _collide_at_bottom(
 	var rect := RectangleShape2D.new()
 	rect.size = foot_size
 	shape.shape = rect
-	shape.position = Vector2(body_w / 2.0, body_h - foot_size.y * 2)
+	shape.position = Vector2(body_w / 2.0, body_h - foot_size.y / 2.0)
 	body.add_child(shape)
 	parent.add_child(body)
 
