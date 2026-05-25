@@ -78,6 +78,7 @@ func change_to_packed(
 	get_tree().root.add_child(new_instance)
 	get_tree().current_scene = new_instance
 	_current_area = area_id
+	AudioManager.play_sfx("SFX/door_open.ogg")
 	print("【场景】新场景已就位: ", new_instance.name)
 
 	await get_tree().process_frame

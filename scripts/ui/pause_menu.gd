@@ -12,6 +12,8 @@ func _ready() -> void:
 	%SaveButton.pressed.connect(_on_save)
 	%SettingsButton.pressed.connect(_on_settings)
 	%QuitButton.pressed.connect(_on_quit)
+	for btn: Button in [%SaveButton, %SettingsButton, %QuitButton]:
+		btn.pressed.connect(AudioManager.play_sfx.bind("SFX/ui_click.ogg"))
 
 
 func _input(event: InputEvent) -> void:

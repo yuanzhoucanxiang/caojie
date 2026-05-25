@@ -12,6 +12,8 @@ func _ready() -> void:
 	%StartButton.pressed.connect(_on_start)
 	%ContinueButton.pressed.connect(_on_continue)
 	%QuitButton.pressed.connect(_on_quit)
+	for btn: Button in [%StartButton, %ContinueButton, %QuitButton]:
+		btn.pressed.connect(AudioManager.play_sfx.bind("SFX/ui_click.ogg"))
 	if SaveManager.has_save():
 		%ContinueButton.disabled = false
 	_do_fade_in()
