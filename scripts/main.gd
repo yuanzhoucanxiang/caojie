@@ -72,13 +72,15 @@ func _apply_textures() -> void:
 
 
 func _add_collisions() -> void:
-	# 建筑（深度面 y≈360）
+	# 建筑
 	_collide_at_bottom("House", 214, 240, Vector2(190, 20))
 	_collide_at_bottom("OldHouse", 113, 93, Vector2(100, 16))
-	# 树/井/设施
-	_collide_at_bottom("YardTree", 16, 0, Vector2(16, 40))
+	# 树/井/设施（找每个物件的实际落地点Y）
+	_collide_at_bottom("YardTree", 16, 0, Vector2(16, 20))
 	_collide_at_bottom("YardWell", 28, 0, Vector2(22, 20))
 	_collide_at_bottom("Clothesline", 56, 0, Vector2(50, 20))
+	_collide_at_bottom("ForegroundTree", 26, 107, Vector2(26, 20))
+	# 独立色块
 	_add_static_body_at(Vector2(793, 417), Vector2(56, 20))
 	_add_static_body_at(Vector2(1000.5, 473), Vector2(133, 20))
 	_add_static_body_at(Vector2(1353.5, 500), Vector2(173, 20))
