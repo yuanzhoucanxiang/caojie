@@ -118,7 +118,7 @@ mouse_filter = 2
 color = Color(0.08, 0.06, 0.04, 0.25)
 
 [node name="House" type="Node2D" parent="." unique_id=315820722]
-z_index = 300
+z_index = 360
 position = Vector2(80, 120)
 
 [node name="HouseBody" type="ColorRect" parent="House" unique_id=732231702]
@@ -182,7 +182,7 @@ spawn_id = "from_outside"
 shape = SubResource("trigger_house")
 
 [node name="OldHouse" type="Node2D" parent="." unique_id=1264977627]
-z_index = 300
+z_index = 360
 position = Vector2(300, 267)
 
 [node name="OldHouseWall" type="ColorRect" parent="OldHouse" unique_id=1581502384]
@@ -198,7 +198,7 @@ offset_bottom = 7.0
 color = Color(0.28, 0.22, 0.18, 1)
 
 [node name="YardTree" type="Node2D" parent="." unique_id=1309557850]
-z_index = 300
+z_index = 360
 position = Vector2(267, 360)
 
 [node name="TreeTrunk" type="ColorRect" parent="YardTree" unique_id=1866293589]
@@ -215,7 +215,7 @@ offset_bottom = -61.0
 color = Color(0.38, 0.44, 0.25, 1)
 
 [node name="YardWell" type="Node2D" parent="." unique_id=1672171698]
-z_index = 363
+z_index = 423
 position = Vector2(493, 423)
 
 [node name="WellBody" type="ColorRect" parent="YardWell" unique_id=1855407847]
