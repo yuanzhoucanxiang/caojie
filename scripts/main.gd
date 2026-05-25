@@ -8,13 +8,17 @@ const SPAWN_POINTS := {
 	"from_house": Vector2(1370, 385),
 }
 
+const COLLISION_THRESHOLD: float = 25.0
+
+var _collision_bodies: Array[Dictionary] = []
+
 @onready var player: CharacterBody2D = $Player
 
 
 func _ready() -> void:
 	_apply_textures()
 	_setup_post_process()
-	_add_collisions()
+	_add_depth_collisions()
 	_add_pause_menu()
 	_apply_spawn()
 	player.add_to_group("player")
@@ -71,27 +75,17 @@ func _apply_textures() -> void:
 	TextureSetup.apply_by_name(self, rules)
 
 
-func _add_collisions() -> void:
-	# 建筑
-	_collide_at_bottom("House", 214, 240, Vector2(190, 20))
-	_collide_at_bottom("OldHouse", 113, 93, Vector2(100, 16))
-	# 树/井/设施（找每个物件的实际落地点Y）
-	_collide_at_bottom("YardTree", 16, 0, Vector2(16, 20))
-	_collide_at_bottom("YardWell", 28, 0, Vector2(22, 20))
-	_collide_at_bottom("Clothesline", 56, 0, Vector2(50, 20))
-	_collide_at_bottom("ForegroundTree", 26, 107, Vector2(26, 20))
-	# 独立色块
-	_add_static_body_at(Vector2(793, 417), Vector2(56, 20))
-	_add_static_body_at(Vector2(1000.5, 473), Vector2(133, 20))
-	_add_static_body_at(Vector2(1353.5, 500), Vector2(173, 20))
-	_add_static_body_at(Vector2(101.5, 400), Vector2(43, 20))
-	_add_static_body_at(Vector2(1676.5, 420), Vector2(45, 20))
+func _add_depth_collisions() -> void:
+	# 大屋 ground_y=360
+	_add_body("House", 214, 240, 360)
+	# 老屋 ground_y=360
+	_add_body("OldHouse", 113, 93, 360)
+	# 龙眼树 ground_y=360
+	_add_body("YardTree", 16, 0, 360)
 
 
-func _collide_at_bottom(
-	parent_path: String, body_w: float, body_h: float, foot_size: Vector2,
-) -> void:
-	var parent := get_node_or_null(parent_path)
+func _add_body(node_path: String, w: float, h: float, ground_y: float) -> void:
+	var parent := get_node_or_null(node_path)
 	if not parent:
 		return
 	var body := StaticBody2D.new()
@@ -99,24 +93,21 @@ func _collide_at_bottom(
 	body.collision_mask = 0
 	var shape := CollisionShape2D.new()
 	var rect := RectangleShape2D.new()
-	rect.size = foot_size
+	rect.size = Vector2(w, 20)
 	shape.shape = rect
-	shape.position = Vector2(body_w / 2.0, body_h)
+	shape.position = Vector2(w / 2.0, h)
 	body.add_child(shape)
 	parent.add_child(body)
+	_collision_bodies.append({"body": body, "ground_y": ground_y})
 
 
-func _add_static_body_at(world_center: Vector2, size: Vector2) -> void:
-	var body := StaticBody2D.new()
-	body.position = world_center
-	body.collision_layer = 1
-	body.collision_mask = 0
-	var shape := CollisionShape2D.new()
-	var rect := RectangleShape2D.new()
-	rect.size = size
-	shape.shape = rect
-	body.add_child(shape)
-	add_child(body)
+func _physics_process(_delta: float) -> void:
+	if not player:
+		return
+	for data in _collision_bodies:
+		var body: StaticBody2D = data["body"]
+		var dist := absf(player.position.y - data["ground_y"])
+		body.set_collision_layer_value(1, dist < COLLISION_THRESHOLD)
 
 
 func _apply_spawn() -> void:
