@@ -21,7 +21,7 @@ shape = SubResource("player_collision")
 shape = SubResource("interact_shape")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(0, -27)
+position = Vector2(0, -120)
 zoom = Vector2(1, 1)
 drag_horizontal_enabled = true
 drag_vertical_enabled = false
