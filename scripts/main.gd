@@ -82,6 +82,8 @@ func _add_depth_collisions() -> void:
 	_add_body("OldHouse", 113, 93, 360)
 	# 龙眼树 ground_y=360
 	_add_body("YardTree", 16, 0, 360)
+	_add_body("Tree1", 12, 0, 400)
+	_add_body("Tree2", 16, 0, 420)
 
 
 func _add_body(node_path: String, w: float, h: float, ground_y: float) -> void:

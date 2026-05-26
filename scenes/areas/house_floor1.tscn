@@ -113,16 +113,16 @@ offset_bottom = 213.0
 color = Color(0.38, 0.3, 0.2, 1)
 
 [node name="Grandmother" parent="." instance=ExtResource("4_grandmother")]
-position = Vector2(240, 333)
+position = Vector2(200, 370)
 
 [node name="Aunt" parent="." instance=ExtResource("5_aunt")]
-position = Vector2(533, 340)
+position = Vector2(550, 375)
 
 [node name="Player" parent="." instance=ExtResource("2_player")]
-position = Vector2(133, 333)
+position = Vector2(400, 370)
 
 [node name="ExitDoor" type="StaticBody2D" parent="."]
-position = Vector2(33, 267)
+position = Vector2(33, 340)
 script = ExtResource("3_trigger")
 target_scene_path = "res://scenes/main.tscn"
 target_area_id = "courtyard"
@@ -136,7 +136,7 @@ spawn_id = "from_house"
 shape = SubResource("trigger_shape")
 
 [node name="StairsUp" type="StaticBody2D" parent="."]
-position = Vector2(680, 293)
+position = Vector2(680, 340)
 script = ExtResource("3_trigger")
 target_scene_path = "res://scenes/areas/house_floor2.tscn"
 target_area_id = "house_floor2"

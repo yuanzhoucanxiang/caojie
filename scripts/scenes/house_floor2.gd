@@ -12,6 +12,7 @@ const SPAWN_POINTS := {
 func _ready() -> void:
 	_apply_textures()
 	_setup_post_process()
+	_add_wall_collisions()
 	_add_pause_menu()
 	_apply_spawn()
 	player.add_to_group("player")
@@ -79,3 +80,23 @@ func _on_dialogue_started() -> void:
 func _on_dialogue_finished() -> void:
 	player.set_physics_process(true)
 	player.set_process(true)
+
+
+func _add_wall_collisions() -> void:
+	_add_static_body("WallLeft", Vector2(0, 0), Vector2(16, 480))
+	_add_static_body("WallRight", Vector2(624, 0), Vector2(16, 480))
+
+
+func _add_static_body(obj_name: String, pos: Vector2, size: Vector2) -> void:
+	var body := StaticBody2D.new()
+	body.name = obj_name
+	body.position = pos
+	body.collision_layer = 1
+	body.collision_mask = 0
+	var shape := CollisionShape2D.new()
+	var rect := RectangleShape2D.new()
+	rect.size = size
+	shape.shape = rect
+	shape.position = size / 2.0
+	body.add_child(shape)
+	add_child(body)

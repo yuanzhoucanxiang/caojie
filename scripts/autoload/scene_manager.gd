@@ -1,17 +1,37 @@
 ## 职责：场景切换管理——推拉幕布过渡动画、室内外镜头切换
-## 谁使用它：场景边界触发器（StaticBody2D）
-## 它使用谁：无外部依赖
-
 extends Node
 
 signal transition_completed
 
 const CAMERA_CONFIGS = {
-	"courtyard": {"zoom": 1.25},
-	"house_floor1": {"zoom": 1.5},
-	"house_floor2": {"zoom": 1.5},
-	"house_floor3": {"zoom": 1.8},
-	"village_road": {"zoom": 0.9},
+	"courtyard": {
+		"zoom": 1.25,
+		"offset": Vector2(0, -100),
+		"player_bounds": {"left": 32, "right": 1680, "top": 360, "bottom": 520},
+	},
+	"house_floor1": {
+		"zoom": 1.8,
+		"offset": Vector2(0, 0),
+		"limits": {"left": 0, "right": 750, "top": 0, "bottom": 480},
+		"player_bounds": {"left": 20, "right": 730, "top": 350, "bottom": 400},
+	},
+	"house_floor2": {
+		"zoom": 1.8,
+		"offset": Vector2(0, 0),
+		"limits": {"left": 0, "right": 640, "top": 0, "bottom": 480},
+		"player_bounds": {"left": 16, "right": 624, "top": 50, "bottom": 450},
+	},
+	"house_floor3": {
+		"zoom": 2.0,
+		"offset": Vector2(0, 0),
+		"limits": {"left": 0, "right": 510, "top": 0, "bottom": 480},
+		"player_bounds": {"left": 20, "right": 490, "top": 330, "bottom": 400},
+	},
+	"village_road": {
+		"zoom": 0.9,
+		"offset": Vector2(0, -100),
+		"player_bounds": {"left": 32, "right": 1680, "top": 360, "bottom": 520},
+	},
 }
 
 var _curtain: ColorRect
@@ -21,24 +41,19 @@ var _pending_spawn: String = ""
 
 
 func _ready() -> void:
+	var canvas := CanvasLayer.new()
+	canvas.layer = 128
+	add_child(canvas)
+
 	_curtain = ColorRect.new()
 	_curtain.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_curtain.z_index = 4096
-	add_child(_curtain)
-	# 初始藏在屏幕左侧外
-	_reset_curtain()
+	_curtain.visible = false
+	canvas.add_child(_curtain)
 
 
-func _reset_curtain() -> void:
-	var vs := get_viewport().get_visible_rect().size
-	_curtain.size = vs
-	_curtain.position = Vector2(-vs.x, 0)
-
-
-func _process(_delta: float) -> void:
-	if _curtain and is_instance_valid(_curtain):
-		var vs := get_viewport().get_visible_rect().size
-		_curtain.size = vs
+func _exit_tree() -> void:
+	if _curtain:
+		_curtain.queue_free()
 
 
 func change_to_packed(
@@ -52,24 +67,15 @@ func change_to_packed(
 	_is_transitioning = true
 	_pending_spawn = spawn_id
 
-	# 暗沉版场景主色调
-	_curtain.color = Color(
-		transition_color.r * 0.35,
-		transition_color.g * 0.32,
-		transition_color.b * 0.28,
-		1.0,
-	)
-
 	var vs := get_viewport().get_visible_rect().size
-	_curtain.position = Vector2(-vs.x, 0)
 
-	# 幕布从左边滑入
-	var t_in := create_tween()
-	t_in.tween_property(_curtain, "position:x", 0.0, 0.3) \
-		.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
-	await t_in.finished
+	# ——— 幕布直接遮挡（不做滑入动画，只有一次滑动：滑出） ———
+	_curtain.size = vs
+	_curtain.color = Color(transition_color.r * 0.35, transition_color.g * 0.32, transition_color.b * 0.28, 1.0)
+	_curtain.position = Vector2.ZERO
+	_curtain.visible = true
 
-	# 遮住时：切场景 + 设镜头
+	# ——— 幕布遮住时加载新场景 ———
 	var new_instance := packed_scene.instantiate()
 	var old := get_tree().current_scene
 	if old:
@@ -79,31 +85,47 @@ func change_to_packed(
 	get_tree().current_scene = new_instance
 	_current_area = area_id
 	AudioManager.play_sfx("SFX/door_open.ogg")
-	print("【场景】新场景已就位: ", new_instance.name)
 
+	# 等场景 + 镜头 + GPU 全部就绪
 	await get_tree().process_frame
-	_set_camera_zoom(area_id)
+	_setup_area(area_id)
+	await get_tree().process_frame
+	await get_tree().process_frame
 
-	# 幕布往右滑出
-	var vs2 := get_viewport().get_visible_rect().size
+	# ——— 唯一一次滑动：幕布向右滑出 ———
 	var t_out := create_tween()
-	t_out.tween_property(_curtain, "position:x", vs2.x, 0.3) \
+	t_out.tween_property(_curtain, "position:x", vs.x, 0.35) \
 		.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
 	await t_out.finished
 
-	_reset_curtain()
+	# ——— 收尾 ———
+	_curtain.visible = false
 	_is_transitioning = false
 	transition_completed.emit()
-	print("【场景】切换完成!")
 
 
-func _set_camera_zoom(area_id: String) -> void:
-	var camera := get_viewport().get_camera_2d()
-	if not camera:
-		return
+func _setup_area(area_id: String) -> void:
 	var config: Dictionary = CAMERA_CONFIGS.get(area_id, {})
-	var target_zoom: float = config.get("zoom", 1.0)
-	camera.zoom = Vector2(target_zoom, target_zoom)
+	var camera := get_viewport().get_camera_2d()
+	if camera:
+		var z: float = config.get("zoom", 1.0)
+		camera.zoom = Vector2(z, z)
+		if config.has("offset"):
+			camera.position = config["offset"]
+		camera.reset_smoothing()
+		if config.has("limits"):
+			var L: Dictionary = config["limits"]
+			camera.limit_left = L.get("left", -10000000)
+			camera.limit_right = L.get("right", 10000000)
+			camera.limit_top = L.get("top", -10000000)
+			camera.limit_bottom = L.get("bottom", 10000000)
+
+	if config.has("player_bounds"):
+		var b: Dictionary = config["player_bounds"]
+		var oy: float = config.get("offset", Vector2.ZERO).y
+		var p = get_tree().get_first_node_in_group("player")
+		if p and p.has_method("set_movement_bounds"):
+			p.set_movement_bounds(b["left"], b["right"], b["top"], b["bottom"], oy)
 
 
 func get_current_area() -> String:
