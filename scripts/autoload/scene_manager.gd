@@ -69,13 +69,19 @@ func change_to_packed(
 
 	var vs := get_viewport().get_visible_rect().size
 
-	# ——— 幕布直接遮挡（不做滑入动画，只有一次滑动：滑出） ———
+	# ——— 幕布就位（屏幕左侧外） ———
 	_curtain.size = vs
 	_curtain.color = Color(transition_color.r * 0.35, transition_color.g * 0.32, transition_color.b * 0.28, 1.0)
-	_curtain.position = Vector2.ZERO
+	_curtain.position = Vector2(-vs.x, 0)
 	_curtain.visible = true
 
-	# ——— 幕布遮住时加载新场景 ———
+	# ——— 第一次滑动：从左边滑入 ———
+	var t_in := create_tween()
+	t_in.tween_property(_curtain, "position:x", 0.0, 0.3) \
+		.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+	await t_in.finished
+
+	# ——— 切场景 ———
 	var new_instance := packed_scene.instantiate()
 	var old := get_tree().current_scene
 	if old:
@@ -86,15 +92,14 @@ func change_to_packed(
 	_current_area = area_id
 	AudioManager.play_sfx("SFX/door_open.ogg")
 
-	# 等场景 + 镜头 + GPU 全部就绪
 	await get_tree().process_frame
 	_setup_area(area_id)
 	await get_tree().process_frame
 	await get_tree().process_frame
 
-	# ——— 唯一一次滑动：幕布向右滑出 ———
+	# ——— 第二次滑动：往右滑出 ———
 	var t_out := create_tween()
-	t_out.tween_property(_curtain, "position:x", vs.x, 0.35) \
+	t_out.tween_property(_curtain, "position:x", vs.x, 0.3) \
 		.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
 	await t_out.finished
 
