@@ -13,19 +13,19 @@ const CAMERA_CONFIGS = {
 		"zoom": 1.8,
 		"offset": Vector2(0, 0),
 		"limits": {"left": 0, "right": 750, "top": 0, "bottom": 480},
-		"player_bounds": {"left": 20, "right": 730, "top": 350, "bottom": 400},
+		"player_bounds": {"left": 30, "right": 720, "top": 350, "bottom": 400},
 	},
 	"house_floor2": {
 		"zoom": 1.8,
 		"offset": Vector2(0, 0),
 		"limits": {"left": 0, "right": 640, "top": 0, "bottom": 480},
-		"player_bounds": {"left": 16, "right": 624, "top": 50, "bottom": 450},
+		"player_bounds": {"left": 30, "right": 610, "top": 350, "bottom": 400},
 	},
 	"house_floor3": {
 		"zoom": 2.0,
 		"offset": Vector2(0, 0),
 		"limits": {"left": 0, "right": 510, "top": 0, "bottom": 480},
-		"player_bounds": {"left": 20, "right": 490, "top": 330, "bottom": 400},
+		"player_bounds": {"left": 30, "right": 480, "top": 330, "bottom": 400},
 	},
 	"village_road": {
 		"zoom": 0.9,
@@ -76,12 +76,14 @@ func change_to_packed(
 	_curtain.visible = true
 
 	# ——— 第一次滑动：从左边滑入 ———
+	print("【切换】滑入开始 → ", area_id)
 	var t_in := create_tween()
 	t_in.tween_property(_curtain, "position:x", 0.0, 0.3) \
 		.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
 	await t_in.finished
 
 	# ——— 切场景 ———
+	print("【切换】幕布遮住，开始切场景")
 	var new_instance := packed_scene.instantiate()
 	var old := get_tree().current_scene
 	if old:
@@ -91,22 +93,28 @@ func change_to_packed(
 	get_tree().current_scene = new_instance
 	_current_area = area_id
 	AudioManager.play_sfx("SFX/door_open.ogg")
+	print("【切换】新场景已就位: ", new_instance.name)
 
 	await get_tree().process_frame
+	print("【切换】等一帧完成，设镜头")
 	_setup_area(area_id)
+	print("【切换】镜头设完，等渲染")
 	await get_tree().process_frame
 	await get_tree().process_frame
+	print("【切换】渲染等完，准备滑出")
 
 	# ——— 第二次滑动：往右滑出 ———
 	var t_out := create_tween()
 	t_out.tween_property(_curtain, "position:x", vs.x, 0.3) \
 		.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
 	await t_out.finished
+	print("【切换】滑出完成")
 
 	# ——— 收尾 ———
 	_curtain.visible = false
 	_is_transitioning = false
 	transition_completed.emit()
+	print("【切换】过渡结束!")
 
 
 func _setup_area(area_id: String) -> void:

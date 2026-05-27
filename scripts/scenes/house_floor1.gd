@@ -18,7 +18,7 @@ const SCREEN_W: float = 750.0
 const SCREEN_H: float = 480.0
 const CEILING_H: float = 25.0
 const FLOOR_Y: float = 340.0
-const WALL_THICK: float = 15.0
+const WALL_THICK: float = 30.0
 
 @onready var player: CharacterBody2D = $Player
 
@@ -62,20 +62,53 @@ func _draw() -> void:
 # ============================================================
 
 func _build_flat_room() -> void:
+	# 天花板
 	_add_poly("StructCeiling", 0, 0, SCREEN_W, CEILING_H,
-		Color(0.35, 0.32, 0.26, 1), TextureSetup.Pattern.NOISE, 100.0, 0.02, -100)
+		Color(0.32, 0.28, 0.22, 1), TextureSetup.Pattern.NOISE, 100.0, 0.02, -100)
 
-	_add_poly("StructBackWall", 0, CEILING_H, SCREEN_W, FLOOR_Y - CEILING_H,
+	# 1F: WALL_TOP=30px, WALL_BOT=8px
+	_add_wall_perspective(30, 8)
+
+	# 后墙
+	_add_poly("StructBackWall", 30, CEILING_H, SCREEN_W - 60, FLOOR_Y - CEILING_H,
 		Color(0.82, 0.76, 0.62, 1), TextureSetup.Pattern.NOISE, 100.0, 0.06, -90)
 
-	_add_poly("StructLeftWall", 0, CEILING_H, WALL_THICK, FLOOR_Y - CEILING_H,
-		Color(0.55, 0.48, 0.36, 1), TextureSetup.Pattern.NOISE, 60.0, 0.03, -80)
+	# 地板：梯形
+	_add_face("StructFloor", [
+		Vector2(8, SCREEN_H), Vector2(SCREEN_W - 8, SCREEN_H),
+		Vector2(SCREEN_W - 30, FLOOR_Y), Vector2(30, FLOOR_Y),
+	], Color(0.48, 0.38, 0.26, 1), TextureSetup.Pattern.WOOD_H, 80.0, 0.1, 0)
 
-	_add_poly("StructRightWall", SCREEN_W - WALL_THICK, CEILING_H, WALL_THICK, FLOOR_Y - CEILING_H,
-		Color(0.55, 0.48, 0.36, 1), TextureSetup.Pattern.NOISE, 60.0, 0.03, -80)
 
-	_add_poly("StructFloor", 0, FLOOR_Y, SCREEN_W, SCREEN_H - FLOOR_Y,
-		Color(0.48, 0.38, 0.26, 1), TextureSetup.Pattern.WOOD_H, 80.0, 0.1, 0)
+func _add_wall_perspective(top_w: float, bot_w: float) -> void:
+	_add_face("StructLeftWall", [
+		Vector2(0, CEILING_H), Vector2(top_w, CEILING_H),
+		Vector2(bot_w, SCREEN_H), Vector2(0, SCREEN_H),
+	], Color(0.48, 0.4, 0.3, 1), TextureSetup.Pattern.WOOD_V, 60.0, 0.06, -80)
+
+	_add_face("StructRightWall", [
+		Vector2(SCREEN_W - top_w, CEILING_H), Vector2(SCREEN_W, CEILING_H),
+		Vector2(SCREEN_W, SCREEN_H), Vector2(SCREEN_W - bot_w, SCREEN_H),
+	], Color(0.45, 0.38, 0.28, 1), TextureSetup.Pattern.WOOD_V, 60.0, 0.06, -80)
+
+
+func _add_face(poly_name: String, verts: Array, color: Color, pattern: int, tex_scale: float, noise: float, z: int) -> void:
+	var poly := Polygon2D.new()
+	poly.name = poly_name
+	poly.polygon = PackedVector2Array(verts)
+	poly.color = color
+	poly.z_index = z
+	poly.z_as_relative = false
+	var shader := load("res://shaders/procedural_texture.gdshader") as Shader
+	if shader:
+		var mat := ShaderMaterial.new()
+		mat.shader = shader
+		mat.set_shader_parameter("base_color", color)
+		mat.set_shader_parameter("pattern", pattern)
+		mat.set_shader_parameter("texture_scale", tex_scale)
+		mat.set_shader_parameter("noise_intensity", noise)
+		poly.material = mat
+	add_child(poly)
 
 
 func _add_poly(poly_name: String, x: float, y: float, w: float, h: float, color: Color, pattern: int, tex_scale: float, noise: float, z: int) -> void:
@@ -116,8 +149,8 @@ func _hide_old_nodes() -> void:
 # ============================================================
 
 func _add_wall_collisions() -> void:
-	_add_hitbox("WallLeft", Vector2(0, 0), Vector2(WALL_THICK + 5, SCREEN_H))
-	_add_hitbox("WallRight", Vector2(SCREEN_W - WALL_THICK - 5, 0), Vector2(WALL_THICK + 5, SCREEN_H))
+	_add_hitbox("WallLeft", Vector2(0, 0), Vector2(WALL_THICK + 2, SCREEN_H))
+	_add_hitbox("WallRight", Vector2(SCREEN_W - WALL_THICK - 2, 0), Vector2(WALL_THICK + 2, SCREEN_H))
 
 
 func _add_hitbox(obj_name: String, pos: Vector2, size: Vector2) -> void:
