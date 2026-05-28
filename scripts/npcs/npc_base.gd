@@ -96,6 +96,10 @@ func _get_events() -> Array[Dictionary]:
 
 func _get_available_event() -> Dictionary:
 	for event in _get_events():
+		var event_id: String = event.get("id", "")
+		var repeatable: bool = event.get("repeatable", false)
+		if not repeatable and not event_id.is_empty() and GameState.is_event_completed(event_id):
+			continue
 		if _check_conditions(event.get("conditions", [])):
 			return event
 	return {}

@@ -7,29 +7,39 @@ const CAMERA_CONFIGS = {
 	"courtyard": {
 		"zoom": 1.25,
 		"offset": Vector2(0, -100),
+		"allow_zoom": true,
+		"depth_scale": {"min": 0.85, "max": 1.0},
 		"player_bounds": {"left": 32, "right": 1680, "top": 360, "bottom": 520},
 	},
 	"house_floor1": {
 		"zoom": 1.8,
 		"offset": Vector2(0, 0),
+		"allow_zoom": false,
+		"depth_scale": {"min": 0.9, "max": 1.05},
 		"limits": {"left": 0, "right": 750, "top": 0, "bottom": 480},
 		"player_bounds": {"left": 30, "right": 720, "top": 350, "bottom": 400},
 	},
 	"house_floor2": {
 		"zoom": 1.8,
 		"offset": Vector2(0, 0),
+		"allow_zoom": false,
+		"depth_scale": {"min": 0.9, "max": 1.05},
 		"limits": {"left": 0, "right": 640, "top": 0, "bottom": 480},
 		"player_bounds": {"left": 30, "right": 610, "top": 350, "bottom": 400},
 	},
 	"house_floor3": {
 		"zoom": 2.0,
-		"offset": Vector2(0, 0),
+		"offset": Vector2(0, -40),
+		"allow_zoom": false,
+		"depth_scale": {"min": 0.9, "max": 1.05},
 		"limits": {"left": 0, "right": 510, "top": 0, "bottom": 480},
-		"player_bounds": {"left": 30, "right": 480, "top": 330, "bottom": 400},
+		"player_bounds": {"left": 30, "right": 480, "top": 340, "bottom": 400},
 	},
 	"village_road": {
 		"zoom": 0.9,
 		"offset": Vector2(0, -100),
+		"allow_zoom": true,
+		"depth_scale": {"min": 0.85, "max": 1.0},
 		"player_bounds": {"left": 32, "right": 1680, "top": 360, "bottom": 520},
 	},
 }
@@ -59,7 +69,7 @@ func _exit_tree() -> void:
 func change_to_packed(
 	packed_scene: PackedScene,
 	area_id: String = "courtyard",
-	transition_color: Color = Color(0, 0, 0, 1),
+	transition_color: Color = Color(0.08, 0.06, 0.04, 1),
 	spawn_id: String = "",
 ) -> void:
 	if _is_transitioning:
@@ -71,7 +81,8 @@ func change_to_packed(
 
 	# ——— 幕布就位（屏幕左侧外） ———
 	_curtain.size = vs
-	_curtain.color = Color(transition_color.r * 0.35, transition_color.g * 0.32, transition_color.b * 0.28, 1.0)
+	var tc := transition_color
+	_curtain.color = Color(tc.r * 0.35, tc.g * 0.32, tc.b * 0.28, 1.0)
 	_curtain.position = Vector2(-vs.x, 0)
 	_curtain.visible = true
 
@@ -127,11 +138,11 @@ func _setup_area(area_id: String) -> void:
 			camera.position = config["offset"]
 		camera.reset_smoothing()
 		if config.has("limits"):
-			var L: Dictionary = config["limits"]
-			camera.limit_left = L.get("left", -10000000)
-			camera.limit_right = L.get("right", 10000000)
-			camera.limit_top = L.get("top", -10000000)
-			camera.limit_bottom = L.get("bottom", 10000000)
+			var lim: Dictionary = config["limits"]
+			camera.limit_left = lim.get("left", -10000000)
+			camera.limit_right = lim.get("right", 10000000)
+			camera.limit_top = lim.get("top", -10000000)
+			camera.limit_bottom = lim.get("bottom", 10000000)
 
 	if config.has("player_bounds"):
 		var b: Dictionary = config["player_bounds"]
@@ -143,6 +154,14 @@ func _setup_area(area_id: String) -> void:
 
 func get_current_area() -> String:
 	return _current_area
+
+
+func can_zoom_current_area() -> bool:
+	return CAMERA_CONFIGS.get(_current_area, {}).get("allow_zoom", false)
+
+
+func get_current_depth_scale() -> Dictionary:
+	return CAMERA_CONFIGS.get(_current_area, {}).get("depth_scale", {})
 
 
 func get_pending_spawn() -> String:

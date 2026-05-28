@@ -83,8 +83,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _can_zoom() -> bool:
-	var area := SceneManager.get_current_area()
-	return area == "courtyard" or area == "village_road"
+	return SceneManager.can_zoom_current_area()
 
 
 var _camera_base_offset_y: float = -100.0
@@ -108,19 +107,16 @@ func _process(_delta: float) -> void:
 
 
 func _update_depth_scale() -> void:
-	var area := SceneManager.get_current_area()
-	if area == "courtyard" or area == "village_road":
-		var t: float = clampf((position.y - _movement_top) / (_movement_bottom - _movement_top), 0.0, 1.0)
-		var s: float = lerp(SCALE_MIN, SCALE_MAX, t)
-		scale = Vector2(s, s)
-	elif area.begins_with("house_"):
-		const INDOOR_SCALE_MIN: float = 0.75
-		const INDOOR_SCALE_MAX: float = 1.0
-		var t: float = clampf((position.y - _movement_top) / (_movement_bottom - _movement_top), 0.0, 1.0)
-		var s: float = lerp(INDOOR_SCALE_MIN, INDOOR_SCALE_MAX, t)
-		scale = Vector2(s, s)
-	else:
+	var scale_config := SceneManager.get_current_depth_scale()
+	if scale_config.is_empty():
 		scale = Vector2.ONE
+		return
+
+	var t: float = clampf((position.y - _movement_top) / (_movement_bottom - _movement_top), 0.0, 1.0)
+	var min_scale: float = scale_config.get("min", SCALE_MIN)
+	var max_scale: float = scale_config.get("max", SCALE_MAX)
+	var s: float = lerp(min_scale, max_scale, t)
+	scale = Vector2(s, s)
 
 
 func set_movement_bounds(left: float, right: float, top: float, bottom: float, camera_offset_y: float = 0.0) -> void:

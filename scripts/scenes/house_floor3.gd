@@ -1,232 +1,190 @@
-## 职责：三楼场景控制器——平视舞台风格（Long Gone 参考），主角房间、天台入口
-extends Node2D
+## 职责：三楼场景控制器——主角房间（房间结构在tscn中，代码管理家具和互动）
+extends "res://scripts/scenes/area_controller_base.gd"
 
+const InteriorStageBuilderScript := preload("res://scripts/scenes/interior_stage_builder.gd")
 
 const SPAWN_POINTS := {
-	"from_2f_up": Vector2(255, 375),
+	"from_2f_up": Vector2(90, 390),
 }
 
-# 室内深度参数
-const INDOOR_DEPTH_MIN: float = 330.0
-const INDOOR_DEPTH_MAX: float = 400.0
-const INDOOR_SCALE_MIN: float = 0.92
-const INDOOR_SCALE_MAX: float = 1.0
-
-# 房间几何
-const SCREEN_W: float = 510.0
-const SCREEN_H: float = 480.0
-const CEILING_H: float = 25.0
-const FLOOR_Y: float = 340.0
-const WALL_THICK: float = 30.0
-
-@onready var player: CharacterBody2D = $Player
-
-
 func _ready() -> void:
-	_apply_textures()
-	_build_flat_room()
-	_build_furniture()
-	_hide_old_nodes()
-	_setup_post_process()
-	_add_depth_lighting()
+	_rebuild_visual_stage()
 	_add_wall_collisions()
-	_add_furniture_collisions()
 	_add_interactable_objects()
-	_add_pause_menu()
-	_apply_spawn()
-	player.add_to_group("player")
-	_bind_all_npcs()
-	DialogueManager.dialogue_started.connect(_on_dialogue_started)
-	DialogueManager.dialogue_finished.connect(_on_dialogue_finished)
-	queue_redraw()
+	setup_area_common()
+
+
+func get_spawn_points() -> Dictionary:
+	return SPAWN_POINTS
+
+
+func get_post_process_config() -> Dictionary:
+	return {
+		"vignette_intensity": 0.3,
+		"tint_color": Color(1.0, 0.88, 0.72, 0.14),
+		"size": Vector2(510, 480),
+	}
 
 
 # ============================================================
-# 线框标注
+# 室内舞台视觉
 # ============================================================
 
-func _draw() -> void:
-	var font := ThemeDB.fallback_font
-	var fs := 10
-	var bold := Color.WHITE
-	var lw := 2.0
-
-	# 地面线
-	draw_line(Vector2(0, FLOOR_Y), Vector2(SCREEN_W, FLOOR_Y), Color(1.0, 0.25, 0.15, 0.7), lw)
-	draw_string(font, Vector2(5, FLOOR_Y - 5), "地面 y=340", HORIZONTAL_ALIGNMENT_LEFT, -1, fs, bold)
-
-	# 后墙
-	draw_rect(Rect2(0, CEILING_H, SCREEN_W, FLOOR_Y - CEILING_H), Color(0.2, 0.5, 1.0, 0.5), false, 1.5)
-
-	# 天花板
-	draw_line(Vector2(0, CEILING_H), Vector2(SCREEN_W, CEILING_H), Color(1.0, 0.85, 0.1, 0.6), 1.5)
-
-	# 深度范围
-	var dc := Color(0.1, 0.9, 0.9, 0.4)
-	draw_dashed_line(Vector2(0, INDOOR_DEPTH_MIN), Vector2(SCREEN_W, INDOOR_DEPTH_MIN), dc, 1.0, 5.0)
-	draw_dashed_line(Vector2(0, INDOOR_DEPTH_MAX), Vector2(SCREEN_W, INDOOR_DEPTH_MAX), dc, 1.0, 5.0)
+func _rebuild_visual_stage() -> void:
+	InteriorStageBuilderScript.rebuild(self, {
+		"width": 510.0,
+		"height": 480.0,
+		"ceiling_h": 48.0,
+		"floor_y": 340.0,
+		"wall": 25.0,
+		"side_bottom": 5.0,
+		"palette": {
+			"ceiling": Color(0.35, 0.43, 0.48, 1),
+			"back_wall": Color(0.62, 0.72, 0.78, 1),
+			"side_wall": Color(0.43, 0.5, 0.55, 1),
+			"floor": Color(0.64, 0.62, 0.55, 1),
+		},
+		"lights": [
+			{"name": "BlueMorningWash", "pos": Vector2(0, 56), "size": Vector2(510, 238), "color": Color(0.62, 0.77, 0.9, 0.16), "z": 55},
+			{"name": "WindowLightBand", "pos": Vector2(92, 224), "size": Vector2(260, 48), "color": Color(0.9, 0.84, 0.64, 0.13), "z": 57},
+			{"name": "FloorMist", "pos": Vector2(0, 398), "size": Vector2(510, 82), "color": Color(0.76, 0.78, 0.72, 0.24), "z": 93},
+			{"name": "BottomSoftVignette", "pos": Vector2(0, 426), "size": Vector2(510, 54), "color": Color(0.12, 0.14, 0.14, 0.3), "z": 96},
+		],
+		"items": [
+			{"name": "LeftStairDoorFrame", "pos": Vector2(10, 190), "size": Vector2(58, 150), "color": Color(0.28, 0.24, 0.28, 1), "z": -62},
+			{"name": "LeftStairDoorPanel", "pos": Vector2(20, 204), "size": Vector2(38, 134), "color": Color(0.56, 0.46, 0.5, 1), "z": -61},
+			{"name": "RooftopDoorFrame", "pos": Vector2(432, 168), "size": Vector2(54, 172), "color": Color(0.24, 0.22, 0.24, 1), "z": -62},
+			{"name": "RooftopDoorPanel", "pos": Vector2(440, 184), "size": Vector2(38, 154), "color": Color(0.28, 0.24, 0.26, 1), "z": -61},
+			{"name": "MainWindowFrame", "pos": Vector2(132, 126), "size": Vector2(198, 112), "color": Color(0.45, 0.39, 0.32, 1), "z": -50},
+			{"name": "MainWindowPane", "pos": Vector2(140, 134), "size": Vector2(182, 96), "color": Color(0.62, 0.78, 0.88, 1), "z": -49},
+			{"name": "WindowCrossH", "pos": Vector2(140, 180), "size": Vector2(182, 5), "color": Color(0.42, 0.36, 0.3, 1), "z": -48},
+			{"name": "WindowCrossV", "pos": Vector2(228, 134), "size": Vector2(6, 96), "color": Color(0.42, 0.36, 0.3, 1), "z": -48},
+			{"name": "PlanePoster", "pos": Vector2(108, 238), "size": Vector2(96, 58), "color": Color(0.45, 0.68, 0.82, 1), "z": -44},
+			{"kind": "line", "name": "PlanePosterTapeA", "from": Vector2(112, 236), "to": Vector2(132, 244), "width": 4.0, "color": Color(0.86, 0.78, 0.56, 0.7), "z": -43},
+			{"kind": "line", "name": "PlanePosterTapeB", "from": Vector2(184, 236), "to": Vector2(204, 244), "width": 4.0, "color": Color(0.86, 0.78, 0.56, 0.7), "z": -43},
+			{"kind": "line", "name": "PixelPlaneWing", "from": Vector2(126, 266), "to": Vector2(180, 250), "width": 5.0, "color": Color(0.82, 0.86, 0.72, 0.72), "z": -43},
+			{"kind": "line", "name": "PixelPlaneBody", "from": Vector2(136, 276), "to": Vector2(190, 276), "width": 5.0, "color": Color(0.36, 0.5, 0.66, 0.72), "z": -43},
+			{"name": "SmallPosterA", "pos": Vector2(216, 236), "size": Vector2(42, 40), "color": Color(0.72, 0.58, 0.42, 1), "z": -44},
+			{"name": "SmallPosterB", "pos": Vector2(270, 236), "size": Vector2(44, 52), "color": Color(0.34, 0.45, 0.58, 1), "z": -44},
+			{"kind": "ellipse", "name": "WallToyMedalA", "pos": Vector2(222, 210), "size": Vector2(20, 20), "color": Color(0.68, 0.58, 0.26, 1), "z": -43},
+			{"kind": "ellipse", "name": "WallToyMedalB", "pos": Vector2(250, 214), "size": Vector2(18, 18), "color": Color(0.5, 0.7, 0.42, 1), "z": -43},
+			{"kind": "line", "name": "PaperBirdA", "from": Vector2(82, 214), "to": Vector2(104, 204), "width": 4.0, "color": Color(0.82, 0.48, 0.24, 1), "z": -43},
+			{"kind": "line", "name": "PaperBirdB", "from": Vector2(104, 204), "to": Vector2(126, 214), "width": 4.0, "color": Color(0.36, 0.68, 0.82, 1), "z": -43},
+			{"name": "BedBase", "pos": Vector2(28, 378), "size": Vector2(126, 24), "color": Color(0.38, 0.3, 0.22, 1), "z": 405},
+			{"name": "BedBlanketTop", "pos": Vector2(30, 352), "size": Vector2(126, 18), "color": Color(0.48, 0.56, 0.62, 1), "z": 389},
+			{"name": "BedBlanketFront", "pos": Vector2(30, 370), "size": Vector2(126, 20), "color": Color(0.34, 0.42, 0.5, 1), "z": 391},
+			{"name": "BedStripeA", "pos": Vector2(36, 358), "size": Vector2(112, 3), "color": Color(0.68, 0.7, 0.66, 0.72), "z": 392},
+			{"name": "BedStripeB", "pos": Vector2(36, 378), "size": Vector2(112, 3), "color": Color(0.64, 0.66, 0.62, 0.62), "z": 392},
+			{"name": "PillowNew", "pos": Vector2(38, 338), "size": Vector2(42, 16), "color": Color(0.78, 0.76, 0.66, 1), "z": 391},
+			{"name": "StudyDeskTop", "pos": Vector2(338, 350), "size": Vector2(108, 10), "color": Color(0.62, 0.58, 0.48, 1), "z": 369},
+			{"name": "StudyDeskFront", "pos": Vector2(338, 360), "size": Vector2(108, 16), "color": Color(0.48, 0.44, 0.36, 1), "z": 376},
+			{"name": "DeskLegLeft", "pos": Vector2(350, 376), "size": Vector2(8, 34), "color": Color(0.36, 0.32, 0.27, 1), "z": 411},
+			{"name": "DeskLegRight", "pos": Vector2(430, 376), "size": Vector2(8, 34), "color": Color(0.36, 0.32, 0.27, 1), "z": 411},
+			{"name": "HomeworkBook", "pos": Vector2(356, 336), "size": Vector2(42, 18), "color": Color(0.78, 0.75, 0.62, 1), "z": 370},
+			{"name": "BlueSuitcase", "pos": Vector2(226, 364), "size": Vector2(34, 52), "color": Color(0.24, 0.42, 0.58, 1), "z": 417},
+			{"name": "ToyRobotBody", "pos": Vector2(298, 342), "size": Vector2(28, 42), "color": Color(0.52, 0.63, 0.68, 1), "z": 385},
+			{"name": "ToyRobotHead", "pos": Vector2(301, 322), "size": Vector2(22, 20), "color": Color(0.62, 0.72, 0.76, 1), "z": 386},
+			{"name": "PlantPot", "pos": Vector2(404, 326), "size": Vector2(28, 28), "color": Color(0.5, 0.28, 0.18, 1), "z": 356},
+			{"name": "PlantLeafA", "pos": Vector2(398, 304), "size": Vector2(16, 28), "color": Color(0.22, 0.48, 0.32, 1), "z": 357},
+			{"name": "PlantLeafB", "pos": Vector2(418, 300), "size": Vector2(18, 32), "color": Color(0.26, 0.54, 0.35, 1), "z": 357},
+			{"kind": "line", "name": "BedroomBaseLine", "from": Vector2(25, 340), "to": Vector2(485, 340), "width": 3.0, "color": Color(0.28, 0.32, 0.32, 0.44), "z": -38},
+			{"kind": "line", "name": "CeilingPanelLineA", "from": Vector2(112, 4), "to": Vector2(128, 48), "width": 2.0, "color": Color(0.22, 0.28, 0.32, 0.2), "z": -40},
+			{"kind": "line", "name": "CeilingPanelLineB", "from": Vector2(370, 2), "to": Vector2(352, 48), "width": 2.0, "color": Color(0.22, 0.28, 0.32, 0.2), "z": -40},
+			{"kind": "line", "name": "TileLineA", "from": Vector2(28, 382), "to": Vector2(482, 376), "width": 2.0, "color": Color(0.46, 0.46, 0.42, 0.32), "z": 50},
+			{"kind": "line", "name": "TileLineB", "from": Vector2(18, 424), "to": Vector2(492, 414), "width": 2.0, "color": Color(0.43, 0.43, 0.39, 0.28), "z": 50},
+			{"name": "WindowLightPatchA", "pos": Vector2(94, 252), "size": Vector2(132, 28), "color": Color(0.9, 0.84, 0.64, 0.08), "z": 58},
+			{"name": "WindowLightPatchB", "pos": Vector2(248, 246), "size": Vector2(110, 26), "color": Color(0.9, 0.84, 0.64, 0.06), "z": 58},
+			{"name": "WindowLightPatchFloorA", "pos": Vector2(110, 330), "size": Vector2(112, 22), "color": Color(0.88, 0.82, 0.62, 0.06), "z": 58},
+			{"name": "WindowLightPatchFloorB", "pos": Vector2(252, 324), "size": Vector2(96, 20), "color": Color(0.88, 0.82, 0.62, 0.05), "z": 58},
+			{"kind": "line", "name": "BlanketFoldA", "from": Vector2(42, 366), "to": Vector2(146, 358), "width": 2.0, "color": Color(0.24, 0.32, 0.4, 0.5), "z": 392},
+			{"kind": "line", "name": "BlanketFoldB", "from": Vector2(46, 382), "to": Vector2(152, 374), "width": 2.0, "color": Color(0.24, 0.32, 0.4, 0.42), "z": 392},
+			{"name": "DeskLampBase", "pos": Vector2(406, 332), "size": Vector2(26, 8), "color": Color(0.38, 0.34, 0.3, 1), "z": 371},
+			{"kind": "line", "name": "DeskLampNeck", "from": Vector2(414, 332), "to": Vector2(396, 312), "width": 3.0, "color": Color(0.36, 0.32, 0.28, 1), "z": 371},
+			{"name": "DeskLampShade", "pos": Vector2(386, 304), "size": Vector2(26, 14), "color": Color(0.78, 0.62, 0.34, 1), "z": 372},
+			{"kind": "line", "name": "PencilOnDesk", "from": Vector2(356, 332), "to": Vector2(388, 326), "width": 2.0, "color": Color(0.74, 0.44, 0.2, 1), "z": 371},
+			{"name": "RobotChest", "pos": Vector2(304, 352), "size": Vector2(16, 10), "color": Color(0.82, 0.72, 0.32, 1), "z": 387},
+			{"name": "RobotEyeLeft", "pos": Vector2(306, 329), "size": Vector2(4, 4), "color": Color(0.18, 0.24, 0.3, 1), "z": 387},
+			{"name": "RobotEyeRight", "pos": Vector2(314, 329), "size": Vector2(4, 4), "color": Color(0.18, 0.24, 0.3, 1), "z": 387},
+			{"kind": "ellipse", "name": "RobotWheelLeft", "pos": Vector2(300, 380), "size": Vector2(8, 8), "color": Color(0.26, 0.32, 0.36, 1), "z": 388},
+			{"kind": "ellipse", "name": "RobotWheelRight", "pos": Vector2(318, 380), "size": Vector2(8, 8), "color": Color(0.26, 0.32, 0.36, 1), "z": 388},
+			{"name": "PosterPinA", "pos": Vector2(112, 242), "size": Vector2(5, 5), "color": Color(0.72, 0.62, 0.42, 1), "z": -43},
+			{"name": "PosterPinB", "pos": Vector2(196, 242), "size": Vector2(5, 5), "color": Color(0.72, 0.62, 0.42, 1), "z": -43},
+		],
+		"foreground": [
+			{"name": "ForegroundBedShadow", "pos": Vector2(0, 430), "size": Vector2(180, 50), "color": Color(0.09, 0.08, 0.07, 0.46), "z": 104},
+			{"name": "ForegroundDeskShadow", "pos": Vector2(330, 420), "size": Vector2(140, 48), "color": Color(0.1, 0.11, 0.1, 0.34), "z": 104},
+		],
+	})
 
 
 # ============================================================
-# 房间结构
+# 可互动物品
 # ============================================================
 
-func _build_flat_room() -> void:
-	# 天花板
-	_add_poly("StructCeiling", 0, 0, SCREEN_W, CEILING_H,
-		Color(0.32, 0.28, 0.22, 1), TextureSetup.Pattern.NOISE, 100.0, 0.02, -100)
+func _add_interactable_objects() -> void:
+	var bed := InteractableObject.new()
+	bed.position = Vector2(27, 391)
+	bed.object_name = "Bed"
+	bed.description = "一张小木床，被子叠得整整齐齐。"
+	bed.collision_w = 93
+	bed.collision_h = 22
+	add_child(bed)
 
-	# 墙壁内边沿：顶部宽（远离镜头），底部窄（靠近镜头）→ 斜线产生透视感
-	# 3F: WALL_TOP=25px, WALL_BOT=5px
-	_add_wall_perspective(25, 5)
+	var desk := InteractableObject.new()
+	desk.position = Vector2(338, 368)
+	desk.object_name = "Desk"
+	desk.description = "桌上放着课本和作业本，铅笔滚到了桌角。"
+	desk.collision_w = 112
+	desk.collision_h = 22
+	add_child(desk)
 
-	# 后墙：在两面墙之间
-	_add_poly("StructBackWall", 25, CEILING_H, SCREEN_W - 50, FLOOR_Y - CEILING_H,
-		Color(0.82, 0.76, 0.62, 1), TextureSetup.Pattern.NOISE, 100.0, 0.06, -90)
+	var window_obj := InteractableObject.new()
+	window_obj.position = Vector2(132, 180)
+	window_obj.object_name = "Window"
+	window_obj.description = "窗外能看到村子的屋顶和远处的鱼塘，天很蓝。"
+	window_obj.collision_w = 198
+	window_obj.collision_h = 60
+	add_child(window_obj)
 
-	# 地板：梯形（底部宽、顶部窄）
-	_add_face("StructFloor", [
-		Vector2(5, SCREEN_H), Vector2(SCREEN_W - 5, SCREEN_H),
-		Vector2(SCREEN_W - 25, FLOOR_Y), Vector2(25, FLOOR_Y),
-	], Color(0.48, 0.38, 0.26, 1), TextureSetup.Pattern.WOOD_H, 80.0, 0.1, 0)
+	var suitcase := InteractableObject.new()
+	suitcase.position = Vector2(226, 380)
+	suitcase.object_name = "Suitcase"
+	suitcase.description = "蓝色行李箱还没完全收好，像是在提醒你刚来到这里。"
+	suitcase.collision_w = 42
+	suitcase.collision_h = 40
+	add_child(suitcase)
 
+	var posters := InteractableObject.new()
+	posters.position = Vector2(108, 270)
+	posters.object_name = "Posters"
+	posters.description = "墙上的飞机和机器人贴纸有点幼稚，却让这个小房间终于像自己的地方。"
+	posters.collision_w = 206
+	posters.collision_h = 36
+	add_child(posters)
 
-func _add_wall_perspective(top_w: float, bot_w: float) -> void:
-	# 左墙：内边沿从 (top_w, 340) 斜到 (bot_w, 480)
-	_add_face("StructLeftWall", [
-		Vector2(0, CEILING_H), Vector2(top_w, CEILING_H),
-		Vector2(bot_w, SCREEN_H), Vector2(0, SCREEN_H),
-	], Color(0.48, 0.4, 0.3, 1), TextureSetup.Pattern.WOOD_V, 60.0, 0.06, -80)
+	var toy_robot := InteractableObject.new()
+	toy_robot.position = Vector2(292, 360)
+	toy_robot.object_name = "ToyRobot"
+	toy_robot.description = "铁皮机器人站得很直，胸口的颜色有点掉漆，像是在替你守着房间。"
+	toy_robot.collision_w = 40
+	toy_robot.collision_h = 34
+	add_child(toy_robot)
 
-	# 右墙：镜像
-	_add_face("StructRightWall", [
-		Vector2(SCREEN_W - top_w, CEILING_H), Vector2(SCREEN_W, CEILING_H),
-		Vector2(SCREEN_W, SCREEN_H), Vector2(SCREEN_W - bot_w, SCREEN_H),
-	], Color(0.45, 0.38, 0.28, 1), TextureSetup.Pattern.WOOD_V, 60.0, 0.06, -80)
+	var homework := InteractableObject.new()
+	homework.position = Vector2(352, 348)
+	homework.object_name = "HomeworkBook"
+	homework.description = "作业本摊在桌上，铅笔压着还没写完的一行字。"
+	homework.collision_w = 88
+	homework.collision_h = 24
+	add_child(homework)
 
-
-# ============================================================
-# 家具布置
-# ============================================================
-
-func _build_furniture() -> void:
-	# ========== 后墙物品 ==========
-
-	# 窗户 + 十字窗框（居中）
-	_add_poly("FurnWindow", 140, 70, 230, 115,
-		Color(0.55, 0.72, 0.82, 1), TextureSetup.Pattern.NOISE, 100.0, 0.02, 185)
-	_add_poly("FurnWinBarH", 140, 125, 230, 5,
-		Color(0.35, 0.28, 0.2, 1), TextureSetup.Pattern.WOOD_H, 30.0, 0.05, 190)
-	_add_poly("FurnWinBarV", 252, 70, 5, 115,
-		Color(0.35, 0.28, 0.2, 1), TextureSetup.Pattern.WOOD_V, 30.0, 0.05, 190)
-
-	# 海报（右上墙）
-	_add_poly("FurnPoster", 430, 80, 50, 70,
-		Color(0.72, 0.55, 0.45, 1), TextureSetup.Pattern.NOISE, 70.0, 0.04, 150)
-
-	# 书架（右墙，窗和海报之间，靠上）
-	_add_poly("FurnBookshelf", 390, 235, 48, 105,
-		Color(0.42, 0.33, 0.2, 1), TextureSetup.Pattern.WOOD_V, 40.0, 0.08, 340)
-	_add_poly("FurnShelf1", 392, 265, 44, 4,
-		Color(0.48, 0.38, 0.24, 1), TextureSetup.Pattern.WOOD_H, 25.0, 0.05, 270)
-	_add_poly("FurnShelf2", 392, 298, 44, 4,
-		Color(0.48, 0.38, 0.24, 1), TextureSetup.Pattern.WOOD_H, 25.0, 0.05, 303)
-	for i in range(3):
-		_add_poly("FurnBook%d" % i, 394 + i * 13, 242, 10, 22,
-			Color(0.5 + i * 0.12, 0.3 + i * 0.08, 0.25 + i * 0.1, 1), TextureSetup.Pattern.NOISE, 18.0, 0.02, 265)
-
-	# ========== 地面物品 ==========
-
-	# 床（左墙，紧凑型）
-	_add_poly("FurnBedFrame", 25, 335, 80, 55,
-		Color(0.45, 0.35, 0.22, 1), TextureSetup.Pattern.WOOD_H, 50.0, 0.1, 390)
-	_add_poly("FurnMattress", 30, 340, 70, 38,
-		Color(0.68, 0.58, 0.42, 1), TextureSetup.Pattern.NOISE, 50.0, 0.06, 379)
-	_add_poly("FurnPillow", 33, 330, 32, 12,
-		Color(0.82, 0.78, 0.68, 1), TextureSetup.Pattern.NOISE, 40.0, 0.03, 343)
-	_add_poly("FurnBlanket", 65, 342, 32, 32,
-		Color(0.62, 0.52, 0.36, 1), TextureSetup.Pattern.NOISE, 40.0, 0.05, 375)
-
-	# 书桌（右墙，紧凑型）
-	_add_poly("FurnDesk", 370, 338, 95, 10,
-		Color(0.48, 0.38, 0.24, 1), TextureSetup.Pattern.WOOD_H, 50.0, 0.1, 349)
-	_add_poly("FurnDeskLeg1", 378, 348, 6, 42, Color(0.4, 0.32, 0.2, 1), TextureSetup.Pattern.WOOD_V, 18.0, 0.05, 391)
-	_add_poly("FurnDeskLeg2", 450, 348, 6, 42, Color(0.4, 0.32, 0.2, 1), TextureSetup.Pattern.WOOD_V, 18.0, 0.05, 391)
-
-	# 椅子（紧贴书桌）
-	_add_poly("FurnChairSeat", 395, 365, 32, 8,
-		Color(0.46, 0.36, 0.22, 1), TextureSetup.Pattern.WOOD_H, 35.0, 0.08, 374)
-	_add_poly("FurnChairBack", 395, 345, 5, 25,
-		Color(0.44, 0.34, 0.2, 1), TextureSetup.Pattern.WOOD_V, 18.0, 0.05, 371)
-	_add_poly("FurnChairLegL", 399, 373, 4, 17, Color(0.4, 0.3, 0.18, 1), TextureSetup.Pattern.WOOD_V, 12.0, 0.05, 391)
-	_add_poly("FurnChairLegR", 420, 373, 4, 17, Color(0.4, 0.3, 0.18, 1), TextureSetup.Pattern.WOOD_V, 12.0, 0.05, 391)
-
-	# 桌上物品
-	_add_poly("FurnNotebook", 382, 326, 38, 22,
-		Color(0.88, 0.85, 0.78, 1), TextureSetup.Pattern.NOISE, 35.0, 0.02, 349)
-	_add_poly("FurnPencil", 425, 322, 4, 28,
-		Color(0.75, 0.65, 0.38, 1), TextureSetup.Pattern.WOOD_V, 12.0, 0.03, 351)
-	_add_poly("FurnLampBase", 435, 322, 18, 14,
-		Color(0.35, 0.3, 0.25, 1), TextureSetup.Pattern.NOISE, 25.0, 0.03, 337)
-
-	# 地毯（中央地面）
-	_add_poly("FurnRug", 145, 385, 220, 20,
-		Color(0.56, 0.34, 0.2, 1), TextureSetup.Pattern.NOISE, 80.0, 0.08, 406)
-
-	# 书包（左墙角落）
-	_add_poly("FurnBackpack", 22, 378, 28, 30,
-		Color(0.28, 0.38, 0.25, 1), TextureSetup.Pattern.NOISE, 35.0, 0.06, 409)
-
-	# 衣物堆（床脚边，靠墙）
-	_add_poly("FurnClothes", 108, 388, 22, 14,
-		Color(0.55, 0.5, 0.42, 1), TextureSetup.Pattern.NOISE, 35.0, 0.06, 403)
-
-
-func _add_poly(poly_name: String, x: float, y: float, w: float, h: float, color: Color, pattern: int, tex_scale: float, noise: float, z: int) -> void:
-	var poly := Polygon2D.new()
-	poly.name = poly_name
-	poly.polygon = PackedVector2Array([Vector2(x, y), Vector2(x + w, y), Vector2(x + w, y + h), Vector2(x, y + h)])
-	poly.color = color
-	poly.z_index = z
-	poly.z_as_relative = false
-
-	var shader := load("res://shaders/procedural_texture.gdshader") as Shader
-	if shader:
-		var mat := ShaderMaterial.new()
-		mat.shader = shader
-		mat.set_shader_parameter("base_color", color)
-		mat.set_shader_parameter("pattern", pattern)
-		mat.set_shader_parameter("texture_scale", tex_scale)
-		mat.set_shader_parameter("noise_intensity", noise)
-		poly.material = mat
-
-	add_child(poly)
-
-
-func _add_face(poly_name: String, verts: Array, color: Color, pattern: int, tex_scale: float, noise: float, z: int) -> void:
-	var poly := Polygon2D.new()
-	poly.name = poly_name
-	poly.polygon = PackedVector2Array(verts)
-	poly.color = color
-	poly.z_index = z
-	poly.z_as_relative = false
-	var shader := load("res://shaders/procedural_texture.gdshader") as Shader
-	if shader:
-		var mat := ShaderMaterial.new()
-		mat.shader = shader
-		mat.set_shader_parameter("base_color", color)
-		mat.set_shader_parameter("pattern", pattern)
-		mat.set_shader_parameter("texture_scale", tex_scale)
-		mat.set_shader_parameter("noise_intensity", noise)
-		poly.material = mat
-	add_child(poly)
-
-
-func _hide_old_nodes() -> void:
-	for node_name in ["Floor", "BackWall", "LeftWall", "RightWall", "Bed", "Desk", "Window", "WindowFrame"]:
-		var n := get_node_or_null(node_name)
-		if n and n is ColorRect:
-			n.modulate.a = 0.0
+	var window_light := InteractableObject.new()
+	window_light.position = Vector2(150, 306)
+	window_light.object_name = "WindowLight"
+	window_light.description = "窗格的影子落在地上，一块一块的亮，像可以踩上去。"
+	window_light.collision_w = 190
+	window_light.collision_h = 56
+	add_child(window_light)
 
 
 # ============================================================
@@ -234,14 +192,10 @@ func _hide_old_nodes() -> void:
 # ============================================================
 
 func _add_wall_collisions() -> void:
-	_add_hitbox("WallLeft", Vector2(0, 0), Vector2(WALL_THICK + 2, SCREEN_H))
-	_add_hitbox("WallRight", Vector2(SCREEN_W - WALL_THICK - 2, 0), Vector2(WALL_THICK + 2, SCREEN_H))
-
-
-func _add_furniture_collisions() -> void:
-	_add_hitbox("Bed", Vector2(25, 345), Vector2(80, 45))
-	_add_hitbox("Desk", Vector2(370, 345), Vector2(95, 45))
-	_add_hitbox("Bookshelf", Vector2(390, 260), Vector2(48, 80))
+	_add_hitbox("WallLeftTop", Vector2(0, 0), Vector2(27, 280))
+	_add_hitbox("WallLeftBot", Vector2(0, 340), Vector2(27, 140))
+	_add_hitbox("WallRightTop", Vector2(483, 0), Vector2(27, 280))
+	_add_hitbox("WallRightBot", Vector2(483, 340), Vector2(27, 140))
 
 
 func _add_hitbox(obj_name: String, pos: Vector2, size: Vector2) -> void:
@@ -257,115 +211,3 @@ func _add_hitbox(obj_name: String, pos: Vector2, size: Vector2) -> void:
 	shape.position = size / 2.0
 	body.add_child(shape)
 	add_child(body)
-
-
-# ============================================================
-# 可互动物品
-# ============================================================
-
-func _add_interactable_objects() -> void:
-	var bed := InteractableObject.new()
-	bed.position = Vector2(25, 345)
-	bed.setup("Bed", "一张小木床，被子叠得整整齐齐。躺上去应该很舒服。", 80, 45)
-	add_child(bed)
-
-	var desk := InteractableObject.new()
-	desk.position = Vector2(370, 345)
-	desk.setup("Desk", "桌上摊着课本和作业本，铅笔滚到了桌角。", 95, 45)
-	add_child(desk)
-
-	var window_obj := InteractableObject.new()
-	window_obj.position = Vector2(140, 70)
-	window_obj.setup("Window", "窗外能看到村子的屋顶和远处的鱼塘，天很蓝。", 230, 115)
-	add_child(window_obj)
-
-	var shelf := InteractableObject.new()
-	shelf.position = Vector2(390, 235)
-	shelf.setup("Bookshelf", "几本旧课本和一本翻烂了的《西游记》小人书。", 48, 105)
-	add_child(shelf)
-
-	var poster := InteractableObject.new()
-	poster.position = Vector2(430, 80)
-	poster.setup("Poster", "一张褪色的动画片海报，边角已经卷起来了。", 50, 70)
-	add_child(poster)
-
-	var backpack := InteractableObject.new()
-	backpack.position = Vector2(22, 378)
-	backpack.setup("Backpack", "书包扔在角落，拉链都没拉好。", 28, 30)
-	add_child(backpack)
-
-
-# ============================================================
-# 光照/出生点/暂停/后处理
-# ============================================================
-
-func _add_depth_lighting() -> void:
-	var top := ColorRect.new()
-	top.name = "TopShadow"
-	top.position = Vector2(0, 0)
-	top.size = Vector2(SCREEN_W, CEILING_H + 50)
-	top.color = Color(0.06, 0.04, 0.02, 0.32)
-	top.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	top.z_index = 50
-	add_child(top)
-
-	var mid := ColorRect.new()
-	mid.name = "MidShadow"
-	mid.position = Vector2(0, FLOOR_Y - 30)
-	mid.size = Vector2(SCREEN_W, 50)
-	mid.color = Color(0.06, 0.04, 0.02, 0.1)
-	mid.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	mid.z_index = 50
-	add_child(mid)
-
-
-func _apply_spawn() -> void:
-	var sid := SceneManager.get_pending_spawn()
-	if sid.is_empty():
-		return
-	var pos: Vector2 = SPAWN_POINTS.get(sid, Vector2.ZERO)
-	if pos != Vector2.ZERO:
-		player.position = pos
-
-
-func _add_pause_menu() -> void:
-	add_child(load("res://scenes/ui/pause_menu.tscn").instantiate())
-
-
-func _setup_post_process() -> void:
-	var shader := load("res://shaders/post_process.gdshader") as Shader
-	var mat := ShaderMaterial.new()
-	mat.shader = shader
-	mat.set_shader_parameter("vignette_intensity", 0.3)
-	mat.set_shader_parameter("tint_color", Color(1.0, 0.88, 0.72, 0.14))
-
-	var overlay := ColorRect.new()
-	overlay.name = "PostProcess"
-	overlay.material = mat
-	overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	overlay.z_index = 1000
-	add_child(overlay)
-	overlay.size = Vector2(SCREEN_W, SCREEN_H)
-
-
-func _apply_textures() -> void:
-	# 旧 tscn 家具已被隐藏，不需要纹理
-	pass
-
-
-func _bind_all_npcs() -> void:
-	for child in get_children():
-		if child.has_signal("dialogue_request"):
-			child.dialogue_request.connect(
-				func(npc, data): DialogueManager.start_dialogue(npc, data)
-			)
-
-
-func _on_dialogue_started() -> void:
-	player.set_physics_process(false)
-	player.set_process(false)
-
-
-func _on_dialogue_finished() -> void:
-	player.set_physics_process(true)
-	player.set_process(true)

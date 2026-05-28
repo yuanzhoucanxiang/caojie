@@ -2,46 +2,33 @@
 ## 谁使用它：Godot 引擎（自动加载此场景）
 ## 它使用谁：DialogueManager、Player、所有 NPC
 
-extends Node2D
+extends "res://scripts/scenes/area_controller_base.gd"
 
 const SPAWN_POINTS := {
 	"from_house": Vector2(1370, 385),
+	"from_3f_rooftop": Vector2(1370, 385),
 }
 
 const COLLISION_THRESHOLD: float = 25.0
 
 var _collision_bodies: Array[Dictionary] = []
 
-@onready var player: CharacterBody2D = $Player
-
-
 func _ready() -> void:
 	_apply_textures()
-	_setup_post_process()
 	_add_depth_collisions()
-	_add_pause_menu()
-	_apply_spawn()
-	player.add_to_group("player")
-	_bind_all_npcs()
-	DialogueManager.dialogue_started.connect(_on_dialogue_started)
-	DialogueManager.dialogue_finished.connect(_on_dialogue_finished)
+	setup_area_common()
 
 
-func _setup_post_process() -> void:
-	var shader := load("res://shaders/post_process.gdshader") as Shader
-	var mat := ShaderMaterial.new()
-	mat.shader = shader
-	mat.set_shader_parameter("vignette_intensity", 0.25)
-	mat.set_shader_parameter("tint_color", Color(1.0, 0.92, 0.82, 0.08))
+func get_spawn_points() -> Dictionary:
+	return SPAWN_POINTS
 
-	var overlay := ColorRect.new()
-	overlay.name = "PostProcess"
-	overlay.material = mat
-	overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	overlay.z_index = 1000
-	add_child(overlay)
 
-	overlay.size = Vector2(1710, 900)
+func get_post_process_config() -> Dictionary:
+	return {
+		"vignette_intensity": 0.25,
+		"tint_color": Color(1.0, 0.92, 0.82, 0.08),
+		"size": Vector2(1710, 900),
+	}
 
 
 func _apply_textures() -> void:
@@ -110,35 +97,3 @@ func _physics_process(_delta: float) -> void:
 		var body: StaticBody2D = data["body"]
 		var dist := absf(player.position.y - data["ground_y"])
 		body.set_collision_layer_value(1, dist < COLLISION_THRESHOLD)
-
-
-func _apply_spawn() -> void:
-	var sid := SceneManager.get_pending_spawn()
-	if sid.is_empty():
-		return
-	var pos: Vector2 = SPAWN_POINTS.get(sid, Vector2.ZERO)
-	if pos != Vector2.ZERO:
-		player.position = pos
-
-
-func _add_pause_menu() -> void:
-	add_child(load("res://scenes/ui/pause_menu.tscn").instantiate())
-
-
-func _bind_all_npcs() -> void:
-	## 自动查找场景中所有 NPCBase 子类，连接它们的 dialogue_request 信号
-	for child in get_children():
-		if child.has_signal("dialogue_request"):
-			child.dialogue_request.connect(
-				func(npc, data): DialogueManager.start_dialogue(npc, data)
-			)
-
-
-func _on_dialogue_started() -> void:
-	player.set_physics_process(false)
-	player.set_process(false)
-
-
-func _on_dialogue_finished() -> void:
-	player.set_physics_process(true)
-	player.set_process(true)

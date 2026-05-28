@@ -14,8 +14,6 @@ var _packed_scene: PackedScene = null
 
 
 func _draw() -> void:
-	draw_rect(Rect2(-10, -50, 20, 50), Color(0.45, 0.3, 0.15))
-	draw_rect(Rect2(-12, -52, 24, 4), Color(0.5, 0.35, 0.2))
 	if _in_range:
 		var font: Font = ThemeDB.fallback_font
 		draw_string(font, Vector2(-40, -60), prompt_text, HORIZONTAL_ALIGNMENT_CENTER, -1, 12)
