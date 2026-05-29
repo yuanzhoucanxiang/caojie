@@ -1,5 +1,7 @@
 * [日志总览](README.md)
 * [← 回到策划案](https://yuanzhoucanxiang.github.io/caojie/)
+* **2026-05-29**
+  * [院落素材替换+CourtyardStageBuilder+镜头仰视](2026-05-29.md)
 * **2026-05-28**
   * [Codex改动推送+策划案同步+镜头微调](2026-05-28.md)
 * **2026-05-27**
