@@ -24,6 +24,7 @@ func _ready() -> void:
 	collision_mask = 0
 
 	var phys_shape := CollisionShape2D.new()
+	phys_shape.name = "CollisionShape2D"
 	var rect := RectangleShape2D.new()
 	rect.size = Vector2(collision_w, collision_h)
 	phys_shape.shape = rect
