@@ -29,7 +29,8 @@ caojie/
 │   │   ├── game_state.gd            # 全局属性、事件标记
 │   │   ├── dialogue_manager.gd      # 对话调度、气泡UI管理
 │   │   ├── scene_manager.gd         # 场景切换、镜头缩放、水彩过渡
-│   │   └── save_manager.gd          # 存档/读档、JSON 序列化
+│   │   ├── save_manager.gd          # 存档/读档、JSON 序列化
+│   │   └── audio_manager.gd         # BGM/SFX 播放和音量控制
 │   ├── player/
 │   │   └── player.gd                # 玩家移动、depth缩放、广播 interact_pressed
 │   ├── npcs/                        # 所有 NPC 脚本
@@ -80,9 +81,13 @@ caojie/
 │   └── GDD/                         # 游戏设计文档（预留）
 │
 ├── docs_dev/                        # 开发内部文档（不部署）
-│   └── code_conventions.md          # 代码规范详细文档
+│   ├── code_conventions.md          # 代码规范详细文档
+│   └── architecture_handoff.md      # 架构交接与后续协作说明
 │
 ├── logs/                            # 工作日志（原始 markdown）
+│
+├── tests/                           # 自动化测试（GdUnit4）
+│   └── unit/                        # 单元/架构回归测试
 │
 └── addons/                          # Godot 插件
     └── gdUnit4/                     # GDUnit4 测试框架（预留）
@@ -129,7 +134,7 @@ caojie/
 
 ## Autoload 规则（重要！）
 
-**当前 autoload 列表：** `GameState`, `DialogueManager`, `SceneManager`, `SaveManager`（在 `scripts/autoload/` 下）
+**当前 autoload 列表：** `GameState`, `DialogueManager`, `SceneManager`, `SaveManager`, `AudioManager`（在 `scripts/autoload/` 下）
 
 - Autoload 脚本**不要加 `class_name`**，Autoload 注册名已经是全局引用
 - 写新脚本前先检查 `project.godot` 的 autoload 列表，避免冲突
@@ -251,7 +256,8 @@ const SPAWN_POINTS := {
 | 视口 | 854×480 |
 | 渲染 | gl_compatibility |
 | 主场景 | `res://scenes/ui/title_screen.tscn` |
-| Autoload | GameState, DialogueManager, SceneManager, SaveManager |
+| Autoload | GameState, DialogueManager, SceneManager, SaveManager, AudioManager |
+| 架构交接 | `docs_dev/architecture_handoff.md` |
 | 策划案 wiki | yuanzhoucanxiang.github.io/caojie/ |
 | 开发日志 wiki | yuanzhoucanxiang.github.io/caojie/logs/ |
 | 仓库 | git@github.com:yuanzhoucanxiang/caojie.git |
