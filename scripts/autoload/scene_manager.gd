@@ -6,10 +6,10 @@ signal transition_completed
 const CAMERA_CONFIGS = {
 	"courtyard": {
 		"zoom": 1.25,
-		"offset": Vector2(0, -85),
+		"offset": Vector2(0, -150),
 		"allow_zoom": true,
-		"depth_scale": {"min": 0.85, "max": 1.0},
-		"player_bounds": {"left": 32, "right": 1680, "top": 360, "bottom": 520},
+		"depth_scale": {"min": 0.78, "max": 1.08},
+		"player_bounds": {"left": 32, "right": 1680, "top": 350, "bottom": 520},
 	},
 	"house_floor1": {
 		"zoom": 1.8,

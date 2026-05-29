@@ -46,28 +46,26 @@ func _rebuild_courtyard_stage() -> void:
 			{"name": "CourtyardFarVillageB", "pos": Vector2(1100, 204), "size": Vector2(72, 68), "color": Color(0.72, 0.64, 0.48, 0.8), "z": -310},
 			{"name": "CourtyardFarVillageC", "pos": Vector2(1206, 226), "size": Vector2(64, 46), "color": Color(0.62, 0.56, 0.44, 0.76), "z": -310},
 			{"name": "CourtyardMidTrees", "pos": Vector2(0, 252), "size": Vector2(1710, 116), "color": Color(0.34, 0.43, 0.28, 0.92), "z": -300},
-			{"name": "CourtyardYardGround", "pos": Vector2(0, 348), "size": Vector2(1710, 552), "color": Color(0.5, 0.43, 0.31, 1), "z": -90},
-			{"kind": "poly", "name": "CourtyardYardPerspectiveFar", "points": [Vector2(284, 338), Vector2(1008, 338), Vector2(1190, 900), Vector2(72, 900)], "color": Color(0.56, 0.49, 0.36, 0.62), "z": -86},
-			{"kind": "poly", "name": "CourtyardPathWash", "points": [Vector2(356, 350), Vector2(884, 350), Vector2(1128, 900), Vector2(180, 900)], "color": Color(0.61, 0.53, 0.38, 0.56), "z": -84},
-			{"kind": "poly", "name": "CourtyardYardPerspectiveNear", "points": [Vector2(0, 428), Vector2(1710, 408), Vector2(1710, 900), Vector2(0, 900)], "color": Color(0.45, 0.38, 0.27, 0.34), "z": -80},
-			{"kind": "poly", "name": "CourtyardOpenPlayBand", "points": [Vector2(92, 366), Vector2(1510, 352), Vector2(1610, 528), Vector2(32, 536)], "color": Color(0.67, 0.58, 0.4, 0.2), "z": -76},
-			{"name": "CourtyardMainHouse", "pos": Vector2(336, 82), "size": Vector2(286, 278), "color": Color(0.62, 0.48, 0.36, 1), "z": 328},
-			{"name": "CourtyardMainHouseSide", "pos": Vector2(622, 128), "size": Vector2(70, 232), "color": Color(0.48, 0.38, 0.3, 1), "z": 326},
-			{"name": "CourtyardMainRoof", "pos": Vector2(318, 50), "size": Vector2(332, 36), "color": Color(0.42, 0.19, 0.16, 1), "z": 329},
-			{"name": "CourtyardBalcony1", "pos": Vector2(332, 172), "size": Vector2(318, 28), "color": Color(0.72, 0.64, 0.48, 0.86), "z": 331},
-			{"name": "CourtyardBalcony2", "pos": Vector2(332, 268), "size": Vector2(318, 28), "color": Color(0.72, 0.64, 0.48, 0.78), "z": 331},
-			{"name": "CourtyardShopSign", "pos": Vector2(374, 284), "size": Vector2(118, 28), "color": Color(0.32, 0.45, 0.28, 1), "z": 333},
-			{"name": "CourtyardDoor", "pos": Vector2(548, 304), "size": Vector2(56, 56), "color": Color(0.36, 0.22, 0.16, 1), "z": 334},
-			{"name": "CourtyardWindowA", "pos": Vector2(386, 116), "size": Vector2(46, 38), "color": Color(0.68, 0.66, 0.5, 1), "z": 334},
-			{"name": "CourtyardWindowB", "pos": Vector2(522, 116), "size": Vector2(46, 38), "color": Color(0.68, 0.66, 0.5, 1), "z": 334},
-			{"name": "CourtyardWindowC", "pos": Vector2(388, 216), "size": Vector2(44, 34), "color": Color(0.72, 0.66, 0.48, 1), "z": 334},
-			{"name": "CourtyardWindowD", "pos": Vector2(522, 216), "size": Vector2(44, 34), "color": Color(0.72, 0.66, 0.48, 1), "z": 334},
-			{"kind": "line", "name": "CourtyardTileLineA", "from": Vector2(344, 140), "to": Vector2(684, 136), "width": 1.0, "color": Color(0.34, 0.24, 0.18, 0.28), "z": 335},
-			{"kind": "line", "name": "CourtyardTileLineB", "from": Vector2(344, 236), "to": Vector2(684, 232), "width": 1.0, "color": Color(0.34, 0.24, 0.18, 0.24), "z": 335},
-			{"name": "CourtyardOldHouse", "pos": Vector2(710, 242), "size": Vector2(224, 118), "color": Color(0.66, 0.51, 0.34, 1), "z": 332},
-			{"kind": "poly", "name": "CourtyardOldHouseRoof", "points": [Vector2(688, 220), Vector2(962, 220), Vector2(934, 250), Vector2(710, 250)], "color": Color(0.28, 0.22, 0.18, 1), "z": 333},
-			{"name": "CourtyardOldHouseDoor", "pos": Vector2(784, 306), "size": Vector2(44, 54), "color": Color(0.36, 0.24, 0.16, 1), "z": 334},
-			{"name": "CourtyardOldHouseWindow", "pos": Vector2(852, 284), "size": Vector2(40, 30), "color": Color(0.7, 0.62, 0.42, 1), "z": 334},
+			{"name": "CourtyardRearGroundApron", "pos": Vector2(0, 348), "size": Vector2(1710, 54), "color": Color(0.51, 0.44, 0.31, 1), "z": -91},
+			{"name": "CourtyardYardGround", "pos": Vector2(0, 368), "size": Vector2(1710, 532), "color": Color(0.5, 0.43, 0.31, 1), "z": -90},
+			{"kind": "poly", "name": "CourtyardYardPerspectiveFar", "points": [Vector2(322, 364), Vector2(968, 364), Vector2(1190, 900), Vector2(72, 900)], "color": Color(0.56, 0.49, 0.36, 0.58), "z": -86},
+			{"kind": "poly", "name": "CourtyardPathWash", "points": [Vector2(390, 374), Vector2(850, 374), Vector2(1128, 900), Vector2(180, 900)], "color": Color(0.61, 0.53, 0.38, 0.52), "z": -84},
+			{"kind": "poly", "name": "CourtyardYardPerspectiveNear", "points": [Vector2(0, 458), Vector2(1710, 432), Vector2(1710, 900), Vector2(0, 900)], "color": Color(0.45, 0.38, 0.27, 0.36), "z": -80},
+			{"kind": "poly", "name": "CourtyardOpenPlayBand", "points": [Vector2(116, 386), Vector2(1480, 374), Vector2(1610, 528), Vector2(32, 536)], "color": Color(0.67, 0.58, 0.4, 0.18), "z": -76},
+			{"kind": "line", "name": "CourtyardGroundPerspectiveLineA", "from": Vector2(360, 374), "to": Vector2(112, 900), "width": 1.4, "color": Color(0.3, 0.24, 0.16, 0.22), "z": -74},
+			{"kind": "line", "name": "CourtyardGroundPerspectiveLineB", "from": Vector2(538, 374), "to": Vector2(444, 900), "width": 1.2, "color": Color(0.3, 0.24, 0.16, 0.2), "z": -74},
+			{"kind": "line", "name": "CourtyardGroundPerspectiveLineC", "from": Vector2(738, 374), "to": Vector2(876, 900), "width": 1.2, "color": Color(0.3, 0.24, 0.16, 0.2), "z": -74},
+			{"kind": "line", "name": "CourtyardGroundPerspectiveLineD", "from": Vector2(916, 374), "to": Vector2(1350, 900), "width": 1.4, "color": Color(0.3, 0.24, 0.16, 0.22), "z": -74},
+			{"kind": "line", "name": "CourtyardGroundCrossLineA", "from": Vector2(128, 460), "to": Vector2(1540, 438), "width": 1.0, "color": Color(0.3, 0.24, 0.16, 0.18), "z": -73},
+			{"kind": "line", "name": "CourtyardGroundCrossLineB", "from": Vector2(72, 512), "to": Vector2(1618, 492), "width": 1.0, "color": Color(0.3, 0.24, 0.16, 0.16), "z": -73},
+			{"kind": "ellipse", "name": "CourtyardMainHouseContactShadow", "pos": Vector2(336, 340), "size": Vector2(354, 28), "color": Color(0.18, 0.13, 0.09, 0.18), "z": 320},
+			{"kind": "ellipse", "name": "CourtyardOldHouseContactShadow", "pos": Vector2(700, 340), "size": Vector2(306, 26), "color": Color(0.18, 0.13, 0.09, 0.2), "z": 320},
+			{"kind": "sprite", "name": "CourtyardMainHouse", "texture": "res://assets/sprites/Scenes/courtyard/main_house.png", "pos": Vector2(337, 81), "size": Vector2(313, 272), "z": 328},
+			{"name": "CourtyardMainHouseGroundLip", "pos": Vector2(350, 348), "size": Vector2(286, 9), "color": Color(0.2, 0.14, 0.09, 0.24), "z": 329},
+			{"kind": "sprite", "name": "CourtyardOldHouse", "texture": "res://assets/sprites/Scenes/courtyard/old_house.png", "pos": Vector2(690, 138), "size": Vector2(326, 215), "z": 332},
+			{"name": "CourtyardOldHouseGroundLip", "pos": Vector2(712, 348), "size": Vector2(284, 9), "color": Color(0.2, 0.14, 0.09, 0.22), "z": 333},
+			{"name": "CourtyardPottedPlantA", "pos": Vector2(682, 330), "size": Vector2(17, 22), "color": Color(0.28, 0.38, 0.2, 1), "z": 354},
+			{"name": "CourtyardPottedPlantPotA", "pos": Vector2(680, 348), "size": Vector2(21, 11), "color": Color(0.48, 0.28, 0.18, 1), "z": 360},
 			{"kind": "ellipse", "name": "CourtyardWell", "pos": Vector2(560, 370), "size": Vector2(92, 28), "color": Color(0.48, 0.44, 0.34, 1), "z": 398},
 			{"name": "CourtyardWellBase", "pos": Vector2(576, 344), "size": Vector2(60, 38), "color": Color(0.42, 0.39, 0.32, 1), "z": 382},
 			{"kind": "ellipse", "name": "CourtyardStoneTable", "pos": Vector2(392, 396), "size": Vector2(112, 28), "color": Color(0.54, 0.5, 0.4, 1), "z": 416},
@@ -76,6 +74,8 @@ func _rebuild_courtyard_stage() -> void:
 			{"kind": "ellipse", "name": "CourtyardScooterWheelA", "pos": Vector2(220, 426), "size": Vector2(18, 18), "color": Color(0.08, 0.07, 0.06, 1), "z": 430},
 			{"kind": "ellipse", "name": "CourtyardScooterWheelB", "pos": Vector2(272, 426), "size": Vector2(18, 18), "color": Color(0.08, 0.07, 0.06, 1), "z": 430},
 			{"kind": "line", "name": "CourtyardClothesline", "from": Vector2(966, 292), "to": Vector2(1288, 272), "width": 3.0, "color": Color(0.18, 0.14, 0.1, 0.72), "z": 345},
+			{"kind": "line", "name": "CourtyardPowerLineA", "from": Vector2(1010, 190), "to": Vector2(1478, 146), "width": 2.0, "color": Color(0.12, 0.09, 0.07, 0.62), "z": 338},
+			{"kind": "line", "name": "CourtyardPowerLineB", "from": Vector2(1014, 210), "to": Vector2(1482, 168), "width": 1.6, "color": Color(0.12, 0.09, 0.07, 0.5), "z": 338},
 			{"name": "CourtyardClothesPoleA", "pos": Vector2(964, 270), "size": Vector2(7, 122), "color": Color(0.28, 0.2, 0.13, 1), "z": 386},
 			{"name": "CourtyardClothesPoleB", "pos": Vector2(1286, 252), "size": Vector2(7, 128), "color": Color(0.28, 0.2, 0.13, 1), "z": 386},
 			{"name": "CourtyardClothA", "pos": Vector2(1002, 294), "size": Vector2(32, 58), "color": Color(0.78, 0.72, 0.58, 1), "z": 346},
@@ -94,7 +94,7 @@ func _align_legacy_gameplay_anchors() -> void:
 		house.position = Vector2(430, 104)
 	var old_house := get_node_or_null("OldHouse") as Node2D
 	if old_house:
-		old_house.position = Vector2(710, 266)
+		old_house.position = Vector2(720, 262)
 	var yard_tree := get_node_or_null("YardTree") as Node2D
 	if yard_tree:
 		yard_tree.position = Vector2(120, 360)
@@ -142,7 +142,7 @@ func _add_courtyard_interactable_objects() -> void:
 	add_child(scooter)
 
 	var shop_counter := InteractableObject.new()
-	shop_counter.position = Vector2(374, 318)
+	shop_counter.position = Vector2(384, 306)
 	shop_counter.object_name = "CourtyardShopCounterObject"
 	shop_counter.description = "小卖部门口摆着零食和汽水，柜台后面的阴影里透出一点凉意。"
 	shop_counter.collision_w = 110
@@ -156,12 +156,17 @@ func _apply_textures() -> void:
 		"CourtyardSky": [TextureSetup.Pattern.NOISE, 220.0, 0.025],
 		"CourtyardFarHills": [TextureSetup.Pattern.NOISE, 160.0, 0.04],
 		"CourtyardMidTrees": [TextureSetup.Pattern.GRASS, 80.0, 0.08],
+		"CourtyardRearGroundApron": [TextureSetup.Pattern.DIRT, 78.0, 0.09],
 		"CourtyardYardGround": [TextureSetup.Pattern.DIRT, 70.0, 0.1],
+		"CourtyardYardPerspective": [TextureSetup.Pattern.DIRT, 92.0, 0.07],
 		"CourtyardPathWash": [TextureSetup.Pattern.DIRT, 90.0, 0.08],
-		"CourtyardMainHouse": [TextureSetup.Pattern.BRICK, 38.0, 0.08],
 		"CourtyardOldHouse": [TextureSetup.Pattern.DIRT, 54.0, 0.08],
+		"CourtyardOldHouseSideWall": [TextureSetup.Pattern.DIRT, 48.0, 0.08],
 		"CourtyardOldHouseRoof": [TextureSetup.Pattern.NOISE, 42.0, 0.08],
+		"CourtyardOldHouseSideRoof": [TextureSetup.Pattern.NOISE, 36.0, 0.08],
 		"CourtyardWellBase": [TextureSetup.Pattern.NOISE, 36.0, 0.08],
+		"CourtyardPottedPlant": [TextureSetup.Pattern.GRASS, 28.0, 0.1],
+		"CourtyardPottedPlantPot": [TextureSetup.Pattern.DIRT, 24.0, 0.08],
 		"CourtyardClothesPole": [TextureSetup.Pattern.WOOD_V, 28.0, 0.1],
 		"CourtyardForegroundFence": [TextureSetup.Pattern.WOOD_H, 34.0, 0.1],
 		"GrassBack": [TextureSetup.Pattern.GRASS, 80.0, 0.08],
@@ -195,9 +200,8 @@ func _apply_textures() -> void:
 
 func _add_depth_collisions() -> void:
 	# 院落主屋和老屋只挡住贴近墙脚的一小段，避免把前院行走带堵死。
-	_add_body("House", 226, 240, 360)
-	_add_body("House", 246, 256, 360)
-	_add_body("OldHouse", 224, 94, 360)
+	_add_body("House", 232, 244, 348)
+	_add_body("OldHouse", 214, 86, 348)
 	_add_body("YardTree", 18, 0, 360)
 	_add_body("Tree1", 12, 0, 404)
 	_add_body("Tree2", 16, 0, 420)
