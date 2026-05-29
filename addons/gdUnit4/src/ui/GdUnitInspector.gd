@@ -1,6 +1,6 @@
 @tool
 class_name GdUnitInspecor
-extends Control
+extends Panel
 
 
 var _command_handler := GdUnitCommandHandler.instance()
@@ -25,8 +25,6 @@ func _ready() -> void:
 	# propagete the test_counters_changed signal to the progress bar
 	@warning_ignore("unsafe_property_access", "unsafe_method_access")
 	%MainPanel.test_counters_changed.connect(%ProgressBar._on_test_counter_changed)
-	# Register for editor theme updates
-	add_child(GdUnitEditorColorTheme.new(), true, Node.INTERNAL_MODE_BACK)
 
 
 func _process(delta: float) -> void:

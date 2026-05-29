@@ -6,6 +6,7 @@ const DEFAULT_TIMEOUT := 2000
 
 
 var _current_value_provider :ValueProvider
+var _current_failure_message :String = ""
 var _custom_failure_message :String = ""
 var _additional_failure_message: String = ""
 var _line_number := -1
@@ -15,7 +16,7 @@ var _sleep_timer :Timer = null
 
 
 func _init(instance :Object, func_name :String, args := Array()) -> void:
-	_line_number = GdUnitStackTrace.new().get_line_number()
+	_line_number = GdUnitAssertions.get_line_number()
 	GdAssertReports.reset_last_error_line_number()
 	# save the actual assert instance on the current thread context
 	GdUnitThreadManager.get_current_context().set_assert(self)
@@ -49,9 +50,13 @@ func report_success() -> GdUnitFuncAssert:
 
 
 func report_error(failure :String) -> GdUnitFuncAssert:
-	var failure_message := GdAssertMessages.build_failure_message(failure, _additional_failure_message, _custom_failure_message)
-	GdAssertReports.report_error(GdUnitError.new(failure_message, _line_number, GdUnitStackTrace.new()))
+	_current_failure_message = GdAssertMessages.build_failure_message(failure, _additional_failure_message, _custom_failure_message)
+	GdAssertReports.report_error(_current_failure_message, _line_number)
 	return self
+
+
+func failure_message() -> String:
+	return _current_failure_message
 
 
 func override_failure_message(message: String) -> GdUnitFuncAssert:

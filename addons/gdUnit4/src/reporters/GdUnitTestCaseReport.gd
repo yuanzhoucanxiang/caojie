@@ -20,9 +20,7 @@ func suite_name() -> String:
 func failure_report() -> String:
 	var report_message := ""
 	for report in get_test_reports():
-		var stack_trace := "" if report.stack_trace() == null else report.stack_trace().print_stack_trace()
-		var message := "%s\n%s\n" % [report.message(), stack_trace]
-		report_message += _text_formatter.call(message)
+		report_message += _text_formatter.call(str(report)) + "\n"
 	return report_message
 
 

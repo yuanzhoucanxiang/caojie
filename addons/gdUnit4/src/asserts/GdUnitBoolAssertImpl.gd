@@ -35,6 +35,10 @@ func report_error(error :String) -> GdUnitBoolAssert:
 	return self
 
 
+func failure_message() -> String:
+	return _base.failure_message()
+
+
 func override_failure_message(message: String) -> GdUnitBoolAssert:
 	@warning_ignore("return_value_discarded")
 	_base.override_failure_message(message)

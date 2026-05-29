@@ -3,6 +3,7 @@ extends GdUnitAssert
 
 
 var _current :Variant
+var _current_failure_message :String = ""
 var _custom_failure_message :String = ""
 var _additional_failure_message: String = ""
 
@@ -12,6 +13,11 @@ func _init(current :Variant) -> void:
 	# save the actual assert instance on the current thread context
 	GdUnitThreadManager.get_current_context().set_assert(self)
 	GdAssertReports.reset_last_error_line_number()
+
+
+
+func failure_message() -> String:
+	return _current_failure_message
 
 
 func current_value() -> Variant:
@@ -24,11 +30,11 @@ func report_success() -> GdUnitAssert:
 
 
 func report_error(failure :String, failure_line_number: int = -1) -> GdUnitAssert:
-	var stack_trace := GdUnitStackTrace.new()
-	var line_number := failure_line_number if failure_line_number != -1 else stack_trace.get_line_number()
+	var line_number := failure_line_number if failure_line_number != -1 else GdUnitAssertions.get_line_number()
 	GdAssertReports.set_last_error_line_number(line_number)
-	var failure_message := GdAssertMessages.build_failure_message(failure, _additional_failure_message, _custom_failure_message)
-	GdAssertReports.report_error(GdUnitError.new(failure_message, line_number, stack_trace))
+	_current_failure_message = GdAssertMessages.build_failure_message(failure, _additional_failure_message, _custom_failure_message)
+	GdAssertReports.report_error(_current_failure_message, line_number)
+	Engine.set_meta("GD_TEST_FAILURE", true)
 	return self
 
 

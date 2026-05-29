@@ -12,6 +12,7 @@ const TITLE = "gdUnit4 ${version} Console"
 var _test_reporter: GdUnitConsoleTestReporter
 
 
+@warning_ignore("return_value_discarded")
 func _ready() -> void:
 	GdUnitFonts.init_fonts(output)
 	GdUnit4Version.init_version_label(title)
@@ -23,6 +24,8 @@ func _ready() -> void:
 
 
 func _notification(what: int) -> void:
+	if what == EditorSettings.NOTIFICATION_EDITOR_SETTINGS_CHANGED:
+		_test_reporter.init_colors()
 	if what == NOTIFICATION_PREDELETE:
 		var instance := GdUnitSignals.instance()
 		if instance.gdunit_event.is_connected(_on_gdunit_event):

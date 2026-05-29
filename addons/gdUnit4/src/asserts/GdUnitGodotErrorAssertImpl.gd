@@ -1,5 +1,6 @@
 extends GdUnitGodotErrorAssert
 
+var _current_failure_message := ""
 var _custom_failure_message := ""
 var _additional_failure_message := ""
 var _callable: Callable
@@ -18,16 +19,19 @@ func _execute() -> Array[ErrorLogEntry]:
 	return _logger.entries()
 
 
+func failure_message() -> String:
+	return _current_failure_message
+
+
 func _report_success() -> GdUnitAssert:
 	GdAssertReports.report_success()
 	return self
 
 
 func _report_error(error_message: String, failure_line_number: int = -1) -> GdUnitAssert:
-	var stack_trace := GdUnitStackTrace.new()
-	var line_number := failure_line_number if failure_line_number != -1 else stack_trace.get_line_number()
-	var failure_message := GdAssertMessages.build_failure_message(error_message, _additional_failure_message, _custom_failure_message)
-	GdAssertReports.report_error(GdUnitError.new(failure_message, line_number, stack_trace))
+	var line_number := failure_line_number if failure_line_number != -1 else GdUnitAssertions.get_line_number()
+	_current_failure_message = GdAssertMessages.build_failure_message(error_message, _additional_failure_message, _custom_failure_message)
+	GdAssertReports.report_error(_current_failure_message, line_number)
 	return self
 
 
