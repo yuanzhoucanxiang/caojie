@@ -1,41 +1,39 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene format=3 uid="uid://w02c4732xuqu"]
 
-[ext_resource type="Script" path="res://scripts/scenes/house_floor1.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://d0l1xd064cb4f" path="res://scripts/scenes/house_floor1.gd" id="1_script"]
 [ext_resource type="PackedScene" path="res://scenes/player.tscn" id="2_player"]
-[ext_resource type="Script" path="res://scripts/triggers/transition_trigger.gd" id="3_trigger"]
+[ext_resource type="Script" uid="uid://c26cm3fhpxvp2" path="res://scripts/triggers/transition_trigger.gd" id="3_trigger"]
 [ext_resource type="PackedScene" path="res://scenes/npcs/npc_grandmother.tscn" id="4_grandmother"]
 [ext_resource type="PackedScene" path="res://scenes/npcs/npc_aunt.tscn" id="5_aunt"]
 
 [sub_resource type="RectangleShape2D" id="trigger_shape"]
 size = Vector2(33, 80)
 
-[node name="HouseFloor1" type="Node2D"]
+[node name="HouseFloor1" type="Node2D" unique_id=2082401134]
 script = ExtResource("1_script")
 
-[node name="Grandmother" parent="." instance=ExtResource("4_grandmother")]
+[node name="Grandmother" parent="." unique_id=2134721230 instance=ExtResource("4_grandmother")]
 position = Vector2(300, 370)
 
-[node name="Aunt" parent="." instance=ExtResource("5_aunt")]
+[node name="Aunt" parent="." unique_id=484609617 instance=ExtResource("5_aunt")]
 position = Vector2(450, 375)
 
-[node name="Player" parent="." instance=ExtResource("2_player")]
+[node name="Player" parent="." unique_id=498277892 instance=ExtResource("2_player")]
 position = Vector2(400, 370)
 
-[node name="ExitDoor" type="StaticBody2D" parent="."]
+[node name="ExitDoor" type="StaticBody2D" parent="." unique_id=2057817096]
 position = Vector2(3, 380)
 script = ExtResource("3_trigger")
 target_scene_path = "res://scenes/main.tscn"
-target_area_id = "courtyard"
-transition_color = Color(0.95, 0.93, 0.88, 1)
 prompt_text = "按 E 出去"
 spawn_id = "from_house"
 
-[node name="TriggerZone" type="Area2D" parent="ExitDoor"]
+[node name="TriggerZone" type="Area2D" parent="ExitDoor" unique_id=2133286620]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitDoor/TriggerZone"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitDoor/TriggerZone" unique_id=963115104]
 shape = SubResource("trigger_shape")
 
-[node name="StairsUp" type="StaticBody2D" parent="."]
+[node name="StairsUp" type="StaticBody2D" parent="." unique_id=1236091939]
 position = Vector2(717, 380)
 script = ExtResource("3_trigger")
 target_scene_path = "res://scenes/areas/house_floor2.tscn"
@@ -44,7 +42,7 @@ transition_color = Color(0.68, 0.62, 0.48, 1)
 prompt_text = "按 E 上楼"
 spawn_id = "from_1f_up"
 
-[node name="TriggerZone" type="Area2D" parent="StairsUp"]
+[node name="TriggerZone" type="Area2D" parent="StairsUp" unique_id=623697530]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StairsUp/TriggerZone"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StairsUp/TriggerZone" unique_id=1893909075]
 shape = SubResource("trigger_shape")

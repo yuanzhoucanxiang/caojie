@@ -46,52 +46,52 @@ func _rebuild_visual_stage() -> void:
 			"floor": Color(0.4, 0.32, 0.23, 1),
 		},
 		"lights": [
-			{"name": "NarrowHallTopShade", "pos": Vector2(0, 0), "size": Vector2(640, 72), "color": Color(0.07, 0.055, 0.04, 0.32), "z": 58},
-			{"name": "ThinWindowLight", "pos": Vector2(110, 204), "size": Vector2(210, 54), "color": Color(0.78, 0.66, 0.48, 0.07), "z": 56},
-			{"name": "DoorwayFalloff", "pos": Vector2(444, 104), "size": Vector2(170, 238), "color": Color(0.12, 0.095, 0.075, 0.22), "z": 57},
+			{"name": "NarrowHallTopShade", "pos": Vector2(0, 0), "size": Vector2(640, 60), "color": Color(0.07, 0.055, 0.04, 0.28), "z": 58},
+			{"name": "ThinWindowLight", "pos": Vector2(116, 216), "size": Vector2(174, 38), "color": Color(0.78, 0.66, 0.48, 0.055), "z": 56},
+			{"name": "DoorwayFalloff", "pos": Vector2(450, 168), "size": Vector2(116, 174), "color": Color(0.12, 0.095, 0.075, 0.18), "z": 57},
 			{"name": "LowForegroundHaze", "pos": Vector2(0, 404), "size": Vector2(640, 76), "color": Color(0.08, 0.06, 0.045, 0.34), "z": 92},
 		],
 		"items": [
-			{"name": "GrandparentsDoorFrame", "pos": Vector2(60, 126), "size": Vector2(124, 214), "color": Color(0.36, 0.28, 0.2, 1), "z": -62},
-			{"name": "GrandparentsDoorPanel", "pos": Vector2(70, 140), "size": Vector2(104, 198), "color": Color(0.52, 0.42, 0.3, 1), "z": -61},
-			{"name": "GrandparentsDoorMat", "pos": Vector2(74, 342), "size": Vector2(94, 16), "color": Color(0.34, 0.4, 0.28, 1), "z": 360},
-			{"name": "UncleDoorFrame", "pos": Vector2(258, 120), "size": Vector2(124, 220), "color": Color(0.31, 0.25, 0.2, 1), "z": -62},
-			{"name": "UncleDoorPanel", "pos": Vector2(268, 134), "size": Vector2(104, 204), "color": Color(0.42, 0.34, 0.25, 1), "z": -61},
-			{"name": "AwardPaper1", "pos": Vector2(220, 112), "size": Vector2(42, 28), "color": Color(0.75, 0.66, 0.46, 1), "z": -52},
-			{"name": "AwardPaper2", "pos": Vector2(386, 112), "size": Vector2(40, 28), "color": Color(0.72, 0.62, 0.42, 1), "z": -52},
-			{"name": "CousinDoorFrame", "pos": Vector2(456, 126), "size": Vector2(118, 214), "color": Color(0.28, 0.22, 0.18, 1), "z": -62},
-			{"name": "CousinDoorPanel", "pos": Vector2(466, 140), "size": Vector2(98, 198), "color": Color(0.39, 0.3, 0.22, 1), "z": -61},
-			{"name": "CrookedDrawing1", "pos": Vector2(474, 164), "size": Vector2(34, 24), "color": Color(0.54, 0.46, 0.36, 1), "z": -50},
-			{"name": "CrookedDrawing2", "pos": Vector2(516, 182), "size": Vector2(30, 22), "color": Color(0.58, 0.49, 0.38, 1), "z": -50},
-			{"name": "SoftWindowPatchLeft", "pos": Vector2(82, 218), "size": Vector2(164, 34), "color": Color(0.72, 0.62, 0.44, 0.08), "z": 56},
-			{"name": "SoftWindowPatchRight", "pos": Vector2(444, 212), "size": Vector2(108, 38), "color": Color(0.68, 0.58, 0.42, 0.06), "z": 56},
-			{"kind": "line", "name": "LeftDoorCharmString", "from": Vector2(118, 178), "to": Vector2(118, 252), "width": 2.0, "color": Color(0.42, 0.34, 0.24, 0.58), "z": -49},
-			{"kind": "ellipse", "name": "LeftDoorCharmTop", "pos": Vector2(106, 196), "size": Vector2(24, 28), "color": Color(0.68, 0.52, 0.32, 0.92), "z": -48},
-			{"kind": "ellipse", "name": "LeftDoorCharmBottom", "pos": Vector2(110, 230), "size": Vector2(18, 20), "color": Color(0.78, 0.66, 0.46, 0.9), "z": -48},
-			{"kind": "ellipse", "name": "GrandparentsDoorKnob", "pos": Vector2(154, 254), "size": Vector2(8, 8), "color": Color(0.78, 0.64, 0.38, 1), "z": -48},
-			{"kind": "ellipse", "name": "UncleDoorKnob", "pos": Vector2(352, 254), "size": Vector2(8, 8), "color": Color(0.74, 0.58, 0.34, 1), "z": -48},
-			{"kind": "ellipse", "name": "CousinDoorKnob", "pos": Vector2(546, 254), "size": Vector2(8, 8), "color": Color(0.72, 0.56, 0.32, 1), "z": -48},
-			{"name": "HallBench", "pos": Vector2(206, 368), "size": Vector2(92, 18), "color": Color(0.35, 0.25, 0.16, 1), "z": 387},
-			{"name": "BenchLegLeft", "pos": Vector2(216, 386), "size": Vector2(8, 28), "color": Color(0.27, 0.19, 0.12, 1), "z": 415},
-			{"name": "BenchLegRight", "pos": Vector2(278, 386), "size": Vector2(8, 28), "color": Color(0.27, 0.19, 0.12, 1), "z": 415},
-			{"name": "DogMat", "pos": Vector2(474, 372), "size": Vector2(70, 22), "color": Color(0.3, 0.24, 0.18, 1), "z": 395},
-			{"name": "CeilingWireA", "pos": Vector2(80, 58), "size": Vector2(200, 3), "color": Color(0.17, 0.14, 0.11, 1), "z": -40},
-			{"name": "CeilingWireB", "pos": Vector2(352, 58), "size": Vector2(160, 3), "color": Color(0.17, 0.14, 0.11, 1), "z": -40},
+			{"name": "GrandparentsDoorFrame", "pos": Vector2(78, 174), "size": Vector2(82, 166), "color": Color(0.36, 0.28, 0.2, 1), "z": -62},
+			{"name": "GrandparentsDoorPanel", "pos": Vector2(86, 188), "size": Vector2(66, 150), "color": Color(0.52, 0.42, 0.3, 1), "z": -61},
+			{"name": "GrandparentsDoorMat", "pos": Vector2(82, 342), "size": Vector2(74, 12), "color": Color(0.34, 0.4, 0.28, 0.88), "z": 360},
+			{"name": "UncleDoorFrame", "pos": Vector2(276, 174), "size": Vector2(82, 166), "color": Color(0.31, 0.25, 0.2, 1), "z": -62},
+			{"name": "UncleDoorPanel", "pos": Vector2(284, 188), "size": Vector2(66, 150), "color": Color(0.42, 0.34, 0.25, 1), "z": -61},
+			{"name": "AwardPaper1", "pos": Vector2(214, 138), "size": Vector2(36, 24), "color": Color(0.75, 0.66, 0.46, 1), "z": -52},
+			{"name": "AwardPaper2", "pos": Vector2(384, 140), "size": Vector2(34, 24), "color": Color(0.72, 0.62, 0.42, 1), "z": -52},
+			{"name": "CousinDoorFrame", "pos": Vector2(474, 176), "size": Vector2(78, 164), "color": Color(0.28, 0.22, 0.18, 1), "z": -62},
+			{"name": "CousinDoorPanel", "pos": Vector2(482, 190), "size": Vector2(62, 148), "color": Color(0.39, 0.3, 0.22, 1), "z": -61},
+			{"name": "CrookedDrawing1", "pos": Vector2(486, 206), "size": Vector2(24, 18), "color": Color(0.54, 0.46, 0.36, 1), "z": -50},
+			{"name": "CrookedDrawing2", "pos": Vector2(518, 220), "size": Vector2(22, 16), "color": Color(0.58, 0.49, 0.38, 1), "z": -50},
+			{"name": "SoftWindowPatchLeft", "pos": Vector2(92, 226), "size": Vector2(122, 26), "color": Color(0.72, 0.62, 0.44, 0.055), "z": 56},
+			{"name": "SoftWindowPatchRight", "pos": Vector2(462, 226), "size": Vector2(76, 24), "color": Color(0.68, 0.58, 0.42, 0.045), "z": 56},
+			{"kind": "line", "name": "LeftDoorCharmString", "from": Vector2(118, 214), "to": Vector2(118, 250), "width": 2.0, "color": Color(0.42, 0.34, 0.24, 0.5), "z": -49},
+			{"kind": "ellipse", "name": "LeftDoorCharmTop", "pos": Vector2(110, 222), "size": Vector2(16, 18), "color": Color(0.68, 0.52, 0.32, 0.86), "z": -48},
+			{"kind": "ellipse", "name": "LeftDoorCharmBottom", "pos": Vector2(112, 246), "size": Vector2(12, 14), "color": Color(0.78, 0.66, 0.46, 0.84), "z": -48},
+			{"kind": "ellipse", "name": "GrandparentsDoorKnob", "pos": Vector2(140, 260), "size": Vector2(7, 7), "color": Color(0.78, 0.64, 0.38, 1), "z": -48},
+			{"kind": "ellipse", "name": "UncleDoorKnob", "pos": Vector2(338, 260), "size": Vector2(7, 7), "color": Color(0.74, 0.58, 0.34, 1), "z": -48},
+			{"kind": "ellipse", "name": "CousinDoorKnob", "pos": Vector2(532, 262), "size": Vector2(7, 7), "color": Color(0.72, 0.56, 0.32, 1), "z": -48},
+			{"name": "HallBench", "pos": Vector2(210, 366), "size": Vector2(82, 16), "color": Color(0.35, 0.25, 0.16, 1), "z": 387},
+			{"name": "BenchLegLeft", "pos": Vector2(220, 382), "size": Vector2(7, 26), "color": Color(0.27, 0.19, 0.12, 1), "z": 415},
+			{"name": "BenchLegRight", "pos": Vector2(276, 382), "size": Vector2(7, 26), "color": Color(0.27, 0.19, 0.12, 1), "z": 415},
+			{"name": "DogMat", "pos": Vector2(476, 374), "size": Vector2(58, 16), "color": Color(0.3, 0.24, 0.18, 0.86), "z": 395},
+			{"name": "CeilingWireA", "pos": Vector2(86, 56), "size": Vector2(146, 2), "color": Color(0.17, 0.14, 0.11, 0.72), "z": -40},
+			{"name": "CeilingWireB", "pos": Vector2(370, 56), "size": Vector2(112, 2), "color": Color(0.17, 0.14, 0.11, 0.72), "z": -40},
 			{"kind": "line", "name": "HallBaseLine", "from": Vector2(25, 340), "to": Vector2(615, 340), "width": 3.0, "color": Color(0.2, 0.15, 0.1, 0.62), "z": -38},
-			{"kind": "line", "name": "HallFloorLineA", "from": Vector2(36, 372), "to": Vector2(604, 366), "width": 2.0, "color": Color(0.25, 0.18, 0.12, 0.5), "z": 50},
-			{"kind": "line", "name": "HallFloorLineB", "from": Vector2(28, 414), "to": Vector2(612, 404), "width": 2.0, "color": Color(0.22, 0.16, 0.11, 0.48), "z": 50},
-			{"name": "GrandparentsDoorNamePlate", "pos": Vector2(106, 154), "size": Vector2(30, 10), "color": Color(0.76, 0.66, 0.44, 1), "z": -50},
-			{"name": "UncleDoorNamePlate", "pos": Vector2(308, 150), "size": Vector2(28, 10), "color": Color(0.68, 0.58, 0.42, 1), "z": -50},
-			{"name": "CousinDoorSticker", "pos": Vector2(500, 222), "size": Vector2(24, 18), "color": Color(0.44, 0.58, 0.64, 1), "z": -50},
-			{"kind": "line", "name": "GrandparentsDoorCrack", "from": Vector2(84, 210), "to": Vector2(98, 282), "width": 2.0, "color": Color(0.24, 0.17, 0.11, 0.6), "z": -48},
-			{"kind": "line", "name": "UncleDoorLightSeam", "from": Vector2(370, 146), "to": Vector2(370, 334), "width": 2.0, "color": Color(0.48, 0.36, 0.22, 0.16), "z": -48},
-			{"kind": "line", "name": "CousinDoorLightSeam", "from": Vector2(466, 152), "to": Vector2(466, 334), "width": 2.0, "color": Color(0.48, 0.36, 0.22, 0.14), "z": -48},
-			{"kind": "line", "name": "AwardPaper1Top", "from": Vector2(220, 112), "to": Vector2(262, 112), "width": 2.0, "color": Color(0.42, 0.22, 0.12, 1), "z": -49},
-			{"kind": "line", "name": "AwardPaper2Top", "from": Vector2(386, 112), "to": Vector2(426, 112), "width": 2.0, "color": Color(0.42, 0.22, 0.12, 1), "z": -49},
-			{"name": "BenchShadow", "pos": Vector2(194, 390), "size": Vector2(118, 14), "color": Color(0.08, 0.055, 0.035, 0.36), "z": 396},
+			{"kind": "line", "name": "HallFloorLineA", "from": Vector2(36, 372), "to": Vector2(604, 366), "width": 2.0, "color": Color(0.25, 0.18, 0.12, 0.38), "z": 50},
+			{"kind": "line", "name": "HallFloorLineB", "from": Vector2(28, 414), "to": Vector2(612, 404), "width": 2.0, "color": Color(0.22, 0.16, 0.11, 0.34), "z": 50},
+			{"name": "GrandparentsDoorNamePlate", "pos": Vector2(104, 198), "size": Vector2(28, 8), "color": Color(0.76, 0.66, 0.44, 0.9), "z": -50},
+			{"name": "UncleDoorNamePlate", "pos": Vector2(304, 198), "size": Vector2(26, 8), "color": Color(0.68, 0.58, 0.42, 0.9), "z": -50},
+			{"name": "CousinDoorSticker", "pos": Vector2(502, 240), "size": Vector2(18, 14), "color": Color(0.44, 0.58, 0.64, 0.92), "z": -50},
+			{"kind": "line", "name": "GrandparentsDoorCrack", "from": Vector2(96, 238), "to": Vector2(106, 292), "width": 2.0, "color": Color(0.24, 0.17, 0.11, 0.5), "z": -48},
+			{"kind": "line", "name": "UncleDoorLightSeam", "from": Vector2(350, 198), "to": Vector2(350, 334), "width": 2.0, "color": Color(0.48, 0.36, 0.22, 0.11), "z": -48},
+			{"kind": "line", "name": "CousinDoorLightSeam", "from": Vector2(482, 202), "to": Vector2(482, 334), "width": 2.0, "color": Color(0.48, 0.36, 0.22, 0.1), "z": -48},
+			{"kind": "line", "name": "AwardPaper1Top", "from": Vector2(214, 138), "to": Vector2(250, 138), "width": 2.0, "color": Color(0.42, 0.22, 0.12, 0.9), "z": -49},
+			{"kind": "line", "name": "AwardPaper2Top", "from": Vector2(384, 140), "to": Vector2(418, 140), "width": 2.0, "color": Color(0.42, 0.22, 0.12, 0.9), "z": -49},
+			{"name": "BenchShadow", "pos": Vector2(200, 386), "size": Vector2(106, 12), "color": Color(0.08, 0.055, 0.035, 0.3), "z": 396},
 			{"name": "UmbrellaHandle", "pos": Vector2(42, 304), "size": Vector2(8, 68), "color": Color(0.16, 0.12, 0.09, 1), "z": 372},
 			{"name": "UmbrellaCloth", "pos": Vector2(30, 292), "size": Vector2(32, 18), "color": Color(0.32, 0.38, 0.34, 1), "z": 373},
-			{"kind": "ellipse", "name": "DogMatSoftEdge", "pos": Vector2(468, 368), "size": Vector2(82, 28), "color": Color(0.22, 0.17, 0.12, 0.72), "z": 396},
+			{"kind": "ellipse", "name": "DogMatSoftEdge", "pos": Vector2(470, 370), "size": Vector2(70, 24), "color": Color(0.22, 0.17, 0.12, 0.5), "z": 396},
 		],
 		"foreground": [
 			{"name": "ForegroundStairShadowLeft", "pos": Vector2(0, 420), "size": Vector2(120, 60), "color": Color(0.08, 0.055, 0.035, 0.66), "z": 104},
@@ -102,35 +102,35 @@ func _rebuild_visual_stage() -> void:
 
 func _add_interactable_objects() -> void:
 	var grandparents := InteractableObject.new()
-	grandparents.position = Vector2(70, 320)
+	grandparents.position = Vector2(86, 316)
 	grandparents.object_name = "GrandparentsRoomDoor"
 	grandparents.description = "外婆房间门缝里有淡淡的药油味，床边大概还放着针线盒。"
-	grandparents.collision_w = 104
-	grandparents.collision_h = 26
+	grandparents.collision_w = 66
+	grandparents.collision_h = 22
 	add_child(grandparents)
 
 	var uncle := InteractableObject.new()
-	uncle.position = Vector2(268, 320)
+	uncle.position = Vector2(284, 316)
 	uncle.object_name = "UncleRoomDoor"
 	uncle.description = "舅舅舅妈的房门收拾得很规整，墙上的奖状已经有些发黄。"
-	uncle.collision_w = 104
-	uncle.collision_h = 26
+	uncle.collision_w = 66
+	uncle.collision_h = 22
 	add_child(uncle)
 
 	var cousin := InteractableObject.new()
-	cousin.position = Vector2(466, 320)
+	cousin.position = Vector2(482, 316)
 	cousin.object_name = "CousinRoomDoor"
 	cousin.description = "二表哥门上贴着歪歪扭扭的画，门口还有一张旧垫子。"
-	cousin.collision_w = 98
-	cousin.collision_h = 26
+	cousin.collision_w = 62
+	cousin.collision_h = 22
 	add_child(cousin)
 
 	var awards := InteractableObject.new()
-	awards.position = Vector2(218, 116)
+	awards.position = Vector2(210, 136)
 	awards.object_name = "AwardPapers"
 	awards.description = "奖状被贴得很高，纸边已经发黄，但红字还很醒目。"
-	awards.collision_w = 210
-	awards.collision_h = 34
+	awards.collision_w = 212
+	awards.collision_h = 28
 	add_child(awards)
 
 	var umbrella := InteractableObject.new()
@@ -142,11 +142,11 @@ func _add_interactable_objects() -> void:
 	add_child(umbrella)
 
 	var hanging_charm := InteractableObject.new()
-	hanging_charm.position = Vector2(104, 214)
+	hanging_charm.position = Vector2(108, 222)
 	hanging_charm.object_name = "DoorCharm"
 	hanging_charm.description = "门上的小挂饰轻轻晃着，颜色已经晒淡，还是被擦得很干净。"
-	hanging_charm.collision_w = 36
-	hanging_charm.collision_h = 42
+	hanging_charm.collision_w = 28
+	hanging_charm.collision_h = 38
 	add_child(hanging_charm)
 
 
