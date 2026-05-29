@@ -11,3 +11,11 @@ export/
 export_presets.cfg
 *.tmp
 *.log
+
+# 本地工具（Godot.exe、gdUnit备份等）
+.local_tools/
+
+# Codex / Superpowers / 报告
+.codex/
+.superpowers/
+reports/
