@@ -7,6 +7,8 @@ extends StaticBody2D
 
 signal dialogue_request(npc_node: Node, event_data: Dictionary)
 
+const InteractionFocusScript := preload("res://scripts/triggers/interaction_focus.gd")
+
 const SPRITE_SIZE: Vector2 = Vector2(32, 54)
 const DEPTH_MIN_Y: float = 360.0
 const DEPTH_MAX_Y: float = 520.0
@@ -18,6 +20,7 @@ const SCALE_MAX: float = 1.0
 @export var sprite_color: Color = Color(0.933, 0.533, 0.6, 1)
 @export var default_text: String = "..."
 @export var default_expression: String = "normal"
+@export var interaction_priority: int = 20
 
 var _in_range: bool = false
 
@@ -26,12 +29,13 @@ var _in_range: bool = false
 
 func _draw() -> void:
 	draw_rect(Rect2(-SPRITE_SIZE.x / 2, -SPRITE_SIZE.y, SPRITE_SIZE.x, SPRITE_SIZE.y), sprite_color)
-	if _in_range:
+	if _in_range and InteractionFocusScript.is_focused(self):
 		var font: Font = ThemeDB.fallback_font
 		draw_string(font, Vector2(-40, -50), "按 E 对话", HORIZONTAL_ALIGNMENT_CENTER, -1, 12)
 
 
 func _ready() -> void:
+	InteractionFocusScript.register(self)
 	_add_body_collision()
 	_update_depth_scale()
 	_update_depth_sort()
@@ -54,6 +58,8 @@ func _add_body_collision() -> void:
 func _process(_delta: float) -> void:
 	_update_depth_scale()
 	_update_depth_sort()
+	if _in_range:
+		queue_redraw()
 
 
 func _register_to_player() -> void:
@@ -64,7 +70,11 @@ func _register_to_player() -> void:
 
 
 func _on_player_interact() -> void:
+	if DialogueManager.is_dialogue_active():
+		return
 	if not _in_range:
+		return
+	if not InteractionFocusScript.is_focused(self):
 		return
 	var event: Dictionary = _get_available_event()
 	if not event.is_empty():
@@ -132,3 +142,15 @@ func _on_area_exited(area: Area2D) -> void:
 	if area.get_parent().is_in_group("player"):
 		_in_range = false
 		queue_redraw()
+
+
+func is_player_in_interaction_range() -> bool:
+	return _in_range
+
+
+func get_interaction_priority() -> int:
+	return interaction_priority
+
+
+func get_interaction_anchor() -> Vector2:
+	return global_position

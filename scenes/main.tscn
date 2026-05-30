@@ -212,13 +212,13 @@ color = Color(0.48, 0.42, 0.3, 1)
 position = Vector2(400, 340)
 
 [node name="Uncle" parent="." unique_id=1372506829 instance=ExtResource("5_uncle")]
-position = Vector2(380, 404)
+position = Vector2(300, 430)
 
 [node name="Cousin2" parent="." unique_id=1114886079 instance=ExtResource("7_cousin2")]
-position = Vector2(550, 409)
+position = Vector2(690, 410)
 
 [node name="Xiaoming" parent="." unique_id=1612897510 instance=ExtResource("8_xiaoming")]
-position = Vector2(700, 387)
+position = Vector2(1040, 420)
 
 [node name="Tree1" type="Node2D" parent="." unique_id=734304595]
 z_index = 400

@@ -7,17 +7,21 @@ extends StaticBody2D
 
 signal dialogue_request(source_node: Node, event_data: Dictionary)
 
+const InteractionFocusScript := preload("res://scripts/triggers/interaction_focus.gd")
+
 @export var object_name: String = ""
 @export_multiline var description: String = ""
 @export var prompt: String = "按 E 查看"
 @export var collision_w: float = 50.0
 @export var collision_h: float = 30.0
 @export var blocks_player: bool = true
+@export var interaction_priority: int = 0
 
 var _in_range: bool = false
 
 
 func _ready() -> void:
+	InteractionFocusScript.register(self)
 	if object_name != "":
 		name = object_name
 	collision_layer = 1 if blocks_player else 0
@@ -65,12 +69,18 @@ func _on_area_exited(a: Area2D) -> void:
 func _draw() -> void:
 	if not _in_range:
 		return
+	if not InteractionFocusScript.is_focused(self):
+		return
 	var font := ThemeDB.fallback_font
 	draw_string(font, Vector2(0, -30), prompt, HORIZONTAL_ALIGNMENT_CENTER, -1, 14)
 
 
 func _on_player_interact() -> void:
+	if DialogueManager.is_dialogue_active():
+		return
 	if not _in_range:
+		return
+	if not InteractionFocusScript.is_focused(self):
 		return
 	var event_data := {
 		"id": "",
@@ -79,3 +89,20 @@ func _on_player_interact() -> void:
 		"choices": [{"text": "好的", "effects": {}}],
 	}
 	dialogue_request.emit(self, event_data)
+
+
+func _process(_delta: float) -> void:
+	if _in_range:
+		queue_redraw()
+
+
+func is_player_in_interaction_range() -> bool:
+	return _in_range
+
+
+func get_interaction_priority() -> int:
+	return interaction_priority
+
+
+func get_interaction_anchor() -> Vector2:
+	return to_global(Vector2(collision_w / 2.0, 0.0))

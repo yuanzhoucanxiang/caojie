@@ -102,12 +102,20 @@ func _on_dialogue_request(source_node: Node, event_data: Dictionary) -> void:
 func _on_dialogue_started() -> void:
 	if player == null:
 		return
-	player.set_physics_process(false)
-	player.set_process(false)
+	if player.has_method("set_input_locked"):
+		player.set_input_locked(true)
+	else:
+		player.set_physics_process(false)
 
 
 func _on_dialogue_finished() -> void:
 	if player == null:
 		return
-	player.set_physics_process(true)
-	player.set_process(true)
+	# 避开结束对话那一帧的 E 键残留，防止玩家立刻重新触发同一个互动。
+	await get_tree().physics_frame
+	if player == null or not is_instance_valid(player) or DialogueManager.is_dialogue_active():
+		return
+	if player.has_method("set_input_locked"):
+		player.set_input_locked(false)
+	else:
+		player.set_physics_process(true)

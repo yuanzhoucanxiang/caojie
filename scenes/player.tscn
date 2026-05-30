@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1_player"]
+[ext_resource type="Texture2D" path="res://assets/sprites/Characters/player/player_idle_front.png" id="2_player_idle_front"]
 
 [sub_resource type="RectangleShape2D" id="player_collision"]
 size = Vector2(20, 10)
@@ -10,6 +11,10 @@ radius = 32.0
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_player")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -36)
+texture = ExtResource("2_player_idle_front")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -5)

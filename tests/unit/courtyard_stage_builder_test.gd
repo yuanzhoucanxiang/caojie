@@ -110,14 +110,17 @@ func test_main_courtyard_places_buildings_on_far_ground_footline() -> void:
 	assert_bool(source.contains("CourtyardMainHouseGroundLip")).is_true()
 	assert_bool(source.contains("CourtyardOldHouseContactShadow")).is_true()
 	assert_bool(source.contains("CourtyardOldHouseGroundLip")).is_true()
+	assert_bool(source.contains("\"CourtyardOldHouseContactShadow\", \"pos\": Vector2(726, 340), \"size\": Vector2(262, 32), \"color\": Color(0.18, 0.13, 0.09, 0.3)")).is_true()
 	assert_bool(source.contains("\"kind\": \"sprite\", \"name\": \"CourtyardMainHouse\"")).is_true()
 	assert_bool(source.contains("\"texture\": \"res://assets/sprites/Scenes/courtyard/main_house.png\"")).is_true()
-	assert_bool(source.contains("\"pos\": Vector2(337, 81), \"size\": Vector2(313, 272)")).is_true()
+	assert_bool(source.contains("\"pos\": Vector2(333, 73), \"size\": Vector2(322, 280)")).is_true()
+	assert_bool(source.contains("\"CourtyardMainHouseGroundLip\", \"pos\": Vector2(346, 348), \"size\": Vector2(298, 10), \"color\": Color(0.2, 0.14, 0.09, 0.26)")).is_true()
 	assert_bool(source.contains("\"kind\": \"sprite\", \"name\": \"CourtyardOldHouse\"")).is_true()
 	assert_bool(source.contains("\"texture\": \"res://assets/sprites/Scenes/courtyard/old_house.png\"")).is_true()
-	assert_bool(source.contains("\"pos\": Vector2(690, 138), \"size\": Vector2(326, 215)")).is_true()
-	assert_bool(source.contains("_add_body(\"House\", 232, 244, 348)")).is_true()
-	assert_bool(source.contains("_add_body(\"OldHouse\", 214, 86, 348)")).is_true()
+	assert_bool(source.contains("\"pos\": Vector2(718, 169), \"size\": Vector2(270, 184)")).is_true()
+	assert_bool(source.contains("\"CourtyardOldHouseGroundLip\", \"pos\": Vector2(736, 347), \"size\": Vector2(232, 12), \"color\": Color(0.2, 0.14, 0.09, 0.32)")).is_true()
+	assert_bool(source.contains("_add_body(\"House\", 240, 246, 348)")).is_true()
+	assert_bool(source.contains("_add_body(\"OldHouse\", 198, 82, 348)")).is_true()
 
 
 func test_main_courtyard_uses_v3_art_perspective_details() -> void:

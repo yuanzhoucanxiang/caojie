@@ -58,12 +58,12 @@ func _rebuild_courtyard_stage() -> void:
 			{"kind": "line", "name": "CourtyardGroundPerspectiveLineD", "from": Vector2(916, 374), "to": Vector2(1350, 900), "width": 1.4, "color": Color(0.3, 0.24, 0.16, 0.22), "z": -74},
 			{"kind": "line", "name": "CourtyardGroundCrossLineA", "from": Vector2(128, 460), "to": Vector2(1540, 438), "width": 1.0, "color": Color(0.3, 0.24, 0.16, 0.18), "z": -73},
 			{"kind": "line", "name": "CourtyardGroundCrossLineB", "from": Vector2(72, 512), "to": Vector2(1618, 492), "width": 1.0, "color": Color(0.3, 0.24, 0.16, 0.16), "z": -73},
-			{"kind": "ellipse", "name": "CourtyardMainHouseContactShadow", "pos": Vector2(336, 340), "size": Vector2(354, 28), "color": Color(0.18, 0.13, 0.09, 0.18), "z": 320},
-			{"kind": "ellipse", "name": "CourtyardOldHouseContactShadow", "pos": Vector2(700, 340), "size": Vector2(306, 26), "color": Color(0.18, 0.13, 0.09, 0.2), "z": 320},
-			{"kind": "sprite", "name": "CourtyardMainHouse", "texture": "res://assets/sprites/Scenes/courtyard/main_house.png", "pos": Vector2(337, 81), "size": Vector2(313, 272), "z": 328},
-			{"name": "CourtyardMainHouseGroundLip", "pos": Vector2(350, 348), "size": Vector2(286, 9), "color": Color(0.2, 0.14, 0.09, 0.24), "z": 329},
-			{"kind": "sprite", "name": "CourtyardOldHouse", "texture": "res://assets/sprites/Scenes/courtyard/old_house.png", "pos": Vector2(690, 138), "size": Vector2(326, 215), "z": 332},
-			{"name": "CourtyardOldHouseGroundLip", "pos": Vector2(712, 348), "size": Vector2(284, 9), "color": Color(0.2, 0.14, 0.09, 0.22), "z": 333},
+			{"kind": "ellipse", "name": "CourtyardMainHouseContactShadow", "pos": Vector2(330, 340), "size": Vector2(370, 30), "color": Color(0.18, 0.13, 0.09, 0.2), "z": 320},
+			{"kind": "ellipse", "name": "CourtyardOldHouseContactShadow", "pos": Vector2(726, 340), "size": Vector2(262, 32), "color": Color(0.18, 0.13, 0.09, 0.3), "z": 320},
+			{"kind": "sprite", "name": "CourtyardMainHouse", "texture": "res://assets/sprites/Scenes/courtyard/main_house.png", "pos": Vector2(333, 73), "size": Vector2(322, 280), "z": 328},
+			{"name": "CourtyardMainHouseGroundLip", "pos": Vector2(346, 348), "size": Vector2(298, 10), "color": Color(0.2, 0.14, 0.09, 0.26), "z": 329},
+			{"kind": "sprite", "name": "CourtyardOldHouse", "texture": "res://assets/sprites/Scenes/courtyard/old_house.png", "pos": Vector2(718, 169), "size": Vector2(270, 184), "z": 332},
+			{"name": "CourtyardOldHouseGroundLip", "pos": Vector2(736, 347), "size": Vector2(232, 12), "color": Color(0.2, 0.14, 0.09, 0.32), "z": 333},
 			{"name": "CourtyardPottedPlantA", "pos": Vector2(682, 330), "size": Vector2(17, 22), "color": Color(0.28, 0.38, 0.2, 1), "z": 354},
 			{"name": "CourtyardPottedPlantPotA", "pos": Vector2(680, 348), "size": Vector2(21, 11), "color": Color(0.48, 0.28, 0.18, 1), "z": 360},
 			{"kind": "ellipse", "name": "CourtyardWell", "pos": Vector2(560, 370), "size": Vector2(92, 28), "color": Color(0.48, 0.44, 0.34, 1), "z": 398},
@@ -200,8 +200,8 @@ func _apply_textures() -> void:
 
 func _add_depth_collisions() -> void:
 	# 院落主屋和老屋只挡住贴近墙脚的一小段，避免把前院行走带堵死。
-	_add_body("House", 232, 244, 348)
-	_add_body("OldHouse", 214, 86, 348)
+	_add_body("House", 240, 246, 348)
+	_add_body("OldHouse", 198, 82, 348)
 	_add_body("YardTree", 18, 0, 360)
 	_add_body("Tree1", 12, 0, 404)
 	_add_body("Tree2", 16, 0, 420)

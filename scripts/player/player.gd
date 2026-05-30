@@ -28,6 +28,7 @@ var _movement_bottom: float = 520.0
 
 var _step_timer: float = 0.0
 var _target_zoom: float = ZOOM_DEFAULT
+var _input_locked: bool = false
 
 @onready var camera: Camera2D = $Camera2D
 
@@ -38,10 +39,17 @@ func _ready() -> void:
 
 
 func _draw() -> void:
+	if has_node("Sprite2D"):
+		return
 	draw_rect(Rect2(-SPRITE_SIZE.x / 2, -SPRITE_SIZE.y, SPRITE_SIZE.x, SPRITE_SIZE.y), SPRITE_COLOR)
 
 
 func _physics_process(_delta: float) -> void:
+	if _is_input_blocked():
+		velocity = Vector2.ZERO
+		_step_timer = 0.0
+		return
+
 	var horizontal: float = Input.get_axis("move_left", "move_right")
 	var vertical: float = Input.get_axis("move_up", "move_down")
 
@@ -66,6 +74,8 @@ func _physics_process(_delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if _is_input_blocked():
+		return
 	if not _can_zoom():
 		return
 	if not event is InputEventMouseButton:
@@ -125,6 +135,21 @@ func set_movement_bounds(left: float, right: float, top: float, bottom: float, c
 	_movement_top = top
 	_movement_bottom = bottom
 	_camera_base_offset_y = camera_offset_y
+
+
+func set_input_locked(locked: bool) -> void:
+	_input_locked = locked
+	if locked:
+		velocity = Vector2.ZERO
+		_step_timer = 0.0
+
+
+func is_input_locked() -> bool:
+	return _input_locked
+
+
+func _is_input_blocked() -> bool:
+	return _input_locked or DialogueManager.is_dialogue_active()
 
 
 func _update_depth_sort() -> void:

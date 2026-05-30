@@ -131,19 +131,19 @@ func _add_interactable_objects() -> void:
 	add_child(bed)
 
 	var desk := InteractableObject.new()
-	desk.position = Vector2(348, 370)
+	desk.position = Vector2(356, 382)
 	desk.object_name = "Desk"
 	desk.description = "桌上放着课本和作业本，铅笔滚到了桌角。"
-	desk.collision_w = 84
-	desk.collision_h = 20
+	desk.collision_w = 72
+	desk.collision_h = 18
 	add_child(desk)
 
 	var window_obj := InteractableObject.new()
 	window_obj.position = Vector2(138, 182)
 	window_obj.object_name = "Window"
 	window_obj.description = "窗外能看到村子的屋顶和远处的鱼塘，天很蓝。"
-	window_obj.collision_w = 174
-	window_obj.collision_h = 52
+	window_obj.collision_w = 140
+	window_obj.collision_h = 42
 	add_child(window_obj)
 
 	var suitcase := InteractableObject.new()
@@ -155,35 +155,35 @@ func _add_interactable_objects() -> void:
 	add_child(suitcase)
 
 	var posters := InteractableObject.new()
-	posters.position = Vector2(108, 270)
+	posters.position = Vector2(92, 260)
 	posters.object_name = "Posters"
 	posters.description = "墙上的飞机和机器人贴纸有点幼稚，却让这个小房间终于像自己的地方。"
-	posters.collision_w = 206
-	posters.collision_h = 36
+	posters.collision_w = 130
+	posters.collision_h = 28
 	add_child(posters)
 
 	var toy_robot := InteractableObject.new()
-	toy_robot.position = Vector2(294, 362)
+	toy_robot.position = Vector2(282, 382)
 	toy_robot.object_name = "ToyRobot"
 	toy_robot.description = "铁皮机器人站得很直，胸口的颜色有点掉漆，像是在替你守着房间。"
-	toy_robot.collision_w = 32
-	toy_robot.collision_h = 30
+	toy_robot.collision_w = 28
+	toy_robot.collision_h = 24
 	add_child(toy_robot)
 
 	var homework := InteractableObject.new()
-	homework.position = Vector2(352, 348)
+	homework.position = Vector2(348, 338)
 	homework.object_name = "HomeworkBook"
 	homework.description = "作业本摊在桌上，铅笔压着还没写完的一行字。"
-	homework.collision_w = 88
-	homework.collision_h = 24
+	homework.collision_w = 58
+	homework.collision_h = 16
 	add_child(homework)
 
 	var window_light := InteractableObject.new()
-	window_light.position = Vector2(150, 306)
+	window_light.position = Vector2(234, 310)
 	window_light.object_name = "WindowLight"
 	window_light.description = "窗格的影子落在地上，一块一块的亮，像可以踩上去。"
-	window_light.collision_w = 128
-	window_light.collision_h = 32
+	window_light.collision_w = 70
+	window_light.collision_h = 24
 	window_light.blocks_player = false
 	add_child(window_light)
 

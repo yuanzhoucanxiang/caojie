@@ -1,6 +1,6 @@
 # 架构交接说明
 
-更新时间：2026-05-28
+更新时间：2026-05-30
 
 本文给后续使用 Codex 或 Claude Code 继续开发《草芥》时阅读。它记录当前游戏代码的分层方式、这次架构调整做了什么，以及新增内容时应该沿用的模式。
 
@@ -19,6 +19,33 @@
 - `AreaControllerBase` 在找不到 `spawn_id` 时会输出 warning，避免场景切换出生点静默失败。
 - 新增 GdUnit 回归测试 `tests/unit/npc_event_selection_test.gd`，覆盖“完成第一条 NPC 事件后应进入下一条事件”。
 - 新增 `scripts/scenes/interior_stage_builder.gd`，用纯文字坐标表生成室内“横向舞台盒子”视觉层，避免非多模态模型只能凭参考图猜布局。
+- 2026-05-30 新增对话/互动输入锁：对话或调查开始后，玩家不能移动、不能滚轮缩放、不能再次触发 NPC/调查物/门；输入焦点交给 `DialogueManager`。
+
+## 对话与互动输入锁
+
+当前交互规则采用“完全锁定”模式：任何 NPC 对话、物品调查、门口对话式交互开始后，在 `DialogueManager.current_state` 回到 `IDLE` 前，玩家只能推进当前对话或选择选项。
+
+实现边界：
+- `Player` 提供 `set_input_locked(locked: bool)` 和 `is_input_locked()`。
+- 锁定时 `Player._physics_process()` 不读取移动轴、不发出 `interact_pressed`，并把 `velocity` 和脚步计时清零。
+- 锁定时 `Player._unhandled_input()` 直接返回，因此对话期间不能用滚轮缩放镜头。
+- `Player` 自身也必须把 `DialogueManager.is_dialogue_active()` 当成全局输入闸门，不能只依赖场景控制器外部上锁。
+- `AreaControllerBase` 监听 `DialogueManager.dialogue_started/dialogue_finished`，只负责调用 `player.set_input_locked(true/false)`。
+- 对话结束时必须等到下一次 `physics_frame` 再解锁玩家，避免“按 E 结束对话”的同一帧又被 Player 当成新互动，造成对话循环打开。
+- `NPCBase`、`InteractableObject`、`TransitionTrigger` 的 `_on_player_interact()` 开头必须检查 `DialogueManager.is_dialogue_active()`，对话中直接返回。
+- `PauseMenu` 在对话活跃且菜单未打开时必须吞掉 `ui_cancel`，不能让玩家在物品调查/对话过程中打开保存、设置或退出菜单。
+- 多个触发区重叠时使用 `scripts/triggers/interaction_focus.gd` 做唯一聚焦选择。所有交互源注册到 `interaction_candidates` 组，按 `interaction_priority`、距离玩家远近、y 轴前后关系选出一个响应者。
+- 默认优先级：`NPCBase = 20`、`TransitionTrigger = 10`、`InteractableObject = 0`。如果一个物品必须压过附近对象，可在实例上调整 `interaction_priority`，不要靠扩大触发区抢响应。
+- 提示文字也只显示当前聚焦对象，避免多个“按 E 查看/对话/进入”挤在一起。
+- 热区布局要和视觉物件“错开但对应”：大家具用较低、较窄的主热区，小物件热区放在物件视觉中心附近但不要压在大家具热区中心。当前守护样例：一楼圆桌/餐具、二楼三扇门、三楼书桌/作业本/玩具/窗光。
+- 院落 NPC 也按生活锚点分散，避免三个人和井口/大屋入口挤成一个交互团。当前守护站位：舅舅 `Vector2(300, 430)` 在左侧院落，二表哥 `Vector2(690, 410)` 在中段井口/老屋过道，小明 `Vector2(1040, 420)` 在右侧生活区。
+- 不使用 `get_tree().paused` 作为对话暂停手段，因为对话 UI、输入冷却、气泡动画仍需要继续运行。
+
+后续 Claude Code / DeepSeek 接手时注意：
+- 不要再用 `player.set_physics_process(false)` 作为主要方案，否则玩家的深度缩放、排序等非输入逻辑会一起停掉。
+- 新增任何可交互系统时，都要在触发入口检查 `DialogueManager.is_dialogue_active()`。
+- 对话中允许的输入只应该由 `DialogueManager` 消费：`interact` 推进/确认，`move_left/move_right` 切选项。
+- 相关回归测试在 `tests/unit/dialogue_interaction_lock_test.gd`。
 
 ## 室内场景方法论入口
 
@@ -39,6 +66,8 @@
 - 家具必须保持正面剖面语言：床要有正面床沿，桌子要有前挡板和桌腿，不要只画一块像俯视桌面的矩形。
 - 室内门框按儿童角色比例控制：普通房门 `140~170px` 高、`50~90px` 宽；二楼三扇门不能成为画面主角，门板比门框内缩 8~12px，门把手放在 `y=255~270` 附近。
 - 家具比例按“儿童角色约 `50~60px` 高”估算：床宽约 `100~130px`，桌宽约 `80~110px`，行李箱/玩具约 `30~45px` 宽。需要更大物件时，用前景遮挡或分层表达，不要单纯放大矩形。
+- 2026-05-30 起，主角游戏内精灵 `assets/sprites/Characters/player/player_idle_front.png` 作为统一比例尺：画布 `48x72`，角色实际约 `60px` 高，脚底点对齐角色节点原点。室内外 NPC、家具、门和建筑都先按这个尺度校准。
+- 院落建筑当前尺度：主屋 `322x280`，老屋 `270x184`，两者视觉底边都约为 `y=353`，通过 `ContactShadow` 和 `GroundLip` 压到远景墙脚基线 `y=348`。后续不要只按 PNG 画布中心摆放建筑，要按真实墙脚/台阶底边接地。
 
 三层大屋当前视觉定位：
 
@@ -144,22 +173,27 @@ signal dialogue_request(source_node: Node, event_data: Dictionary)
 
 ```text
 tests/unit/npc_event_selection_test.gd
+tests/unit/dialogue_interaction_lock_test.gd
 ```
 
 推荐命令：
 
 ```powershell
-addons\gdUnit4\runtest.cmd --godot_binary C:\path\to\godot.exe --add res://tests/unit/npc_event_selection_test.gd
+addons\gdUnit4\runtest.cmd --godot_binary C:\path\to\godot.exe --add tests\unit
 ```
 
 或设置环境变量：
 
 ```powershell
-$env:GODOT_BIN = "C:\path\to\godot.exe"
-addons\gdUnit4\runtest.cmd --add res://tests/unit/npc_event_selection_test.gd
+$env:GODOT_BIN = ".\.local_tools\Godot\Godot_console.exe"
+addons\gdUnit4\runtest.cmd --godot_binary $env:GODOT_BIN --ignoreHeadlessMode --add tests\unit
 ```
 
-本次 Codex 环境里 shell 没有 `godot` / `GODOT_BIN`，因此 GdUnit 测试文件已写入，但未能在 shell 中执行。已通过 Godot MCP 启动以下场景检查解析与运行时错误：
+2026-05-30 当前 Codex 环境已可使用 `.local_tools\Godot\Godot_console.exe` 跑 GdUnit。最近一次回归：
+- `tests/unit`：23/23 通过。
+- `.local_tools\Godot\Godot_console.exe --headless --path . --quit`：项目加载通过。
+
+早期曾通过 Godot MCP 启动以下场景检查解析与运行时错误：
 
 - `res://scenes/main.tscn`
 - `res://scenes/areas/house_floor1.tscn`

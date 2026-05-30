@@ -105,7 +105,7 @@ func _add_interactable_objects() -> void:
 	grandparents.position = Vector2(86, 316)
 	grandparents.object_name = "GrandparentsRoomDoor"
 	grandparents.description = "外婆房间门缝里有淡淡的药油味，床边大概还放着针线盒。"
-	grandparents.collision_w = 66
+	grandparents.collision_w = 52
 	grandparents.collision_h = 22
 	add_child(grandparents)
 
@@ -113,7 +113,7 @@ func _add_interactable_objects() -> void:
 	uncle.position = Vector2(284, 316)
 	uncle.object_name = "UncleRoomDoor"
 	uncle.description = "舅舅舅妈的房门收拾得很规整，墙上的奖状已经有些发黄。"
-	uncle.collision_w = 66
+	uncle.collision_w = 52
 	uncle.collision_h = 22
 	add_child(uncle)
 
@@ -121,15 +121,15 @@ func _add_interactable_objects() -> void:
 	cousin.position = Vector2(482, 316)
 	cousin.object_name = "CousinRoomDoor"
 	cousin.description = "二表哥门上贴着歪歪扭扭的画，门口还有一张旧垫子。"
-	cousin.collision_w = 62
+	cousin.collision_w = 50
 	cousin.collision_h = 22
 	add_child(cousin)
 
 	var awards := InteractableObject.new()
-	awards.position = Vector2(210, 136)
+	awards.position = Vector2(238, 136)
 	awards.object_name = "AwardPapers"
 	awards.description = "奖状被贴得很高，纸边已经发黄，但红字还很醒目。"
-	awards.collision_w = 212
+	awards.collision_w = 138
 	awards.collision_h = 28
 	add_child(awards)
 

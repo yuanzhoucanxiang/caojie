@@ -1,6 +1,6 @@
 # 院落场景交接说明
 
-更新时间：2026-05-29
+更新时间：2026-05-30
 
 本文记录外婆家院落从测试占位画面改成“横版叙事舞台 v3”的实现方式，给后续 Codex / Claude Code / DeepSeek 接手时使用。
 
@@ -37,14 +37,15 @@
 
 - 地面透视由 `CourtyardGroundPerspectiveLine*` 和 `CourtyardGroundCrossLine*` 表达。线条必须顺着院落消失方向走，用低透明深棕，不要画成顶视角网格。
 - 正屋已经进入素材替换阶段：`CourtyardMainHouse` 使用 `assets/sprites/Scenes/courtyard/main_house.png`，由 builder 生成 `Sprite2D`，不再叠加程序化瓷砖线、阳台栏杆和小卖部色块。
-- `main_house.png` 来自用户提供的大屋素材。当前试用版来自 `大屋参考素材1.png`，原图棋盘格是烘进图片里的不透明背景，导入前用“高亮中性色识别”清掉棋盘格并裁剪透明留白。素材节点使用左上角 `pos` 和 `size` 缩放，当前为 `pos = Vector2(337, 81)`、`size = Vector2(313, 272)`，视觉底边会向下咬进地面 5px，形成更稳的接地感。
+- `main_house.png` 来自用户提供的大屋素材。当前试用版来自 `大屋参考素材1.png`，原图棋盘格是烘进图片里的不透明背景，导入前用“高亮中性色识别”清掉棋盘格并裁剪透明留白。素材节点使用左上角 `pos` 和 `size` 缩放，当前为 `pos = Vector2(333, 73)`、`size = Vector2(322, 280)`，视觉底边会向下咬进地面约 5px，形成更稳的接地感。
 - `CourtyardMainHouseGroundLip` 是主楼墙脚压地层，位于 `y=348~357`，用于把素材底部、接触阴影和院落地面粘合起来。调整主楼素材时要同步检查这条压地层是否仍然贴在台阶/地基下沿。
 - 如果后续替换主楼素材，不要只看 PNG 画布底边；要先检查不透明像素边界，确认真正的墙脚、台阶或地基贴到 `y=348`。否则会出现“数据上接地、画面上浮空”的问题。
 - 门口生活痕迹后续优先使用真实拆层素材表现，例如货架、盆栽、扫帚、海报；程序化阶段不要写真实文字，避免低清晰度下变成噪点。
 - 右侧老屋已经进入素材替换试用阶段：`CourtyardOldHouse` 使用 `assets/sprites/Scenes/courtyard/old_house.png`，由 builder 生成 `Sprite2D`，暂时不再叠加程序化正面、侧墙、屋顶、门窗色块。
 - `old_house.png` 来自用户提供的 `老屋参考素材像素.png`。原图棋盘格同样是烘进图片里的不透明背景，本轮用“边缘连通灰度棋盘格泛洪”去背景并裁剪透明留白，尽量避免误伤瓦片暗部。
-- 当前老屋舞台数据为 `pos = Vector2(690, 138)`、`size = Vector2(326, 215)`、`z = 332`，视觉底边落到 `y=353`，向地面承接层咬入约 5px。
-- `CourtyardOldHouseGroundLip` 是老屋墙脚压地层，位于 `y=348~357`。它和主屋压地层一样只负责视觉接地，不参与碰撞。
+- 当前老屋舞台数据为 `pos = Vector2(718, 169)`、`size = Vector2(270, 184)`、`z = 332`，视觉底边落到 `y=353`，向地面承接层咬入约 5px。老屋已按主角 `60px` 儿童比例尺缩小，作为侧翼旧屋，不再接近大屋的视觉权重。
+- `CourtyardOldHouseContactShadow` 当前为 `pos = Vector2(726, 340)`、`size = Vector2(262, 32)`、`Color(0.18, 0.13, 0.09, 0.3)`，比第一次更暗更厚，用于加强老屋重量。
+- `CourtyardOldHouseGroundLip` 是老屋墙脚压地层，当前为 `pos = Vector2(736, 347)`、`size = Vector2(232, 12)`、`Color(0.2, 0.14, 0.09, 0.32)`。它和主屋压地层一样只负责视觉接地，不参与碰撞。
 - `CourtyardPowerLine*` 是远中景空间线索，应该位于建筑和远景之间，不参与碰撞，也不要压到玩家头顶。
 - `CourtyardPottedPlant*` 这类生活道具用于增加家庭气息，底部要贴地并按 y 轴层级排序，不要随意漂在墙面或地面上。
 
@@ -63,10 +64,19 @@
 
 - 新增 `assets/sprites/Scenes/courtyard/old_house.png`，由 `C:/workspace/草芥/老屋参考素材像素.png` 处理而来。
 - 原图尺寸为 `1252x939`，没有透明通道；处理后有效裁剪约为 `1206x824`。
-- `scripts/main.gd` 中已移除程序化老屋墙面、侧墙、屋顶、瓦线、门窗块面，改为单个 `Sprite2D` 条目：`{"kind": "sprite", "name": "CourtyardOldHouse", "texture": "res://assets/sprites/Scenes/courtyard/old_house.png", "pos": Vector2(690, 138), "size": Vector2(326, 215), "z": 332}`。
-- 新增 `CourtyardOldHouseGroundLip`：`pos = Vector2(712, 348)`、`size = Vector2(284, 9)`、`Color(0.2, 0.14, 0.09, 0.22)`、`z = 333`，用于老屋压地。
+- `scripts/main.gd` 中已移除程序化老屋墙面、侧墙、屋顶、瓦线、门窗块面，改为单个 `Sprite2D` 条目；当前微调后为 `{"kind": "sprite", "name": "CourtyardOldHouse", "texture": "res://assets/sprites/Scenes/courtyard/old_house.png", "pos": Vector2(718, 169), "size": Vector2(270, 184), "z": 332}`。
+- 新增并强化 `CourtyardOldHouseGroundLip`；当前微调后为 `pos = Vector2(736, 347)`、`size = Vector2(232, 12)`、`Color(0.2, 0.14, 0.09, 0.32)`、`z = 333`，用于老屋压地。
 - 删除了程序化 `CourtyardPottedPlantB` / `CourtyardPottedPlantPotB`，因为老屋素材本身已经带有盆栽和墙脚杂物，避免重复堆叠。
-- 老屋碰撞仍沿用旧玩法锚点 `_add_body("OldHouse", 214, 86, 348)`，视觉替换不改变玩家移动碰撞。
+- 老屋碰撞随视觉缩小同步微调为 `_add_body("OldHouse", 198, 82, 348)`；主屋碰撞同步为 `_add_body("House", 240, 246, 348)`。两者仍共用远景墙脚基线 `ground_y = 348`。
+
+## 2026-05-30 主角比例尺与建筑微调
+
+- 新增主角游戏内精灵：`assets/sprites/Characters/player/player_idle_front.png`，当前画布 `48x72`，实际角色约 `60px` 高，脚底对齐角色节点原点。
+- 后续所有院落尺度都先用这张 `60px` 儿童角色做比例尺：儿童 NPC `56~64px`，成人 NPC `76~88px`，建筑和门窗按人物关系校准。
+- 主屋作为家庭中心，微调为 `pos = Vector2(333, 73)`、`size = Vector2(322, 280)`；主屋压地层为 `pos = Vector2(346, 348)`、`size = Vector2(298, 10)`、`Color(0.2, 0.14, 0.09, 0.26)`。
+- 老屋作为右侧旧屋，微调为 `pos = Vector2(718, 169)`、`size = Vector2(270, 184)`；不要再把老屋放到接近大屋宽度或高度，否则会削弱“大屋是家庭中心、老屋是时间阴影”的叙事层级。
+- 两栋建筑的视觉底边都落到约 `y=353`，比远景墙脚基线 `y=348` 多咬进 5px。接地检查时看“不透明像素真实墙脚”，不要只看 PNG 画布底边。
+- 院落专项测试 `tests/unit/courtyard_stage_builder_test.gd` 已守护这些数值，修改建筑比例时要同步更新测试和本文档。
 
 ## 实现规则
 

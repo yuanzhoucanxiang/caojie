@@ -24,6 +24,9 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	if not event.is_action_pressed("ui_cancel"):
 		return
+	if DialogueManager.is_dialogue_active() and not visible:
+		get_viewport().set_input_as_handled()
+		return
 	if _settings_panel and _settings_panel.visible:
 		_hide_settings()
 		get_viewport().set_input_as_handled()

@@ -139,10 +139,10 @@ func _add_interactable_objects() -> void:
 	add_child(stove)
 
 	var table := InteractableObject.new()
-	table.position = Vector2(430, 388)
+	table.position = Vector2(392, 392)
 	table.object_name = "RoundTable"
 	table.description = "圆桌上有几道家常菜的痕迹，桌面被擦得发亮。"
-	table.collision_w = 150
+	table.collision_w = 118
 	table.collision_h = 24
 	table.blocks_player = false
 	add_child(table)
@@ -156,11 +156,11 @@ func _add_interactable_objects() -> void:
 	add_child(water_tank)
 
 	var tableware := InteractableObject.new()
-	tableware.position = Vector2(462, 356)
+	tableware.position = Vector2(526, 350)
 	tableware.object_name = "Tableware"
 	tableware.description = "碗里还留着一点饭粒，搪瓷杯上的蓝边已经磕掉了一小块。"
-	tableware.collision_w = 106
-	tableware.collision_h = 28
+	tableware.collision_w = 58
+	tableware.collision_h = 18
 	tableware.blocks_player = false
 	add_child(tableware)
 
