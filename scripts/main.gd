@@ -82,6 +82,13 @@ func _rebuild_courtyard_stage() -> void:
 			{"name": "CourtyardClothB", "pos": Vector2(1054, 290), "size": Vector2(36, 64), "color": Color(0.42, 0.56, 0.62, 1), "z": 346},
 			{"name": "CourtyardClothC", "pos": Vector2(1114, 288), "size": Vector2(30, 52), "color": Color(0.72, 0.5, 0.44, 1), "z": 346},
 			{"name": "CourtyardVegetableBed", "pos": Vector2(990, 404), "size": Vector2(286, 42), "color": Color(0.34, 0.42, 0.24, 1), "z": 442},
+			{"name": "CourtyardChickenCoopRoof", "pos": Vector2(160, 326), "size": Vector2(140, 16), "color": Color(0.45, 0.35, 0.22, 1), "z": 340},
+			{"name": "CourtyardChickenCoopBody", "pos": Vector2(168, 340), "size": Vector2(124, 28), "color": Color(0.52, 0.42, 0.28, 1), "z": 338},
+			{"name": "CourtyardChickenCoopFence", "pos": Vector2(156, 350), "size": Vector2(148, 14), "color": Color(0.38, 0.3, 0.2, 1), "z": 336},
+			{"name": "CourtyardChickenFeedBowl", "pos": Vector2(200, 358), "size": Vector2(22, 8), "color": Color(0.58, 0.48, 0.32, 1), "z": 362},
+			{"kind": "ellipse", "name": "CourtyardChickA", "pos": Vector2(190, 362), "size": Vector2(10, 8), "color": Color(0.82, 0.72, 0.42, 1), "z": 370},
+			{"kind": "ellipse", "name": "CourtyardChickB", "pos": Vector2(210, 364), "size": Vector2(8, 7), "color": Color(0.78, 0.68, 0.38, 1), "z": 370},
+			{"kind": "ellipse", "name": "CourtyardChickC", "pos": Vector2(224, 360), "size": Vector2(9, 8), "color": Color(0.85, 0.75, 0.45, 1), "z": 370},
 			{"name": "CourtyardForegroundFence", "pos": Vector2(0, 450), "size": Vector2(356, 30), "color": Color(0.18, 0.12, 0.08, 0.86), "z": 862},
 			{"name": "CourtyardWarmLight", "pos": Vector2(0, 0), "size": Vector2(1710, 480), "color": Color(0.94, 0.76, 0.46, 0.1), "z": 850},
 		],
@@ -107,14 +114,46 @@ func _align_legacy_gameplay_anchors() -> void:
 
 
 func _add_courtyard_interactable_objects() -> void:
+	# —— 养鸡场行动点 ——
+	var chicken_coop := InteractableObject.new()
+	chicken_coop.position = Vector2(185, 350)
+	chicken_coop.object_name = "CourtyardChickenCoopObject"
+	chicken_coop.description = "低矮的鸡棚旁边散落着几根稻草，小鸡在栅栏里叽叽叫。"
+	chicken_coop.collision_w = 110
+	chicken_coop.collision_h = 26
+	chicken_coop.blocks_player = false
+	chicken_coop.interaction_priority = 5
+	chicken_coop.prompt = "按 E 喂鸡"
+	chicken_coop.event_id = "w1_act_feed_chickens"
+	chicken_coop.event_text = "你抓了一把谷糠撒在地上，小鸡们立刻围过来抢食。有只小鸡还啄了一下你的手指。"
+	chicken_coop.event_conditions = ["event_completed:w1_gm_feed_chickens_task"]
+	chicken_coop.event_choices = [
+		{"text": "撒一小把谷糠", "effects": {"勤劳": 1, "体力": 1}},
+		{"text": "蹲着看小鸡抢食", "effects": {"好奇": 1}},
+	]
+	chicken_coop.completed_description = "鸡棚里的小鸡正在啄食，看起来很满意。"
+	add_child(chicken_coop)
+
+	# —— 井边行动点（打水）——
 	var well := InteractableObject.new()
 	well.position = Vector2(576, 382)
 	well.object_name = "CourtyardWellObject"
 	well.description = "井沿被摸得发亮，井口旁边还放着一个旧水桶。外婆总说打水时要小心脚下。"
 	well.collision_w = 60
 	well.collision_h = 24
+	well.interaction_priority = 5
+	well.prompt = "按 E 打水"
+	well.event_id = "w1_act_fetch_water"
+	well.event_text = "你蹲在井边，小心翼翼地把水桶放下去。井水很凉，打上来的时候溅了一点在手上。"
+	well.event_conditions = ["event_completed:w1_at_water_task"]
+	well.event_choices = [
+		{"text": "扶稳水桶", "effects": {"勤劳": 1, "体力": 1}},
+		{"text": "先看井里有多深", "effects": {"好奇": 1}},
+	]
+	well.completed_description = "水桶已经打满水放在井边了。"
 	add_child(well)
 
+	# —— 石桌行动点（小游戏）——
 	var stone_table := InteractableObject.new()
 	stone_table.position = Vector2(392, 412)
 	stone_table.object_name = "CourtyardStoneTableObject"
@@ -122,8 +161,19 @@ func _add_courtyard_interactable_objects() -> void:
 	stone_table.collision_w = 112
 	stone_table.collision_h = 22
 	stone_table.blocks_player = false
+	stone_table.interaction_priority = 5
+	stone_table.prompt = "按 E 玩游戏"
+	stone_table.event_id = "w1_act_stone_table_game"
+	stone_table.event_text = "二表哥在石桌上摆好纸片，教你拍纸片的规则。你们玩了好几轮，太阳晒得后背暖暖的。"
+	stone_table.event_conditions = ["event_completed:w1_c2_stone_table_task"]
+	stone_table.event_choices = [
+		{"text": "认真学规则", "effects": {"懂事": 1, "好奇": 1}},
+		{"text": "胡乱出一招", "effects": {"体力": 1, "亲密": 1}},
+	]
+	stone_table.completed_description = "石桌上还留着几张纸片，风一吹就翻了个面。"
 	add_child(stone_table)
 
+	# —— 晾衣绳行动点（收衣服）——
 	var clothesline := InteractableObject.new()
 	clothesline.position = Vector2(1002, 342)
 	clothesline.object_name = "CourtyardClotheslineObject"
@@ -131,16 +181,58 @@ func _add_courtyard_interactable_objects() -> void:
 	clothesline.collision_w = 150
 	clothesline.collision_h = 28
 	clothesline.blocks_player = false
+	clothesline.interaction_priority = 5
+	clothesline.prompt = "按 E 收衣服"
+	clothesline.event_id = "w1_act_collect_clothes"
+	clothesline.event_text = "你踮起脚把快要掉的衣服重新夹好。太阳晒过的衣服暖烘烘的，有一股好闻的味道。"
+	clothesline.event_conditions = ["event_completed:w1_xm_clothesline_task"]
+	clothesline.event_choices = [
+		{"text": "把衣角夹回去", "effects": {"勤劳": 1}},
+		{"text": "闻到太阳晒过的味道", "effects": {"好奇": 1}},
+	]
+	clothesline.completed_description = "衣服整整齐齐地挂在绳上，随风轻轻晃动。"
 	add_child(clothesline)
 
+	# —— 摩托行动点（观察旧摩托）——
 	var scooter := InteractableObject.new()
 	scooter.position = Vector2(220, 432)
 	scooter.object_name = "CourtyardScooterObject"
 	scooter.description = "一辆旧摩托停在院角，车牌沾着灰，像是刚从镇上回来不久。"
 	scooter.collision_w = 72
 	scooter.collision_h = 22
+	scooter.interaction_priority = 5
+	scooter.prompt = "按 E 观察摩托"
+	scooter.event_id = "w1_act_check_scooter"
+	scooter.event_text = "你蹲在摩托车旁边，看到车座上有几道旧划痕，排气管上沾着干泥。"
+	scooter.event_conditions = ["event_completed:w1_uc_scooter_hint"]
+	scooter.event_choices = [
+		{"text": "只看车牌和灰尘", "effects": {"懂事": 1}},
+		{"text": "摸一下后座", "effects": {"好奇": 1, "懂事": -1}},
+	]
+	scooter.completed_description = "旧摩托车安静地停在那里，车身上的灰又厚了一点。"
 	add_child(scooter)
 
+	# —— 老屋门口行动点（观察老屋）——
+	var old_house_door := InteractableObject.new()
+	old_house_door.position = Vector2(750, 370)
+	old_house_door.object_name = "CourtyardOldHouseDoorObject"
+	old_house_door.description = "老屋的门半掩着，门框上的红漆已经褪成了暗褐色。屋檐下面有个燕子窝。"
+	old_house_door.collision_w = 50
+	old_house_door.collision_h = 26
+	old_house_door.blocks_player = false
+	old_house_door.interaction_priority = 5
+	old_house_door.prompt = "按 E 观察老屋"
+	old_house_door.event_id = "w1_act_old_house_eaves"
+	old_house_door.event_text = "你站在老屋门口，看到墙上有一条裂缝从屋檐一直延伸到地面。风吹过来的时候，门板轻轻嘎吱响了一声。"
+	old_house_door.event_conditions = ["event_completed:w1_c2_old_house_dare"]
+	old_house_door.event_choices = [
+		{"text": "看墙上的裂缝", "effects": {"好奇": 1}},
+		{"text": "听见响声就退后", "effects": {"懂事": 1}},
+	]
+	old_house_door.completed_description = "老屋静静地站在那里，门缝里透出一股旧木头的味道。"
+	add_child(old_house_door)
+
+	# —— 小卖部（普通查看，无行动事件）——
 	var shop_counter := InteractableObject.new()
 	shop_counter.position = Vector2(384, 306)
 	shop_counter.object_name = "CourtyardShopCounterObject"
@@ -167,6 +259,10 @@ func _apply_textures() -> void:
 		"CourtyardWellBase": [TextureSetup.Pattern.NOISE, 36.0, 0.08],
 		"CourtyardPottedPlant": [TextureSetup.Pattern.GRASS, 28.0, 0.1],
 		"CourtyardPottedPlantPot": [TextureSetup.Pattern.DIRT, 24.0, 0.08],
+		"CourtyardChickenCoopRoof": [TextureSetup.Pattern.NOISE, 36.0, 0.08],
+		"CourtyardChickenCoopBody": [TextureSetup.Pattern.WOOD_H, 36.0, 0.1],
+		"CourtyardChickenCoopFence": [TextureSetup.Pattern.WOOD_V, 28.0, 0.1],
+		"CourtyardChickenFeedBowl": [TextureSetup.Pattern.DIRT, 24.0, 0.08],
 		"CourtyardClothesPole": [TextureSetup.Pattern.WOOD_V, 28.0, 0.1],
 		"CourtyardForegroundFence": [TextureSetup.Pattern.WOOD_H, 34.0, 0.1],
 		"GrassBack": [TextureSetup.Pattern.GRASS, 80.0, 0.08],

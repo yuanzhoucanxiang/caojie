@@ -68,6 +68,7 @@
 - 家具比例按“儿童角色约 `50~60px` 高”估算：床宽约 `100~130px`，桌宽约 `80~110px`，行李箱/玩具约 `30~45px` 宽。需要更大物件时，用前景遮挡或分层表达，不要单纯放大矩形。
 - 2026-05-30 起，主角游戏内精灵 `assets/sprites/Characters/player/player_idle_front.png` 作为统一比例尺：画布 `48x72`，角色实际约 `60px` 高，脚底点对齐角色节点原点。室内外 NPC、家具、门和建筑都先按这个尺度校准。
 - 院落建筑当前尺度：主屋 `322x280`，老屋 `270x184`，两者视觉底边都约为 `y=353`，通过 `ContactShadow` 和 `GroundLip` 压到远景墙脚基线 `y=348`。后续不要只按 PNG 画布中心摆放建筑，要按真实墙脚/台阶底边接地。
+- NPC 占位视觉也已进入比例尺系统：`NPCBase` 使用 `npc_body_size` 和 `prompt_offset_y` 画临时人形轮廓，不再画统一方块。当前守护尺寸：小明 `34x60`、二表哥 `38x74`、舅舅 `42x84`、外婆 `42x78`、舅妈 `40x82`。替换真实 NPC 素材前，不要删除这些尺寸字段，它们是后续素材缩放的基准。
 
 三层大屋当前视觉定位：
 
@@ -167,6 +168,42 @@ NPC 子类继续只写事件数据。事件默认是一次性的：
 signal dialogue_request(source_node: Node, event_data: Dictionary)
 ```
 
+### 行动事件接口（2026-05-30 新增）
+
+`InteractableObject` 支持轻量行动事件：有 `event_id` 时走事件逻辑，否则走普通查看。
+
+关键 `@export` 变量：
+
+| 变量 | 类型 | 说明 |
+|------|------|------|
+| `event_id` | String | 事件 ID，如 `w1_act_feed_chickens` |
+| `event_text` | String | 行动触发时的对话文本 |
+| `event_conditions` | Array[String] | 条件格式同 NPC：`event_completed:<id>`、`attr:<属性>>=<数值>` |
+| `event_choices` | Array[Dictionary] | 选项格式同 NPC：`{"text": "...", "effects": {...}}` |
+| `completed_description` | String | 非 repeatable 事件完成后显示的文本 |
+| `repeatable` | bool | 是否可重复触发 |
+
+行为规则：
+
+- 有 `event_id` 且条件不满足 → 静默返回，不触发任何对话。
+- 非 repeatable 且已 `GameState.is_event_completed(event_id)` → 显示 `completed_description`（若为空则显示 `description`），信号中 `id` 为空。
+- 条件满足 → 发出带 `event_id` 的对话请求，`DialogueManager` 处理后 `GameState.complete_event(event_id)`。
+- 行动触发点建议 `interaction_priority = 5`，高于普通查看物(0)，低于 NPC(20)。
+- 首周事件链使用 `w1_act_*` 前缀命名行动事件 ID。
+
+### 首周事件链规则
+
+- 所有首周事件 ID 使用 `w1_` 前缀。
+- NPC 事件列表必须是"一次性主线在前，repeatable 日常在最后"，避免 repeatable 抢走后续主线事件。
+- NPC 日常事件条件必须依赖该 NPC 最后一个主线事件完成。
+- 属性只使用五项：`懂事`、`好奇`、`勤劳`、`体力`、`亲密`。
+
+相关测试：
+
+```text
+tests/unit/w1_event_chain_test.gd
+```
+
 ## 测试与验证
 
 当前已新增测试：
@@ -190,7 +227,7 @@ addons\gdUnit4\runtest.cmd --godot_binary $env:GODOT_BIN --ignoreHeadlessMode --
 ```
 
 2026-05-30 当前 Codex 环境已可使用 `.local_tools\Godot\Godot_console.exe` 跑 GdUnit。最近一次回归：
-- `tests/unit`：23/23 通过。
+- `tests/unit`：24/24 通过。
 - `.local_tools\Godot\Godot_console.exe --headless --path . --quit`：项目加载通过。
 
 早期曾通过 Godot MCP 启动以下场景检查解析与运行时错误：
