@@ -320,6 +320,43 @@
 
 ---
 
+## 事件链示例：童年首周事件包 v1
+
+童年首周是玩家到达外婆家的第一个完整周期，通过 NPC 交代→玩家行动→NPC 反馈的闭环，让玩家熟悉院子、认识家人和朋友、建立属性基础。
+
+**设计原则：**
+- 不引入完整日期/任务系统，用事件完成条件模拟"首周推进"
+- 属性只使用五项：`懂事`、`好奇`、`勤劳`、`体力`、`亲密`
+- 内容保持生活化、温暖、带一点乡下家庭关系暗流
+- 所有事件 ID 使用 `w1_` 前缀
+
+**事件链结构：**
+
+```
+外婆 arrival（无条件）
+├── 外婆 feed_chickens_task → 养鸡场行动 → 外婆 feed_chickens_return
+├── 舅妈 kitchen_greeting → 舅妈 water_task → 井边行动 → 舅妈 water_return
+├── 舅舅 first_greeting → 舅舅 scooter_hint → 摩托行动 ─┐
+├── 二表哥 invite_play → 石桌任务 → 石桌行动 → 老屋怂恿 → 老屋行动
+├── 小明 first_meet → 晾衣绳任务 → 晾衣绳行动 → 小明 friend_return
+└── 外婆 homesick_evening（需要 water_return + friend_return）
+    └── 各 NPC 日常 repeatable
+```
+
+**NPC 属性倾向：**
+
+| NPC | 主要推动属性 | 事件主题 |
+|-----|------------|---------|
+| 外婆 | 亲密、勤劳 | 家的归属感，从客人变成家人 |
+| 舅妈 | 懂事、亲密 | 生活照顾，做事要慢 |
+| 舅舅 | 懂事、好奇 | 冷淡到软化，观察与尊重 |
+| 二表哥 | 好奇、亲密 | 探索院子，老屋冒险 |
+| 小明 | 亲密、勤劳 | 第一个朋友，互相帮忙 |
+
+**行动触发点：** 院落中 6 个 `InteractableObject` 支持轻量行动事件（养鸡场、井边、石桌、晾衣绳、摩托、老屋门口），条件未满足时显示前置观察文本，条件满足时进入事件选择。
+
+---
+
 # 05 - NPC 系统
 
 ## NPC 设计原则
@@ -711,6 +748,8 @@
 **颜色规则：** 不用纯白纯黑。窗光用暖米白/淡蓝灰，暗部用深棕/暖灰。暗暖房间主色棕灰黄，明亮房间主色蓝灰米色。
 
 **互动要求：** 每个房间至少 2~4 个可互动物品，描述写生活痕迹而非物品说明。
+
+**物品行动事件：** `InteractableObject` 支持轻量行动事件——有 `event_id` 时走事件逻辑，否则走普通查看。条件未满足时显示 `pre_condition_description`（前置观察文本），条件满足时进入事件选择，事件完成后显示 `completed_description`。行动触发点建议 `interaction_priority = 5`，高于普通查看物(0)，低于 NPC(20)。
 
 **实现方式：** 场景脚本继承 `area_controller_base.gd`，调用 `InteriorStageBuilderScript.rebuild(self, spec)` 生成视觉。spec 包含 width/height/ceiling_h/floor_y/wall/palette/lights/items/foreground。详见 `docs_dev/architecture_handoff.md`。
 
