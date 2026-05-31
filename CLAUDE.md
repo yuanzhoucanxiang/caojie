@@ -232,7 +232,10 @@ const SPAWN_POINTS := {
 ## 策划案同步规则
 
 - 修改策划案内容时，先修订 `WORLD.md`（源文件）
-- 再用 pandoc 转换：`pandoc WORLD.md -o 《草芥》游戏策划案.docx`
+- 再用 pandoc 转换（WORLD.md 有多个 `---` 分隔线，会触发 YAML 解析错误，需绕过）：
+  ```bash
+  sed 's/^---$/***/' WORLD.md | pandoc -f markdown -o "《草芥》游戏策划案.docx"
+  ```
 - `WORLD.md` 是源文件，《草芥》游戏策划案.docx` 是供用户查看的汇总文档
 
 ## 内容模糊化规则
