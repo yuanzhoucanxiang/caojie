@@ -18,6 +18,8 @@ const SCALE_MAX: float = 1.0
 @export var npc_id: String = ""
 @export var npc_name: String = ""
 @export var sprite_color: Color = Color(0.933, 0.533, 0.6, 1)
+@export var npc_body_size: Vector2 = Vector2(34, 60)
+@export var prompt_offset_y: float = 72.0
 @export var default_text: String = "..."
 @export var default_expression: String = "normal"
 @export var interaction_priority: int = 20
@@ -28,10 +30,29 @@ var _in_range: bool = false
 
 
 func _draw() -> void:
-	draw_rect(Rect2(-SPRITE_SIZE.x / 2, -SPRITE_SIZE.y, SPRITE_SIZE.x, SPRITE_SIZE.y), sprite_color)
+	_draw_scale_placeholder()
 	if _in_range and InteractionFocusScript.is_focused(self):
 		var font: Font = ThemeDB.fallback_font
-		draw_string(font, Vector2(-40, -50), "按 E 对话", HORIZONTAL_ALIGNMENT_CENTER, -1, 12)
+		draw_string(font, Vector2(-44, -prompt_offset_y), "按 E 对话", HORIZONTAL_ALIGNMENT_CENTER, -1, 12)
+
+
+func _draw_scale_placeholder() -> void:
+	var w := npc_body_size.x
+	var h := npc_body_size.y
+	var head_r := clampf(w * 0.28, 8.0, 13.0)
+	var head_center := Vector2(0, -h + head_r + 1.0)
+	var shoulder_w := w * 0.76
+	var body_top := head_center.y + head_r - 2.0
+	var body_bottom := -16.0
+	var leg_w := w * 0.22
+	var leg_h := 18.0
+
+	draw_circle(head_center, head_r, sprite_color.lightened(0.18))
+	draw_rect(Rect2(-shoulder_w / 2.0, body_top, shoulder_w, body_bottom - body_top), sprite_color)
+	draw_rect(Rect2(-w * 0.27, body_bottom, leg_w, leg_h), sprite_color.darkened(0.18))
+	draw_rect(Rect2(w * 0.05, body_bottom, leg_w, leg_h), sprite_color.darkened(0.18))
+	draw_rect(Rect2(-w * 0.34, -3.0, w * 0.32, 3.0), sprite_color.darkened(0.35))
+	draw_rect(Rect2(w * 0.02, -3.0, w * 0.32, 3.0), sprite_color.darkened(0.35))
 
 
 func _ready() -> void:
@@ -48,7 +69,7 @@ func _ready() -> void:
 func _add_body_collision() -> void:
 	var body_collision = CollisionShape2D.new()
 	var body_shape = RectangleShape2D.new()
-	body_shape.size = Vector2(SPRITE_SIZE.x, 8)
+	body_shape.size = Vector2(maxf(npc_body_size.x * 0.56, 20.0), 8)
 	body_collision.shape = body_shape
 	body_collision.position = Vector2(0, -4)
 	body_collision.name = "BodyCollision"
