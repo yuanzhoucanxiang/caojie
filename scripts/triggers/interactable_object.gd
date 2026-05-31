@@ -23,6 +23,7 @@ const InteractionFocusScript := preload("res://scripts/triggers/interaction_focu
 @export var event_conditions: Array[String] = []
 @export var event_choices: Array[Dictionary] = []
 @export_multiline var completed_description: String = ""
+@export_multiline var pre_condition_description: String = ""
 @export var repeatable: bool = false
 
 var _in_range: bool = false
@@ -114,8 +115,15 @@ func _try_action_event() -> void:
 			"choices": [{"text": "好的", "effects": {}}],
 		})
 		return
-	# 检查条件
+	# 检查条件——不满足时显示前置观察文本
 	if not _check_event_conditions():
+		var pre_desc: String = pre_condition_description if not pre_condition_description.is_empty() else description
+		dialogue_request.emit(self, {
+			"id": "",
+			"text": pre_desc,
+			"expression": "neutral",
+			"choices": [{"text": "好的", "effects": {}}],
+		})
 		return
 	# 条件满足，发出行动事件
 	var fallback := [{"text": "好的", "effects": {}}]

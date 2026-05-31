@@ -132,6 +132,7 @@ func _add_courtyard_interactable_objects() -> void:
 		{"text": "蹲着看小鸡抢食", "effects": {"好奇": 1}},
 	]
 	chicken_coop.completed_description = "鸡棚里的小鸡正在啄食，看起来很满意。"
+	chicken_coop.pre_condition_description = "小鸡在栅栏里叽叽叫，看起来饿了。不过你还不知道该怎么喂它们。"
 	add_child(chicken_coop)
 
 	# —— 井边行动点（打水）——
@@ -151,6 +152,7 @@ func _add_courtyard_interactable_objects() -> void:
 		{"text": "先看井里有多深", "effects": {"好奇": 1}},
 	]
 	well.completed_description = "水桶已经打满水放在井边了。"
+	well.pre_condition_description = "井口旁边放着一个旧水桶，井水在深处泛着微光。现在还不需要打水。"
 	add_child(well)
 
 	# —— 石桌行动点（小游戏）——
@@ -171,6 +173,7 @@ func _add_courtyard_interactable_objects() -> void:
 		{"text": "胡乱出一招", "effects": {"体力": 1, "亲密": 1}},
 	]
 	stone_table.completed_description = "石桌上还留着几张纸片，风一吹就翻了个面。"
+	stone_table.pre_condition_description = "圆石桌被太阳晒得温热，桌面上有几道浅浅的划痕。"
 	add_child(stone_table)
 
 	# —— 晾衣绳行动点（收衣服）——
@@ -191,6 +194,7 @@ func _add_courtyard_interactable_objects() -> void:
 		{"text": "闻到太阳晒过的味道", "effects": {"好奇": 1}},
 	]
 	clothesline.completed_description = "衣服整整齐齐地挂在绳上，随风轻轻晃动。"
+	clothesline.pre_condition_description = "衣服挂在绳上慢慢晃，有一件快要滑下来了。不过还没人让你帮忙收衣服。"
 	add_child(clothesline)
 
 	# —— 摩托行动点（观察旧摩托）——
@@ -210,6 +214,7 @@ func _add_courtyard_interactable_objects() -> void:
 		{"text": "摸一下后座", "effects": {"好奇": 1, "懂事": -1}},
 	]
 	scooter.completed_description = "旧摩托车安静地停在那里，车身上的灰又厚了一点。"
+	scooter.pre_condition_description = "一辆旧摩托停在院角，车身落了灰。舅舅说过不让乱碰。"
 	add_child(scooter)
 
 	# —— 老屋门口行动点（观察老屋）——
@@ -230,6 +235,7 @@ func _add_courtyard_interactable_objects() -> void:
 		{"text": "听见响声就退后", "effects": {"懂事": 1}},
 	]
 	old_house_door.completed_description = "老屋静静地站在那里，门缝里透出一股旧木头的味道。"
+	old_house_door.pre_condition_description = "老屋的门半掩着，看起来很久没人进去过了。一个人过去有点害怕。"
 	add_child(old_house_door)
 
 	# —— 小卖部（普通查看，无行动事件）——
